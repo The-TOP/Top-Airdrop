@@ -70,20 +70,50 @@ const HeroMain = () => {
               </div>
             </div>
           </div>
-          <img
+          <motion.img
             src={ball1}
             alt="ball"
             className=" w-8 absolute top-8 md:top-1/6 left-1/5"
+            initial={{ scale: 0.2, opacity: 0 }}
+            whileInView={{ scale: [0.2, 1.2], opacity: 1 }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              repeatType: "reverse",
+              delay: 0.2,
+              ease: "linear",
+            }}
+            viewport={{ once: true }}
           />
-          <img
+          <motion.img
             src={ball1}
             alt="ball"
             className=" w-6 absolute top-1/2 right-4 md:right-1/6 "
+            initial={{ scale: 0.2, opacity: 0 }}
+            whileInView={{ scale: [0.2, 1.2], opacity: 1 }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              repeatType: "reverse",
+              delay: 0.4,
+              ease: "linear",
+            }}
+            viewport={{ once: true }}
           />
-          <img
+          <motion.img
             src={ball2}
             alt="ball"
             className=" hidden md:block w-12 absolute top-2/3 left-4 md:left-1/7  "
+            initial={{ scale: 0.2, opacity: 0 }}
+            whileInView={{ scale: [0.2, 1.2], opacity: 1 }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              repeatType: "reverse",
+              delay: 0.3,
+              ease: "linear",
+            }}
+            viewport={{ once: true }}
           />
         </div>
 
@@ -93,7 +123,7 @@ const HeroMain = () => {
           <div className="flex flex-col-reverse md:flex-row h-80 items-center md:items-start gap-1">
             {/*   contact */}
 
-            <div className="flex-2 flex mt-4 justify-center items-center gap-3">
+            <div className="flex-2 flex mt-4 justify-center  md:items-center items-start gap-3">
               <div className="flex flex-col items-center justify-center gap-1 mt-4">
                 <div className="flex gap-4 text-white/70">
                   <Link to={"#"}>
@@ -113,18 +143,27 @@ const HeroMain = () => {
               </div>
               {/* Right Social Icons */}
 
-              <div className="">
-                <img src={contactball} alt=" contact us" className="w-2/5 h-auto mt-2 " />
+              <div className="hidden md:block">
+                <img
+                  src={contactball}
+                  alt=" contact us"
+                  className="w-2/5 h-auto mt-2 "
+                />
               </div>
             </div>
 
             {/*  image */}
             <div className="flex-3 hidden md:flex justify-center items-center ">
-              <img src={heroMain} alt="hero image" className="w-4/5" />
+              <motion.img
+                src={heroMain}
+                alt="hero image"
+                className="w-4/5"
+              
+              />
             </div>
 
             {/* time */}
-            <div className=" flex-2 flex flex-col items-center md:items-start font-semibold text-white mt-2 p-3 md:p-0 bg-black/50 sm:bg-black/0 rounded-2xl ">
+            <div className=" flex-2 flex flex-col items-center justify-center md:justify-start md:items-start font-semibold text-white mt-2 p-3 md:p-0 bg-black/50 sm:bg-black/0 rounded-2xl ">
               <p className=" flex items-center justify-center gap-2">
                 <span className="text-green-500">
                   <FaRegClock className="w-8 text-2xl" />
@@ -142,7 +181,7 @@ const HeroMain = () => {
       {/* //// Down ///// */}
 
       <div
-        className=" flex flex-col w-full px-2  md:px-8 items-end justify-center gap-6 md:gap-12"
+        className=" flex flex-col w-full px-3  md:px-8 items-end justify-center gap-6 md:gap-12"
         style={{
           backgroundImage: `url(${heroDown})`,
           backgroundSize: "cover",
@@ -162,15 +201,35 @@ const HeroMain = () => {
           <div className="flex flex-col sm:flex-row gap-6 p-4 sm:px-6 px-8 max-w-6xl mx-auto">
             <div className="flex-2 flex items-center justify-center relative px-4">
               <img src={Tokenimg} alt="" className="w-50  md:w-60 " />
-              <img
+              <motion.img
                 src={Tokenball}
-                alt=""
+                alt="token"
                 className="w-16 absolute -top-3 left-0 "
+                initial={{ scale: 0.2, opacity: 0 }}
+                whileInView={{ scale: [0.2, 1.2], opacity: 1 }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  delay: 0.2,
+                  ease: "linear",
+                }}
+                viewport={{ once: true }}
               />
-              <img
+              <motion.img
                 src={Tokenball}
-                alt=""
+                alt="token"
                 className="w-8 absolute bottom-10 left-0  "
+                initial={{ scale: 0.2, opacity: 0 }}
+                whileInView={{ scale: [0.2, 1.2], opacity: 1 }}
+                transition={{
+                  duration: 10,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  delay: 0.2,
+                  ease: "linear",
+                }}
+                viewport={{ once: true }}
               />
             </div>
 

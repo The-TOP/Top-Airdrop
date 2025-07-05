@@ -52,7 +52,7 @@ const Tokenomics = () => {
   ];
 
   return (
-    <div className=" text-white p-4 md:p-6 min-h-screen">
+    <div className=" text-white p-3 pb-10 md:p-6 min-h-screen">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-semibold mb-4">Tokenomics</h2>
         <p className="text-zinc-400 text-sm mb-8">
