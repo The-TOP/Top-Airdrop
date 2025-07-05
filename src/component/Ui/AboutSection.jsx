@@ -126,7 +126,7 @@ const AboutSection = () => {
       {/* Cards Section */}
       <section className="text-white px-6 py-16 md:pt-4 ">
         <div className="max-w-7xl mx-auto text-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 px-6 max-w-xs sm:max-w-lg lg:grid-cols-4 gap-6 lg:max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 px-6 max-w-xs sm:max-w-lg lg:grid-cols-4 gap-6 lg:max-w-5xl mx-auto">
             {features.map((f, i) => (
               <motion.div
                 key={i}

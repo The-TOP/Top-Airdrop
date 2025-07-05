@@ -5,10 +5,10 @@ import DistributionCountdown from "../component/dashboard/DistributionCountdown"
 
 const Dashboad = () => {
   return (
-    <div className="w-full p-3 md:p-6   space-y-6 h-full ">
-      <section>
-        <h2 className="text-white text-xl font-semibold mb-2">Overview</h2>
-        <p className="text-sm text-zinc-400 mb-4">
+    <div className="w-full p-1 md:p-3  max-w-6xl mx-auto  space-y-6 h-full ">
+      <section className="mb-6 p-4 rounded-t-2xl bg-white/2">
+        <h2 className="text-white font-stretch-condensed text-xl font-semibold tracking-wider italic mb-3">Overview</h2>
+        <p className="text-sm text-zinc-400 mb-6">
           Track key metrics – A real-time snapshot of your platform’s
           performance.
         </p>

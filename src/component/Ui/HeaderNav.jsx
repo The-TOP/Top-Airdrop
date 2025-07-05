@@ -1,13 +1,26 @@
 import React from "react";
-import { FaWallet } from "react-icons/fa";
+import { FaHome, FaInfoCircle, FaUserAlt, FaWallet } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import mainLogo from "../../img/MainLogo.png"
+import mainLogo from "../../img/MainLogo.png";
 
 const HeaderNav = () => {
   return (
-    <header className="flex items-center justify-between px-6 md:px-16 py-5 border-b border-gray-800 bg-black/30 backdrop-blur">
-      <img src={mainLogo} alt="logo" className=" w-25 sm:w-30" />
+    <header className="flex items-center justify-between px-6 md:px-16 py-3 md:py-5 border-b border-gray-800 bg-black/30 backdrop-blur">
+      <div className="">
+        <img src={mainLogo} alt="logo" className=" w-25 sm:w-30" />
+        <div className="md:hidden flex items-center justify-between gap-2 my-1 mt-2 text-sm p-1">
+          <Link to={"/"}>
+            <FaHome className="w-8" />
+          </Link>
+          <Link to={"/dashboard"}>
+            <FaUserAlt className="w-8" />
+          </Link>
+          <Link to={"/about"}>
+            <FaInfoCircle className="w-8" />
+          </Link>
+        </div>
+      </div>
       <nav className="hidden md:flex space-x-8 text-sm px-4 py-2 rounded-full bg-white/10">
         <Link to={"/"} className="hover:text-green-400">
           Home
@@ -18,7 +31,8 @@ const HeaderNav = () => {
         <Link to={"#"} className="hover:text-green-400">
           Whitepaper
         </Link>
-        <Link to={"/dashboard"}
+        <Link
+          to={"/dashboard"}
           className="text-green-400 flex items-center gap-2 font-semibold flex-nowrap hover:text-white"
         >
           <span className="text-nowrap text-sm">Claim Now </span>
