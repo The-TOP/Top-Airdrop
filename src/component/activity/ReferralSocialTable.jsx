@@ -43,7 +43,7 @@ const ReferralSocialTable = ({ Data }) => {
                 </td>
                 <td
                   className={
-                    row.status === " Claimed"
+                    row.status === "Claimed"
                       ? "text-green-500"
                       : "text-orange-400"
                   }

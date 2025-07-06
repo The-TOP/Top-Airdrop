@@ -120,7 +120,7 @@ const DashboardMenu = () => {
       </Sidebar>
 
       {/* Main content */}
-      <main className="flex-1 bg-black/94 py-4 overflow-y-auto relative pt-20 md:pt-24">
+      <main className="flex-1 bg-black/94 py-4 overflow-y-auto relative pt-24">
         <div className=" -ms-5  bg-black fixed text-white  w-full top-0  h-1/8  border-white/20 border-b-3 border-dotted">
           <img src={mainLogo} alt="" className="fixed right-10 w-20 top-6" />
         </div>
