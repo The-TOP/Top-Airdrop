@@ -4,6 +4,8 @@ import AirdropTable from "../component/activity/AirdropTable";
 import ActivityTabs from "../component/activity/ActivityTabs";
 import ReferralSocialTable from "../component/activity/ReferralSocialTable";
 import WithdrawalTable from "../component/activity/WithdrawalTable";
+import profile from "../img/Pprofile.png";
+
 
 const Referrals = [
   {
@@ -13,6 +15,7 @@ const Referrals = [
     reward: "+1",
     status: "Unclaimed",
     claimed: false,
+    profile: profile,
   },
   {
     account: "Cxae99...8ac5",
@@ -21,6 +24,7 @@ const Referrals = [
     reward: "+1",
     status: "Unclaimed",
     claimed: false,
+    profile: profile,
   },
   {
     account: "Cxae99...8ac5",
@@ -29,6 +33,7 @@ const Referrals = [
     reward: "+1",
     status: "Unclaimed",
     claimed: false,
+    profile: profile,
   },
   {
     account: "Cxae99...8ac5",
@@ -37,6 +42,7 @@ const Referrals = [
     reward: "+1",
     status: "Unclaimed",
     claimed: false,
+    profile: profile,
   },
   {
     account: "Cxae99...8ac5",
@@ -45,6 +51,7 @@ const Referrals = [
     reward: "+1",
     status: "Unclaimed",
     claimed: false,
+    profile: profile,
   },
   {
     account: "Cxae99...8ac5",
@@ -53,6 +60,7 @@ const Referrals = [
     reward: "+1",
     status: "Claimed",
     claimed: true,
+    profile: profile,
   },
   {
     account: "Cxae99...8ac5",
@@ -61,6 +69,7 @@ const Referrals = [
     reward: "+1",
     status: "Claimed",
     claimed: true,
+    profile: profile,
   },
 ];
 
@@ -72,6 +81,7 @@ const Withdrawal = [
     amount: "5,000",
     fee: "0.00004286",
     status: "Success",
+    profile: profile,
   },
   {
     account: "Cxae99...8ac5",
@@ -80,6 +90,7 @@ const Withdrawal = [
     amount: "5,000",
     fee: "0.00004286",
     status: "Success",
+    profile: profile,
   },
   {
     account: "Cxae99...8ac5",
@@ -88,6 +99,7 @@ const Withdrawal = [
     amount: "5,000",
     fee: "0.00004286",
     status: "Success",
+    profile: profile,
   },
   {
     account: "Cxae99...8ac5",
@@ -96,6 +108,7 @@ const Withdrawal = [
     amount: "5,000",
     fee: "0.00004286",
     status: "Success",
+    profile: profile,
   },
   {
     account: "Cxae99...8ac5",
@@ -103,7 +116,7 @@ const Withdrawal = [
     date: "10-03-25",
     amount: "5,000",
     fee: "0.00004286",
-    status: "Success",
+    status: "Success",profile:profile
   },
 ];
 
@@ -113,14 +126,14 @@ const Airdrop = [
     task: "Welcome Airdrop",
     date: "10-02-25",
     reward: "+5 000 000",
-    status: "Claimed",
+    status: "Claimed",profile:profile
   },
   {
     account: "Cxao99..9a1c5",
     task: "Account Verification",
     date: "10-03-25",
     reward: "+5 000 000",
-    status: "Claimed",
+    status: "Claimed",profile:profile
   },
 ];
 

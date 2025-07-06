@@ -1,6 +1,7 @@
 import React from "react";
-import { FaLeaf } from "react-icons/fa";
 import { FaDollarSign } from "react-icons/fa6";
+import token from "../../img/miniLogo.png";
+import solana from "../../img/solana.png";
 
 const WithdrawalTable = ({ Data }) => {
   return (
@@ -28,25 +29,28 @@ const WithdrawalTable = ({ Data }) => {
             Data.map((row, index) => (
               <tr
                 key={index}
-                className="border-b border-zinc-800 hover:bg-zinc-800/50 transition text-xs"
+                className="border-b border-zinc-800 hover:bg-zinc-800/50 transition text-xs bg-black"
               >
                 <td className="py-3 px-4 text-white ">{index + 1}</td>
-                <td className="text-white">{row.account}</td>
+                <td className="  text-white flex items-center my-3 gap-1">
+                  <img src={row.profile} alt="profile" className="w-5" />
+                  {row.account}
+                </td>
                 <td className="text-white">{row.task}</td>
                 <td className="text-white">{row.date}</td>
-                <td className="text-green-400 flex items-center gap-1 my-3">
-                  <FaLeaf /> {row.amount}
+                <td className="text-white flex items-center just my-3 gap-1 font-bold">
+                  <img src={token} alt="rewards" className="w-5 " />
+                  {row.amount}
                 </td>
                 <td className="">
-                  
-                  <span className=" text-white flex items-center gap-1 ms-2">
-                    <FaDollarSign /> {row.fee}
+                  <span className=" text-white flex items-center gap-1 font-bold ms-2">
+                   <img src={solana} alt="solana" className="w-6 " /> {row.fee}
                   </span>
                 </td>
                 <td
                   className={
                     row.status === "Success"
-                      ? "text-emerald-400"
+                      ? "text-green-500"
                       : "text-orange-400"
                   }
                 >

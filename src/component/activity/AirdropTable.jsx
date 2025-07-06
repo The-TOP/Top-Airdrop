@@ -1,6 +1,6 @@
 import React from "react";
 import { FaLeaf } from "react-icons/fa";
-
+import token from "../../img/miniLogo.png";
 const AirdropTable = ({ Data }) => {
   return (
     <div className="overflow-x-auto bg-zinc-900 rounded-xl shadow-md mt-2">
@@ -16,7 +16,7 @@ const AirdropTable = ({ Data }) => {
             <th>Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="bg-white/2">
           {Data.length === 0 ? (
             <tr>
               <td colSpan={7} className="text-center py-6 text-zinc-500">
@@ -27,16 +27,20 @@ const AirdropTable = ({ Data }) => {
             Data.map((row, index) => (
               <tr
                 key={index}
-                className="border-b text-white text-xs border-zinc-800 hover:bg-zinc-800/50 transition "
+                className="border-b text-white text-xs border-zinc-800 hover:bg-zinc-800/50 transition bg-black "
               >
-                <td className="py-3 px-4">{index + 1}</td>
-                <td>{row.account}</td>
+                <td className="py-3 px-4 ">{index + 1}</td>
+                <td className=" flex items-center my-3 gap-1">
+                  <img src={row.profile} alt="profile" className="w-5" />
+                  {row.account}
+                </td>
                 <td>{row.task}</td>
                 <td>{row.date}</td>
-                <td className="text-green-400 flex items-center my-3 gap-1">
-                  <FaLeaf /> {row.reward}
+                <td className="text-white flex items-center just my-3 gap-1">
+                  <img src={token} alt="rewards" className="w-5 " />
+                  {row.reward}
                 </td>
-                <td className="text-emerald-400">{row.status}</td>
+                <td className="text-green-500">{row.status}</td>
                 <td>
                   <button
                     disabled
