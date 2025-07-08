@@ -4,5 +4,12 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  /*  theme: {
+    extend: {
+      fontFamily: {
+       sans: ['"Audiowide"', "cursive"], // custom font
+      },
+    },
+  }, */
   plugins: [ tailwindcss(), react()],
 })

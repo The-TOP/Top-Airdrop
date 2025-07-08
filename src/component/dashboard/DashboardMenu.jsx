@@ -87,11 +87,11 @@ const DashboardMenu = () => {
             },
           }}
         >
-          <div className={`mb-8 md:mb-12 mt-6 md:ms-4 ${!collapsed && "ms-1 "}`}>
+          <div className={`mb-8 md:mb-12 md:mt-6 md:ms-4 ${!collapsed && "ms-1 "}`}>
             <img
               src={collapsed ? miniLogo : mainLogo}
               alt="logo"
-              className={`${collapsed ? "w-8 mx-auto mt-5  " : "w-36"}`}
+              className={`${collapsed ? "w-8 mx-auto mt-3 md:mt-5  " : "w-30"}`}
             />
           </div>
 
@@ -115,14 +115,14 @@ const DashboardMenu = () => {
             >
               {!collapsed && item.label}
             </MenuItem>
-          ))}
+          ))} 
         </Menu>
       </Sidebar>
 
       {/* Main content */}
-      <main className="flex-1 bg-black/94 py-4 overflow-y-auto relative pt-24">
-        <div className=" -ms-5  bg-black fixed text-white  w-full top-0  h-1/8  border-white/20 border-b-3 border-dotted">
-          <img src={mainLogo} alt="" className="fixed right-10 w-20 top-6" />
+      <main className="flex-1 bg-black/94 py-4 overflow-y-auto relative pt-18 md:pt-24">
+        <div className=" -ms-5  bg-black fixed text-white  w-full top-0 py-6 md:py-0 md:h-1/8  border-white/20 border-b-3 border-dotted">
+          <img src={mainLogo} alt="" className="fixed right-10 w-20 top-4 md:top-6" />
         </div>
 
         <Outlet />

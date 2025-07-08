@@ -2,15 +2,17 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaCheckCircle } from "react-icons/fa";
 
-const RoadMap = ({ phase, title, items, color, bg }) => {
+const RoadMap = ({ phase, title, items, color, bg, data }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className={`rounded-xl p-5 ${bg} text-white w-full lg:w-[23%] shadow-md`}
+      className={`rounded-xl p-2 ${bg} text-white  xl:w-[23%] border border-white/5 shadow-md`}
     >
-      <div className="text-sm font-medium mb-2 flex items-center gap-2">
+      <img src={data} alt="" className="h-100 " />
+
+     {/*  <div className="text-sm font-medium mb-2 flex items-center gap-2">
         <span className={`text-white bg-${color}-600 px-3 py-1 rounded-full`}>
           {phase}
         </span>
@@ -23,7 +25,8 @@ const RoadMap = ({ phase, title, items, color, bg }) => {
             <span>{item}</span>
           </li>
         ))}
-      </ul>
+      </ul> */}
+
     </motion.div>
   );
 };

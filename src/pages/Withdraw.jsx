@@ -43,7 +43,7 @@ const Withdraw = () => {
 
         {/* Input */}
         <div className="mb-6">
-          <label className="block mb-2 text-sm text-gray-300">Amount:_ _</label>
+          <label htmlFor="withdraw" className="block mb-2 text-sm text-gray-300">Amount:_ _</label>
           <div className="relative">
             <input
               type="number"
@@ -52,7 +52,7 @@ const Withdraw = () => {
               id="withdraw"
               value={withdraw}
               onChange={(e) => setWithdraw(e.target.value)}
-              className="w-full placeholder:text-xs bg-black/60 mb-6  flex items-center px-4 py-3 justify-between border-white/20 border rounded-tl-xl rounded-br-xl  text-white rounded-lg   pl-4 pr-20 focus:outline-none focus:border-green-400"
+              className="w-full placeholder:text-xs bg-black/60 mb-6  flex items-center px-4 py-3 justify-between border-white/20 border rounded-tl-xl rounded-br-xl  text-white  pl-4 pr-20 focus:outline-none focus:border-green-400/40"
             />
             <div className="absolute right-4 top-1/2 -translate-y-1/2  px-3 py-1 text-xs font-bold rounded-full text-black">
               <div className="flex gap-1 justify-center items-center p-1 px-2 rounded-2xl bg-white/20">

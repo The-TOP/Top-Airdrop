@@ -1,7 +1,7 @@
 import React from "react";
 import { FaHome, FaInfoCircle, FaUserAlt, FaWallet } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import mainLogo from "../../img/MainLogo.png";
 
 const HeaderNav = () => {
@@ -10,28 +10,54 @@ const HeaderNav = () => {
       <div className="">
         <img src={mainLogo} alt="logo" className=" w-25 sm:w-30" />
         <div className="md:hidden flex items-center justify-between gap-2 my-1 mt-2 text-sm p-1">
-          <Link to={"/"}>
+          <NavLink to={"/"}  className={({ isActive }) =>
+            isActive ? " text-green-500 " : "hover:text-green-400"
+          }>
             <FaHome className="w-8" />
-          </Link>
-          <Link to={"/dashboard"}>
+          </NavLink>
+          <NavLink to={"/dashboard"}  className={({ isActive }) =>
+            isActive ? " text-green-500 " : "hover:text-green-400"
+          }>
             <FaUserAlt className="w-8" />
-          </Link>
-          <Link to={"/about"}>
+          </NavLink>
+          <NavLink to={"/about"}  className={({ isActive }) =>
+            isActive ? " text-green-500 " : "hover:text-green-400"
+          }>
             <FaInfoCircle className="w-8" />
-          </Link>
+          </NavLink>
         </div>
       </div>
       <nav className="hidden md:flex space-x-8 text-sm px-4 py-2 rounded-full bg-white/10">
-        <Link to={"/"} className="hover:text-green-400">
+        <NavLink
+          to={"/"}
+          className={({ isActive }) =>
+            isActive ? " text-green-500 border-t" : "hover:text-green-400"
+          }
+        >
           Home
-        </Link>
-        <Link to={"/about"} className="hover:text-green-400">
+        </NavLink>
+
+        <NavLink
+          to={"/about"}
+          className={({ isActive }) =>
+            isActive ? " text-green-500 border-t" : "hover:text-green-400"
+          }
+        >
           About
-        </Link>
-        <Link to={"#"} className="hover:text-green-400">
+        </NavLink>
+        <NavLink
+          to={
+            "https://github.com/The-TOP/TOPx---A-Hybrid-Ecosystem-for-Intelligent-Trading-/releases/download/Whitepaper/TOPx.-.A.Hybrid.Ecosystem.For.Intelligent.Trading.pdf"
+          }
+          target="_blank"
+          className={({ isActive }) =>
+            isActive ? " text-green-500 border-t" : "hover:text-green-400"
+          }
+        >
           Whitepaper
-        </Link>
-        <Link
+        </NavLink>
+
+        <NavLink
           to={"/dashboard"}
           className="text-green-400 flex items-center gap-2 font-semibold flex-nowrap hover:text-white"
         >
@@ -39,7 +65,7 @@ const HeaderNav = () => {
           <span className="rounded-full p-1 border-white border bg-black text-green-500">
             <FiArrowUpRight />
           </span>
-        </Link>
+        </NavLink>
       </nav>
       <button className="flex lg:py-2 text-sm items-center gap-2 bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full transition">
         <FaWallet />
