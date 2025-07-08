@@ -6,17 +6,28 @@ export const Web3Context = createContext();
 
 export const Web3Provider = ({ children }) => {
   const [address, setAddress] = useState(null);
+  //auto connect if onces connected
 
+  useEffect(() => {
+    const stored = localStorage.getItem("wallet_address");
+    if (stored) setAddress(stored);
+  }, []);
+
+  //connect wallet
   const connectWallet = async () => {
     try {
       const provider = await getProvider();
       const accounts = await provider.send("eth_requestAccounts", []);
-      setAddress(accounts[0]);
+      const userAddress = accounts[0];
+      setAddress(userAddress);
+      localStorage.setItem("wallet_address", userAddress);
     } catch (err) {
       console.error("Wallet connection failed", err);
       alert("wallet not found, install wallet");
     }
   };
+
+  //disconnect wallet
   const disconnectWallet = () => {
     setAddress(null);
   };

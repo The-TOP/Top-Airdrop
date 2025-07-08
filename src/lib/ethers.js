@@ -1,7 +1,7 @@
 // src/lib/ethers.js
 import { ethers } from "ethers";
 
-const getProvider = () => {
+const getProvider = async () => {
   if (window.ethereum) {
     return new ethers.BrowserProvider(window.ethereum);
   } else {
@@ -9,9 +9,10 @@ const getProvider = () => {
   }
 };
 
+
 const getSigner = async () => {
-  const provider = getProvider();
-  return (await provider).getSigner();
+  const provider = await getProvider();
+  return await provider.getSigner();
 };
 
 export { getProvider, getSigner };
