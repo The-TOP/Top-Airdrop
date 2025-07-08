@@ -12,8 +12,9 @@
   "dependencies": {
     "@mui/material": "^7.2.0",
     "@mui/x-data-grid": "^8.6.0",
-    "@solana/web3.js": "^1.98.2",
     "@tailwindcss/vite": "^4.1.11",
+    "axios": "^1.10.0",
+    "ethers": "^6.15.0",
     "framer-motion": "^12.23.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

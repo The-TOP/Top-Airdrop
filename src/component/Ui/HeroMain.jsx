@@ -119,11 +119,11 @@ const HeroMain = () => {
 
         {/* //// imgSocial time ///// */}
 
-        <div className="mx-auto max-w-7xl md:px-12 ">
-          <div className="flex flex-col-reverse md:flex-row h-80 items-center md:items-start gap-1">
+        <div className="mx-auto max-w-7xl -mt-10 md:mt-0 md:px-12  md:pb-0 ">
+          <div className="flex flex-col md:flex-row h-80 items-center md:items-start gap-1">
             {/*   contact */}
 
-            <div className="flex-2 flex mt-4 justify-center  md:items-center items-start gap-3">
+            <div className="md:flex-2 flex mt-4 justify-center  md:items-center items-start gap-3">
               <div className="flex flex-col items-center justify-center gap-1 mt-4">
                 <div className="flex gap-4 text-white/70">
                   <Link to={"#"}>
@@ -163,7 +163,7 @@ const HeroMain = () => {
             </div>
 
             {/* time */}
-            <div className=" flex-2 flex flex-col items-center justify-center md:justify-start md:items-start font-semibold text-white mt-2 p-3 md:p-0 bg-black/50 sm:bg-black/0 rounded-2xl ">
+            <div className=" mt-6 md:flex-2 flex flex-col items-center justify-center md:justify-start md:items-start font-semibold text-white md:mt-2 p-3 md:p-0 bg-black/50 sm:bg-black/0 rounded-2xl ">
               <p className=" flex items-center justify-center gap-2">
                 <span className="text-green-500">
                   <FaRegClock className="w-8 text-2xl" />

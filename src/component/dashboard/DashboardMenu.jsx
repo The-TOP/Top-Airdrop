@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, useNavigate, useLocation, Link } from "react-router-dom";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import miniLogo from "../../img/miniLogo.png";
 import mainLogo from "../../img/MainLogo.png";
@@ -88,11 +88,11 @@ const DashboardMenu = () => {
           }}
         >
           <div className={`mb-8 md:mb-12 md:mt-6 md:ms-4 ${!collapsed && "ms-1 "}`}>
-            <img
+          <Link to={"/"}><img
               src={collapsed ? miniLogo : mainLogo}
               alt="logo"
               className={`${collapsed ? "w-8 mx-auto mt-3 md:mt-5  " : "w-30"}`}
-            />
+            /></Link> 
           </div>
 
           {menuItems.map((item) => (

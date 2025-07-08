@@ -1,28 +1,43 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaHome, FaInfoCircle, FaUserAlt, FaWallet } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
 import mainLogo from "../../img/MainLogo.png";
+import { Web3Context } from "../../context/Web3Context";
 
 const HeaderNav = () => {
+
+  const { address, connectWallet } = useContext(Web3Context);
+
   return (
     <header className="flex items-center justify-between px-6 md:px-16 py-3 md:py-5 border-b border-gray-800 bg-black/30 backdrop-blur">
       <div className="">
-        <img src={mainLogo} alt="logo" className=" w-25 sm:w-30" />
+        <Link to={"/"}>
+          <img src={mainLogo} alt="logo" className=" w-25 sm:w-30" />
+        </Link>
         <div className="md:hidden flex items-center justify-between gap-2 my-1 mt-2 text-sm p-1">
-          <NavLink to={"/"}  className={({ isActive }) =>
-            isActive ? " text-green-500 " : "hover:text-green-400"
-          }>
+          <NavLink
+            to={"/"}
+            className={({ isActive }) =>
+              isActive ? " text-green-500 " : "hover:text-green-400"
+            }
+          >
             <FaHome className="w-8" />
           </NavLink>
-          <NavLink to={"/dashboard"}  className={({ isActive }) =>
-            isActive ? " text-green-500 " : "hover:text-green-400"
-          }>
+          <NavLink
+            to={"/dashboard"}
+            className={({ isActive }) =>
+              isActive ? " text-green-500 " : "hover:text-green-400"
+            }
+          >
             <FaUserAlt className="w-8" />
           </NavLink>
-          <NavLink to={"/about"}  className={({ isActive }) =>
-            isActive ? " text-green-500 " : "hover:text-green-400"
-          }>
+          <NavLink
+            to={"/about"}
+            className={({ isActive }) =>
+              isActive ? " text-green-500 " : "hover:text-green-400"
+            }
+          >
             <FaInfoCircle className="w-8" />
           </NavLink>
         </div>
@@ -67,9 +82,9 @@ const HeaderNav = () => {
           </span>
         </NavLink>
       </nav>
-      <button className="flex lg:py-2 text-sm items-center gap-2 bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full transition">
-        <FaWallet />
-        Connect Wallet
+      <button onClick={connectWallet} className="flex lg:py-2 text-sm items-center gap-2 bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full transition">
+         <FaWallet />
+      {address ? `${address.slice(0, 4)}...${address.slice(-4)}` : "Connect Wallet"}
       </button>
     </header>
   );

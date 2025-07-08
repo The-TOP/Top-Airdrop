@@ -1,16 +1,16 @@
 import React from 'react'
 import {BrowserRouter} from "react-router-dom";
-import { WalletProvider } from "./context/WalletContext";
+import {  Web3Provider } from "./context/Web3Context";
 import AppRoutes from "./routes/AppRoutes";
-
+Web3Provider
 
 const App = () => {
   return (
-      <WalletProvider>
+      <Web3Provider>
       <BrowserRouter>
         <AppRoutes />
       </BrowserRouter>
-    </WalletProvider>
+    </Web3Provider>
   )
 }
 
