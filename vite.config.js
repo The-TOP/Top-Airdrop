@@ -7,7 +7,7 @@ export default defineConfig({
    theme: {
     extend: {
       fontFamily: {
-       sans: ["Orbitron", "cursive"], // custom font
+       sans: ["Exo", "cursive"], // custom font
       },
     },
   }, 
