@@ -9,20 +9,31 @@ import Withdraw from "../pages/Withdraw";
 import Dashboad from "../pages/Dashboad";
 import Tokenomics from "../pages/Tokenomics";
 import About from "../pages/About";
+import PrivateRoute from "../component/Ui/PrivateRoute";
+import { DataProvider } from "../context/DataContext";
 
 export default function AppRoutes() {
   return (
-    <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/dashboard" element={<DashboardLayout />}>
-        <Route index element={<Dashboad />} />
-        <Route path="activity" element={<Activity />} />
-        <Route path="extract" element={<Extract />} />
-        <Route path="tokenomics" element={<Tokenomics />} />
-        <Route path="withdraw" element={<Withdraw />} />
-        <Route path="tasks" element={<Tasks />} />
-      </Route>
-    </Routes>
+    <DataProvider>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/about" element={<About />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <DashboardLayout />
+            </PrivateRoute>
+          }
+        >
+          <Route index element={<Dashboad />} />
+          <Route path="activity" element={<Activity />} />
+          <Route path="extract" element={<Extract />} />
+          <Route path="tokenomics" element={<Tokenomics />} />
+          <Route path="withdraw" element={<Withdraw />} />
+          <Route path="tasks" element={<Tasks />} />
+        </Route>
+      </Routes>
+    </DataProvider>
   );
 }

@@ -47,8 +47,8 @@ const AboutSection = () => {
                 alt="token"
                 className="w-50 md:w-60"
                 initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1}}
-                transition={{ duration: 0.5 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
                 viewport={{ once: true }}
               />
 
@@ -134,9 +134,22 @@ const AboutSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
                 viewport={{ once: true }}
-                className="bg-black/70 flex flex-col items-center justify-center gap-3 pb-16 md:pb-12 border border-zinc-700 rounded-xl p-6 text-center hover:shadow-lg text-white/60 hover:text-white hover:border-white/30 transition-all duration-300"
+                className="bg-black/70 flex flex-col items-center justify-center gap-3 pb-16 md:pb-12 border border-zinc-700 rounded-xl p-6 text-center hover:shadow-lg text-white/60  md:text-white/40 hover:text-white hover:border-white/30 transition-all duration-300"
               >
-                <div className="mb-4">{f.icon}</div>
+                <motion.div
+                  initial={{ scale: 0.7,  }}
+                  whileInView={{ scale: [0.7, 1] }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    delay: 0.5,
+                    ease: "linear",
+                  }}
+                  className="mb-4"
+                >
+                  {f.icon}
+                </motion.div>
                 <h4 className="md:text-md font-semibold mb-2">{f.title}</h4>
                 <p className="text-sm leading-relaxed">{f.desc}</p>
               </motion.div>

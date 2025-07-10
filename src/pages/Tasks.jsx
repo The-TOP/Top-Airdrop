@@ -84,7 +84,7 @@ const Tasks = () => {
           );
         }}
         Icon={FaCopy}
-        buttonLabel={"claim"}
+        buttonLabel={"copy"}
         borderstyle={"rounded-b-xl"}
       />
       <div className="p-1 ps-2">

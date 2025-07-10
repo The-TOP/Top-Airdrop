@@ -11,16 +11,28 @@ import {
 } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { FaSquareYoutube } from "react-icons/fa6";
 
 const FooterSection = () => {
+  const { publicKey, connect, disconnect, connected } = useWallet();
+
   return (
     <footer
       className=" text-white px-4 sm:px-8 md:px- py-6 md:py-12 relative  "
-      style={{ backgroundImage: `url(${footbg1})`,backgroundSize:"cover",backgroundRepeat:"no-repeat" }}
+      style={{
+        backgroundImage: `url(${footbg1})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
     >
       <div
         className="border border-white/20 rounded-br-4xl md:rounded-br-[100px] border-t-0 rounded-tl-4xl md:rounded-tl-[100px] px-4 sm:px-8 md:px-16 md:py-12 py-2 max-w-7xl mx-auto"
-        style={{ backgroundImage: `url(${footbg2})`,backgroundSize:"cover",backgroundRepeat:"no-repeat"  }}
+        style={{
+          backgroundImage: `url(${footbg2})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
       >
         {/* Top Call-to-Action */}
         <div className="bg-radial from-green-400 to-green-900 text-black p-6 md:mt-4 mt-14 sm:p-10 rounded-2xl mb-10 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -32,12 +44,14 @@ const FooterSection = () => {
           </div>
 
           <div className="flex items-center gap-4 md:gap-6 flex-shrink-0">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium"
-            >
-              Connect Wallet
-            </motion.button>
+            {!connected && (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium"
+              >
+                Connect Wallet
+              </motion.button>
+            )}
 
             <div className="flex items-center gap-6 text-sm text-white/70">
               <motion.button
@@ -86,17 +100,28 @@ const FooterSection = () => {
 
             {/* Right Social Icons */}
             <div className="flex gap-4 text-white/70">
-              <Link to={"#"}>
+              <Link
+                target="_blank"
+                to={" https://www.facebook.com/share/1BGLMMAAQN/"}
+              >
                 <FaFacebookF className="hover:text-white" />
               </Link>
-              <Link to={"#"}>
+              <Link target="_blank" to={"#"}>
                 <FaTwitter className="hover:text-white" />
               </Link>
-              <Link to={"#"}>
+              <Link
+                target="_blank"
+                to={
+                  " https://www.instagram.com/thetopxchange?igsh=YndwaHNjcjRpM21p"
+                }
+              >
                 <FaInstagram className="hover:text-white" />
               </Link>
-              <Link to={"#"}>
-                <FaLinkedinIn className="hover:text-white" />
+              <Link
+                target="_blank"
+                to={"https://youtube.com/@topxchange?feature=shared"}
+              >
+                <FaSquareYoutube className="hover:text-white" />
               </Link>
             </div>
           </div>

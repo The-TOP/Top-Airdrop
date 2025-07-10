@@ -37,7 +37,13 @@ const SocialtaskCard = ({
             "Done"
           ) : (
             <p className="flex gap-1 items-center justify-center p-1">
-              {Icon && <Icon className="text-white/50" />}{" "}
+            {/*   (
+              {loading ? (
+                <Icon className="text-white/50" />
+              ) : (
+                <Icon className="text-white/50" />
+              )}
+              ) */}
               <span className=""> {buttonLabel}</span>
             </p>
           )}

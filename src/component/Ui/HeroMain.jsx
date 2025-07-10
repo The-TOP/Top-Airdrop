@@ -14,11 +14,16 @@ import {
   FaLinkedinIn,
   FaRegClock,
   FaTwitter,
+  FaYoutube,
+ 
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { FaInstagram } from "react-icons/fa6";
+import { FaInstagram, FaSquareYoutube} from "react-icons/fa6";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const HeroMain = () => {
+  const {  connected } = useWallet();
+
   return (
     <div className="text-center">
       {/* //// Top ///// */}
@@ -49,12 +54,12 @@ const HeroMain = () => {
               </p>
 
               <div className="flex  justify-center items-center gap-6 mt-10 mb-6">
-                <motion.button
+                {  !connected && <motion.button
                   whileHover={{ scale: 1.05 }}
                   className=" border border-green-500 text-white px-3 py-2 rounded-full text-sm font-medium"
                 >
                   Connect Wallet
-                </motion.button>
+                </motion.button>}
 
                 <div className="flex items-center gap-6 text-sm ">
                   <motion.button
@@ -126,17 +131,17 @@ const HeroMain = () => {
             <div className="md:flex-2 flex mt-4 justify-center  md:items-center items-start gap-3">
               <div className="flex flex-col items-center justify-center gap-1 mt-4">
                 <div className="flex gap-4 text-white/70">
-                  <Link to={"#"}>
+                  <Link target="_blank" to={" https://www.facebook.com/share/1BGLMMAAQN/"}>
                     <FaFacebookF className="hover:text-white" />
                   </Link>
-                  <Link to={"#"}>
+                  <Link target="_blank" to={"#"}>
                     <FaTwitter className="hover:text-white" />
                   </Link>
-                  <Link to={"#"}>
+                  <Link target="_blank" to={" https://www.instagram.com/thetopxchange?igsh=YndwaHNjcjRpM21p"}>
                     <FaInstagram className="hover:text-white" />
                   </Link>
-                  <Link to={"#"}>
-                    <FaLinkedinIn className="hover:text-white" />
+                  <Link target="_blank" to={"https://youtube.com/@topxchange?feature=shared"}>
+                    <FaSquareYoutube className="hover:text-white" />
                   </Link>
                 </div>
                 <p className="text-sm">@top_protocol</p>

@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaHome, FaInfoCircle, FaUserAlt, FaWallet } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
 import { Link, NavLink } from "react-router-dom";
 import mainLogo from "../../img/MainLogo.png";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
 const HeaderNav = () => {
+  const { publicKey, connected } = useWallet();
+  const { connection } = useConnection();
+
   return (
     <header className="flex items-center justify-between px-6 md:px-16 py-3 md:py-5 border-b border-gray-800 bg-black/30 backdrop-blur">
       <div className="">
@@ -78,17 +83,57 @@ const HeaderNav = () => {
           </span>
         </NavLink>
       </nav>
-      <button
-        /* onClick={connectWallet} */
+
+      {/* <button
+          onClick={connectWallet} 
         className="flex lg:py-2 text-sm items-center gap-2 bg-green-500 hover:bg-green-600 text-black px-4 py-1.5 rounded-full transition"
       >
-        <FaWallet /> Connect Wallet{" "}
-        {/* 
-      {address ? `${address.slice(0, 4)}...${address.slice(-4)}` : "Connect Wallet"}
-       */}
-      </button>
+        <FaWallet />
+        Connect Wallet
+           {address
+          ? `${address.slice(0, 4)}...${address.slice(-4)}`
+          : "Connect Wallet"} 
+      </button> */}
+
+      <div className="rounded-full text-green-400 ">
+        <WalletMultiButton />
+      </div>
     </header>
   );
 };
 
 export default HeaderNav;
+
+/* 
+import { useWallet } from "@solana/wallet-adapter-react";
+
+const CustomConnectButton = () => {
+  const { publicKey, connect, disconnect, connected } = useWallet();
+
+  return (
+  <div>
+    <button
+      onClick={connected ? disconnect : connect}
+      className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-500"
+    >
+      {connected ? "Disconnect Wallet" : "Connect Wallet"}
+    </button> 
+    {connected && (
+          <p className="mt-4 text-green-400">
+            Connected: {publicKey.toBase58()}
+          </p>
+        )}
+          
+        const handleDisconnect = async () => {
+    try {
+      await disconnect(); // disconnect the wallet
+      console.log("Wallet disconnected");
+    } catch (error) {
+      console.error("Failed to disconnect wallet:", error);
+    }
+  };</div>
+  );
+
+
+
+}; */

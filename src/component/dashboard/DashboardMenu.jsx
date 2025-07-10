@@ -5,10 +5,14 @@ import miniLogo from "../../img/miniLogo.png";
 import mainLogo from "../../img/MainLogo.png";
 import { FiGift, FiDollarSign, FiHome, FiClock } from "react-icons/fi";
 import { FaChartLine, FaSquare } from "react-icons/fa6";
+import { useContext } from "react";
+import DataContext from "../../context/DataContext";
 
 const DashboardMenu = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { setOndashboard } = useContext(DataContext);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [collapsed, setCollapsed] = useState(window.innerWidth < 768);
@@ -21,6 +25,7 @@ const DashboardMenu = () => {
       setIsMobile(mobile);
       setCollapsed(mobile);
     };
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -87,12 +92,18 @@ const DashboardMenu = () => {
             },
           }}
         >
-          <div className={`mb-8 md:mb-12 md:mt-6 md:ms-4 ${!collapsed && "ms-1 "}`}>
-          <Link to={"/"}><img
+          <div
+            className={`mb-8 md:mb-12 md:mt-6 md:ms-4 ${!collapsed && "ms-1 "}`}
+          >
+            <img
               src={collapsed ? miniLogo : mainLogo}
               alt="logo"
+              onClick={() => {
+                setOndashboard(true);
+                navigate("/");
+              }}
               className={`${collapsed ? "w-8 mx-auto mt-3 md:mt-5  " : "w-30"}`}
-            /></Link> 
+            />
           </div>
 
           {menuItems.map((item) => (
@@ -115,14 +126,18 @@ const DashboardMenu = () => {
             >
               {!collapsed && item.label}
             </MenuItem>
-          ))} 
+          ))}
         </Menu>
       </Sidebar>
 
       {/* Main content */}
       <main className="flex-1 bg-black/94 py-4 overflow-y-auto relative pt-18 md:pt-24">
         <div className=" -ms-5  bg-black fixed text-white  w-full top-0 py-6 md:py-0 md:h-1/8  border-white/20 border-b-3 border-dotted">
-          <img src={mainLogo} alt="" className="fixed right-10 w-20 top-4 md:top-6" />
+          <img
+            src={mainLogo}
+            alt=""
+            className="fixed right-10 w-20 top-4 md:top-6"
+          />
         </div>
 
         <Outlet />
