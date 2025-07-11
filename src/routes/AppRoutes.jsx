@@ -11,6 +11,7 @@ import Tokenomics from "../pages/Tokenomics";
 import About from "../pages/About";
 import PrivateRoute from "../component/Ui/PrivateRoute";
 import { DataProvider } from "../context/DataContext";
+import ExamplePage from "../pages/ExamplePage";
 
 export default function AppRoutes() {
   return (
@@ -18,6 +19,7 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/about" element={<About />} />
+        <Route path="/example" element={<ExamplePage />} />
         <Route
           path="/dashboard"
           element={

@@ -9,20 +9,21 @@ import heroMain from "../../img/heroMain.png";
 import contactball from "../../img/contactball.png";
 import { motion } from "framer-motion";
 import { FiArrowUpRight } from "react-icons/fi";
+
 import {
   FaFacebookF,
   FaLinkedinIn,
   FaRegClock,
   FaTwitter,
   FaYoutube,
- 
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { FaInstagram, FaSquareYoutube} from "react-icons/fa6";
+import { FaInstagram, FaSquareYoutube } from "react-icons/fa6";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 const HeroMain = () => {
-  const {  connected } = useWallet();
+  const { connected } = useWallet();
 
   return (
     <div className="text-center">
@@ -54,12 +55,14 @@ const HeroMain = () => {
               </p>
 
               <div className="flex  justify-center items-center gap-6 mt-10 mb-6">
-                {  !connected && <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  className=" border border-green-500 text-white px-3 py-2 rounded-full text-sm font-medium"
-                >
-                  Connect Wallet
-                </motion.button>}
+                {!connected && (
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    className=" border border-green-500 text-white px-3 py-2 rounded-full text-sm font-medium"
+                  >
+                    Connect Wallet
+                  </motion.button>
+                )}
 
                 <div className="flex items-center gap-6 text-sm ">
                   <motion.button
@@ -131,16 +134,27 @@ const HeroMain = () => {
             <div className="md:flex-2 flex mt-4 justify-center  md:items-center items-start gap-3">
               <div className="flex flex-col items-center justify-center gap-1 mt-4">
                 <div className="flex gap-4 text-white/70">
-                  <Link target="_blank" to={" https://www.facebook.com/share/1BGLMMAAQN/"}>
+                  <Link
+                    target="_blank"
+                    to={" https://www.facebook.com/share/1BGLMMAAQN/"}
+                  >
                     <FaFacebookF className="hover:text-white" />
                   </Link>
                   <Link target="_blank" to={"#"}>
                     <FaTwitter className="hover:text-white" />
                   </Link>
-                  <Link target="_blank" to={" https://www.instagram.com/thetopxchange?igsh=YndwaHNjcjRpM21p"}>
+                  <Link
+                    target="_blank"
+                    to={
+                      " https://www.instagram.com/thetopxchange?igsh=YndwaHNjcjRpM21p"
+                    }
+                  >
                     <FaInstagram className="hover:text-white" />
                   </Link>
-                  <Link target="_blank" to={"https://youtube.com/@topxchange?feature=shared"}>
+                  <Link
+                    target="_blank"
+                    to={"https://youtube.com/@topxchange?feature=shared"}
+                  >
                     <FaSquareYoutube className="hover:text-white" />
                   </Link>
                 </div>
@@ -158,12 +172,12 @@ const HeroMain = () => {
             </div>
 
             {/*  image */}
-            <div className="flex-3 hidden md:flex justify-center items-center ">
-              <motion.img
-                src={heroMain}
-                alt="hero image"
-                className="w-4/5"
-              
+            <div className="flex-3 hidden md:flex justify-center  items-center z-20 ">
+              <DotLottieReact
+                src="https://lottie.host/98a67277-2f13-459c-b371-7a18eb6e0149/C3sz1rV4ez.lottie"
+                loop
+                autoplay
+                className="scale-250 "
               />
             </div>
 
@@ -175,7 +189,7 @@ const HeroMain = () => {
                 </span>
                 <span className="">Distribution Countdown </span>
               </p>
-              <p className="mt-3 md:border  md:bg-black/30 border-white/30 rounded-br-4xl  md:rounded-br-[40px] border-b-white/10 rounded-tl-4xl md:rounded-tl-[40px] text-2xl md:text-3xl text-white font-semibold p-3 ">
+              <p className="mt-3 md:border  md:bg-black/30 border-white/30 rounded-br-4xl  md:rounded-br-[30px] border-b-white/10 rounded-tl-4xl md:rounded-tl-[30px] text-2xl md:text-3xl text-white font-semibold p-3 ">
                 5D : 18H <span className="text-green-500">: 14M</span>
               </p>
             </div>
