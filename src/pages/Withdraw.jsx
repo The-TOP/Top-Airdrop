@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 import top from "../img/miniLogo.png";
+import WithdrawModal from "../modal/WithdrawModal";
 
 const Withdraw = () => {
   const [withdraw, setWithdraw] = useState("");
+  const [openWithdrawModal, setopenWithdrawModal] = useState(false);
 
   const handleWithdraw = () => {
+    setopenWithdrawModal(true)
     console.log("withdraw Transaction Details:", {
       withdraw,
       wallet: "Cxa99...8a1c5",
@@ -18,7 +21,7 @@ const Withdraw = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="max-w-3xl mx-auto p-3 md:p-6 pb-10 text-white"
+      className=" p-3 md:p-6 pb-10 text-white"
     >
       <div className="bg-white/2 mt-3 mb-1 p-2 pt-3 py-1 rounded-t-2xl ">
         <h2 className=" text-white font-stretch-condensed text-lg md:text-xl font-semibold tracking-wide mb-3">
@@ -52,7 +55,7 @@ const Withdraw = () => {
               id="withdraw"
               value={withdraw}
               onChange={(e) => setWithdraw(e.target.value)}
-              className="w-full placeholder:text-xs bg-black/60 mb-6  flex items-center px-4 py-3 justify-between border-white/20 border rounded-tl-xl rounded-br-xl  text-white  pl-4 pr-20 focus:outline-none focus:border-green-400/40"
+              className="w-full placeholder:text-xs bg-black/60 mb-6  text-sm flex items-center px-4 py-3 justify-between border-white/20 border rounded-tl-xl rounded-br-xl  text-white  pl-4 pr-20 focus:outline-none focus:border-green-400/40"
             />
             <div className="absolute right-4 top-1/2 -translate-y-1/2  px-3 py-1 text-xs font-bold rounded-full text-black">
               <div className="flex gap-1 justify-center items-center p-1 px-2 rounded-2xl bg-white/20">
@@ -69,7 +72,7 @@ const Withdraw = () => {
         </div>
 
         {/* Transaction Info */}
-        <div className="space-y-3 text-sm text-gray-300">
+        <div className="space-y-3 text-xs text-gray-300">
           <div className="flex justify-between">
             <span>Transaction Type:</span>
             <span className="font-medium text-white">Withdrawal</span>
@@ -105,6 +108,7 @@ const Withdraw = () => {
           </button>
         </div>
       </div>
+      <WithdrawModal isOpen={openWithdrawModal} onClose={setopenWithdrawModal} withdrawAmount={withdraw} />
     </motion.div>
   );
 };

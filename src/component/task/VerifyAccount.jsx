@@ -18,18 +18,22 @@ const VerifyAccount = ({
       </label>
       <div className="flex  max-w-3xl items-center text-xs gap-3 ">
         <input
-          type="text"
-          placeholder="Link your email to your account"
+          type="email"
+          placeholder={
+            buttonDisabled ? userEmail : "Link your email to your account"
+          }
           name="verifyaccount"
           id="verifyaccount"
           value={userEmail}
+          /* disabled={buttonDisabled} */
           onChange={(e) => setUserEmail(e.target.value)}
-          className="w-full placeholder:text-xs bg-black/60 flex items-center px-4 py-3 justify-between border-white/20 border rounded-tl-xl rounded-br-xl  text-white    pl-4 pr-20 focus:outline-none focus:border-green-400/40"
+          required
+          className="w-full max-w-xl placeholder:text-xs bg-black/60 flex items-center px-4 py-3 justify-between border-white/20 border rounded-tl-xl rounded-br-xl  text-white    pl-4 pr-20 focus:outline-none focus:border-green-400/40"
         />
 
         <motion.button
           whileTap={{ scale: 0.95 }}
-          className={`px-2  rounded-full text-xs border ${
+          className={`px-3  rounded-full text-xs border ${
             buttonDisabled
               ? "bg-white/10 border-white/30 text-white/30 py-1 cursor-not-allowed"
               : "border-green-500/40  bg-black/70 text-white hover:bg-white/10"

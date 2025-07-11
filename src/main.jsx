@@ -3,6 +3,10 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import "@solana/wallet-adapter-react-ui/styles.css";
 import App from "./App.jsx";
+// Buffer polyfill
+import { Buffer } from "buffer";
+globalThis.Buffer = Buffer;
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

@@ -7,6 +7,7 @@ import { FiGift, FiDollarSign, FiHome, FiClock } from "react-icons/fi";
 import { FaChartLine, FaSquare } from "react-icons/fa6";
 import { useContext } from "react";
 import DataContext from "../../context/DataContext";
+import Dashheader from "./Dashheader";
 
 const DashboardMenu = () => {
   const navigate = useNavigate();
@@ -102,7 +103,7 @@ const DashboardMenu = () => {
                 setOndashboard(true);
                 navigate("/");
               }}
-              className={`${collapsed ? "w-8 mx-auto mt-3 md:mt-5  " : "w-30"}`}
+              className={`${collapsed ? "w-7 ms-5  mt-4 md:mt-5  " : "w-30"}`}
             />
           </div>
 
@@ -133,11 +134,12 @@ const DashboardMenu = () => {
       {/* Main content */}
       <main className="flex-1 bg-black/94 py-4 overflow-y-auto relative pt-18 md:pt-24">
         <div className=" -ms-5  bg-black fixed text-white  w-full top-0 py-6 md:py-0 md:h-1/8  border-white/20 border-b-3 border-dotted">
-          <img
+          {/*  <img
             src={mainLogo}
             alt=""
             className="fixed right-10 w-20 top-4 md:top-6"
-          />
+          /> */}
+          <Dashheader xstyle={"fixed -right-4 md:right-3 md:w-60 top-2 md:top-5 scale-75 md:scale-100"} />
         </div>
 
         <Outlet />

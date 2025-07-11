@@ -6,6 +6,8 @@ import token from "../img/miniLogo.png";
 import VerifyAccount from "../component/task/VerifyAccount";
 import { motion } from "framer-motion";
 import { FaCopy } from "react-icons/fa6";
+import AirdropModal from "../modal/AirdropModal";
+import EmailModal from "../modal/EmailModal";
 
 const Tasks = () => {
   const [claimed, setClaimed] = useState({
@@ -15,15 +17,23 @@ const Tasks = () => {
     telegram: false,
     discord: false,
     youtube: false,
+    email: false,
   });
   const [userEmail, setUserEmail] = useState("");
+  const [OpenAirdropModal, setOpenAirdropModal] = useState(false);
+  const [OpenEmailModal, setOpenEmailModal] = useState(false);
+
+  const [trackLoading, setTrackLoading] = useState(false);
+  const [trackLoading2, setTrackLoading2] = useState(false);
+  const [trackLoading3, setTrackLoading3] = useState(false);
+  const [trackLoading4, setTrackLoading4] = useState(false);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="max-w-3xl mx-auto p-3 md:p-6 pb-10 text-white"
+      className=" p-3 md:p-6 pb-10 text-white"
     >
       <div className="bg-white/2 mt-3 mb-1 p-2 pt-3 py-1 rounded-t-2xl ">
         <h2 className=" text-white font-stretch-condensed text-base font-semibold tracking-wide mb-3">
@@ -40,8 +50,7 @@ const Tasks = () => {
         title={"Welcome Airdrop"}
         description={"Get rewarded just for joining as a new user"}
         buttonDisabled={claimed.airdrop}
-        onButtonClick={() => {}}
-        Icon={""}
+        onButtonClick={() => setOpenAirdropModal(true)}
         buttonLabel={"claim"}
         borderstyle={"rounded-b-xl"}
       />
@@ -59,7 +68,7 @@ const Tasks = () => {
         userEmail={userEmail}
         setUserEmail={setUserEmail}
         buttonDisabled={claimed.account}
-        onButtonClick={() => console.log(userEmail)}
+        onButtonClick={() => setOpenEmailModal(true)}
         Icon={LuCircleArrowOutUpRight}
         buttonLabel={"Go"}
         borderstyle={"rounded-t-xl"}
@@ -101,10 +110,17 @@ const Tasks = () => {
         description={"Follow TOP on Twitter (X)"}
         img={""}
         buttonDisabled={claimed.twitter}
-        onButtonClick={() => {}}
+        onButtonClick={() => {
+          setTrackLoading(true);
+          setTimeout(() => {
+            setTrackLoading(false);
+            setClaimed((prev) => ({ ...prev, twitter: true }));
+          }, 5000);
+        }}
         Icon={LuCircleArrowOutUpRight}
         buttonLabel={"Go"}
         borderstyle={"rounded-t-xl"}
+        trackLoading={trackLoading}
       />
       <SocialtaskCard
         textcolor={"text-white/80"}
@@ -112,10 +128,17 @@ const Tasks = () => {
         description={"Join the Telegram Community"}
         img={""}
         buttonDisabled={claimed.telegram}
-        onButtonClick={() => {}}
+        onButtonClick={() => {
+          setTrackLoading2(true);
+          setTimeout(() => {
+            setTrackLoading2(false);
+            setClaimed((prev) => ({ ...prev, telegram: true }));
+          }, 5000);
+        }}
         Icon={LuCircleArrowOutUpRight}
         buttonLabel={"Go"}
         borderstyle={""}
+        trackLoading={trackLoading2}
       />
       <SocialtaskCard
         textcolor={"text-white/80"}
@@ -123,10 +146,17 @@ const Tasks = () => {
         description={"Join the Discord Community"}
         img={""}
         buttonDisabled={claimed.discord}
-        onButtonClick={() => {}}
+       onButtonClick={() => {
+          setTrackLoading3(true);
+          setTimeout(() => {
+            setTrackLoading3(false);
+            setClaimed((prev) => ({ ...prev, discord: true }));
+          }, 5000);
+        }}
         Icon={LuCircleArrowOutUpRight}
         buttonLabel={"Go"}
         borderstyle={""}
+        trackLoading={trackLoading3}
       />
       <SocialtaskCard
         textcolor={"text-white/80"}
@@ -134,21 +164,32 @@ const Tasks = () => {
         description={"Subscribe to Youtube channel"}
         img={""}
         buttonDisabled={claimed.youtube}
-        onButtonClick={() => {}}
+       onButtonClick={() => {
+          setTrackLoading4(true);
+          setTimeout(() => {
+            setTrackLoading4(false);
+            setClaimed((prev) => ({ ...prev, youtube: true }));
+          }, 5000);
+        }}
         Icon={LuCircleArrowOutUpRight}
         buttonLabel={"Go"}
         borderstyle={"rounded-b-xl"}
+        trackLoading={trackLoading4}
+      />
+
+      <AirdropModal
+        isOpen={OpenAirdropModal}
+        onClose={setOpenAirdropModal}
+        setClaimed={setClaimed}
+      />
+      <EmailModal
+        isOpen={OpenEmailModal}
+        onClose={setOpenEmailModal}
+        setClaimed={setClaimed}
+        email={userEmail}
+        setMail={setUserEmail}
       />
     </motion.div>
-
-    /*  <TaskCard
-        title="Welcome Airdrop"
-        description="Get rewarded just for joining as a new user"
-        showButton={true}
-        buttonLabel="Claim"
-        buttonDisabled={claimed}
-        onButtonClick={() => setClaimed(true)}
-      />*/
   );
 };
 

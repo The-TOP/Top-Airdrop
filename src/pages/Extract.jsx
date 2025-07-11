@@ -4,6 +4,7 @@ import { FaArrowDown, FaCheckCircle, FaInfoCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FaGem } from "react-icons/fa6";
 import top from "../img/miniLogo.png";
+import ExtractModal from "../modal/ExtractModal";
 
 const Extract = () => {
   const navigate = useNavigate();
@@ -12,8 +13,10 @@ const Extract = () => {
   const [toAmount, setToAmount] = useState("");
   const [fromToken, setFromToken] = useState("USDT");
   const [toToken, setToToken] = useState("$TOP");
+  const [OpenExtractModal, setOpenExtractModal] = useState(false);
 
   const handleProceed = () => {
+    setOpenExtractModal(true);
     console.log("Extract Transaction Details:", {
       fromAmount,
       fromToken,
@@ -26,7 +29,7 @@ const Extract = () => {
 
   return (
     <motion.div
-      className=" p-1 md:p-6 pb-10  min-h-screen"
+      className=" p-3 md:p-6 pb-10  min-h-screen"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
@@ -41,7 +44,7 @@ const Extract = () => {
         </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row  gap-4 ">
+      <div className="flex flex-col-reverse lg:flex-row  gap-4 ">
         <div className="flex-1   rounded-xl shadow-md">
           {/* Left Section */}
           <p className="text-zinc-400 rounded-b-lg bg-white/5 py-1 px-2 text-sm mb-2">
@@ -87,7 +90,7 @@ const Extract = () => {
                 placeholder="Enter Amount"
                 value={fromAmount}
                 onChange={(e) => setFromAmount(e.target.value)}
-                className="bg-transparent text-white placeholder-zinc-500 focus:outline-none w-full"
+                className="bg-transparent text-white placeholder-zinc-500 text-sm focus:outline-none w-full"
               />
               <div className="flex items-center gap-2 text-white font-medium text-xs ">
                 <div className="flex gap-1 justify-center items-center p-1 px-2 rounded-2xl bg-white/20">
@@ -151,7 +154,7 @@ const Extract = () => {
                 id="toAmount"
                 value={toAmount}
                 onChange={(e) => setToAmount(e.target.value)}
-                className="bg-transparent text-white placeholder-zinc-500 focus:outline-none w-full"
+                className="bg-transparent text-white placeholder-zinc-500  text-sm focus:outline-none w-full"
               />
               <div className="flex items-center gap-2 text-white font-medium text-xs ">
                 <div className="flex gap-1 justify-center items-center p-1 px-4 rounded-2xl bg-white/20">
@@ -162,9 +165,7 @@ const Extract = () => {
             </div>
           </div>
 
-         
-
-          <div className="text-base text-zinc-400 mb-1">
+          <div className="text-sm text-zinc-400 mb-1">
             <p className=" flex  pe-4 justify-between items-center p-1">
               Transaction Type: <span className="text-white">Extraction</span>
             </p>
@@ -192,17 +193,17 @@ const Extract = () => {
           <p className="text-zinc-400 rounded-b-lg bg-white/5 py-1 px-2 text-sm mb-2 hidden lg:block">
             Swap Breakdown
           </p>
-          <div className=" p-6 rounded-b-lg shadow-md">
+          <div className=" lg:p-6 pt-8 lg;pt-6 rounded-b-lg shadow-md">
             <h3 className=" capitalize tracking-wide bg-black  rounded-full p-1 px-2 md:p-3 md:py-3 shadow-inner shadow-green-600 mx-auto text-white text-center text-md md:text-lg mb-4 mt-1 ">
               Burn Mechanism
             </h3>
-            <p className="text-zinc-400 text-sm mb-6 leading-6">
+            <p className="p-1  text-zinc-400 text-sm mb-6 leading-6">
               When you use the Extract function to trade in your dead or
               inactive tokens for $TOP, those old tokens don’t get recycled —
               they’re permanently burned. The equivalent value of your desired
               token/asset is transferred instantly to your wallet.
             </p>
-            <div className="space-y-3 text-sm text-zinc-300">
+            <div className="space-y-3 text-xs text-zinc-300">
               <h3 className="flex items-center text-lg tracking-wide gap-2 ">
                 {" "}
                 <FaInfoCircle className="text-green-400" />
@@ -228,6 +229,14 @@ const Extract = () => {
           </div>
         </div>
       </div>
+      <ExtractModal
+        isOpen={OpenExtractModal}
+        onClose={setOpenExtractModal}
+        fromAmount={fromAmount}
+        toAmount={toAmount}
+        fromToken={fromAmount}
+        toToken={toToken}
+      />
     </motion.div>
   );
 };

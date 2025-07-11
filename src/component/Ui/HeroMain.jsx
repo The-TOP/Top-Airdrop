@@ -21,6 +21,8 @@ import { Link } from "react-router-dom";
 import { FaInstagram, FaSquareYoutube } from "react-icons/fa6";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import animationData from "../../assets/animation.json";
+import Lottie from "lottie-react";
 
 const HeroMain = () => {
   const { connected } = useWallet();
@@ -64,10 +66,10 @@ const HeroMain = () => {
                   </motion.button>
                 )}
 
-                <div className="flex items-center gap-6 text-sm ">
+                <div className="flex items-center gap-6 text-sm  z-20">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
-                    className="text-green-400 flex items-center gap-2 font-semibold"
+                    className="text-green-400 cursor-pointer flex items-center gap-2 font-semibold"
                   >
                     <span>Claim Now </span>
                     <span className="rounded-full p-1 border-green-400 border bg-black text-green-500">
@@ -172,13 +174,20 @@ const HeroMain = () => {
             </div>
 
             {/*  image */}
-            <div className="flex-3 hidden md:flex justify-center  items-center z-20 ">
-              <DotLottieReact
+            <div className="flex-3 hidden md:flex justify-center  items-center  ">
+              
+              <Lottie
+                animationData={animationData}
+                loop={true}
+                autoplay={true}
+                 className="scale-120 -mt-28 "
+              />
+             {/*  <DotLottieReact
                 src="https://lottie.host/98a67277-2f13-459c-b371-7a18eb6e0149/C3sz1rV4ez.lottie"
                 loop
                 autoplay
                 className="scale-250 "
-              />
+              /> */}
             </div>
 
             {/* time */}
