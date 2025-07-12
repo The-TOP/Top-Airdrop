@@ -6,7 +6,7 @@ import {
   FaTimes,
   FaWallet,
 } from "react-icons/fa";
-import miniLogo from "../img/MIniLogo.png";
+import miniLogo from "../img/MiniLogo.png";
 import congrats from "../img/congratsAirdrop.png";
 
 const AirdropModal = ({ isOpen, onClose, setClaimed }) => {
