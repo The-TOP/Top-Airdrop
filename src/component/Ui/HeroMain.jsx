@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import heroTop from "../../img/heroTop.png";
 import heroDown from "../../img/heroDown.png";
 import Tokenimg from "../../img/tokenimg.png";
@@ -10,22 +10,15 @@ import contactball from "../../img/contactball.png";
 import { motion } from "framer-motion";
 import { FiArrowUpRight } from "react-icons/fi";
 
-import {
-  FaFacebookF,
-  FaLinkedinIn,
-  FaRegClock,
-  FaTwitter,
-  FaYoutube,
-} from "react-icons/fa";
+import { FaFacebookF, FaRegClock, FaTwitter } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaSquareYoutube } from "react-icons/fa6";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import animationData from "../../assets/animation.json";
-import Lottie from "lottie-react";
+import DataContext from "../../context/DataContext";
 
 const HeroMain = () => {
   const { connected } = useWallet();
+  const {days, hours, minutes } = useContext(DataContext)
 
   return (
     <div className="text-center">
@@ -175,14 +168,16 @@ const HeroMain = () => {
 
             {/*  image */}
             <div className="flex-3 hidden md:flex justify-center  items-center  ">
-              
-              <Lottie
+              <div className="flex-3 hidden md:flex justify-center items-center ">
+                <motion.img src={heroMain} alt="hero image" className="w-4/5" />
+              </div>
+              {/*   <Lottie
                 animationData={animationData}
                 loop={true}
                 autoplay={true}
                  className="scale-120 -mt-28 "
-              />
-             {/*  <DotLottieReact
+              /> */}
+              {/*  <DotLottieReact
                 src="https://lottie.host/98a67277-2f13-459c-b371-7a18eb6e0149/C3sz1rV4ez.lottie"
                 loop
                 autoplay
@@ -198,8 +193,8 @@ const HeroMain = () => {
                 </span>
                 <span className="">Distribution Countdown </span>
               </p>
-              <p className="mt-3 md:border  md:bg-black/30 border-white/30 rounded-br-4xl  md:rounded-br-[30px] border-b-white/10 rounded-tl-4xl md:rounded-tl-[30px] text-2xl md:text-3xl text-white font-semibold p-3 ">
-                5D : 18H <span className="text-green-500">: 14M</span>
+              <p className="mt-3  md:border  md:bg-black/30 border-white/30 rounded-br-4xl  md:rounded-br-[30px] border-b-white/10 rounded-tl-4xl md:rounded-tl-[30px] text-2xl md:text-3xl text-white font-semibold p-4 ">
+                {days} D : {hours} H <span className="text-green-500">: {minutes} M</span>
               </p>
             </div>
           </div>

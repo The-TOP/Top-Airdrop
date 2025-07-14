@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import TaskCard from "../component/task/TaskCard";
 import SocialtaskCard from "../component/task/SocialtaskCard";
 import { LuCircleArrowOutUpRight } from "react-icons/lu";
-import token from "../img/miniLogo.png";
 import VerifyAccount from "../component/task/VerifyAccount";
 import { motion } from "framer-motion";
-import { FaCopy } from "react-icons/fa6";
+import { FaCopy, FaSquareXTwitter } from "react-icons/fa6";
 import AirdropModal from "../modal/AirdropModal";
 import EmailModal from "../modal/EmailModal";
+import { FaDiscord, FaTelegram, FaYoutube } from "react-icons/fa";
 
 const Tasks = () => {
   const [claimed, setClaimed] = useState({
@@ -108,7 +107,6 @@ const Tasks = () => {
         textcolor={"text-white/80"}
         title={"Twitter (X)"}
         description={"Follow TOP on Twitter (X)"}
-        img={""}
         buttonDisabled={claimed.twitter}
         onButtonClick={() => {
           setTrackLoading(true);
@@ -117,7 +115,7 @@ const Tasks = () => {
             setClaimed((prev) => ({ ...prev, twitter: true }));
           }, 5000);
         }}
-        Icon={LuCircleArrowOutUpRight}
+        Icon={FaSquareXTwitter}
         buttonLabel={"Go"}
         borderstyle={"rounded-t-xl"}
         trackLoading={trackLoading}
@@ -126,7 +124,6 @@ const Tasks = () => {
         textcolor={"text-white/80"}
         title={"Telegram"}
         description={"Join the Telegram Community"}
-        img={""}
         buttonDisabled={claimed.telegram}
         onButtonClick={() => {
           setTrackLoading2(true);
@@ -135,7 +132,7 @@ const Tasks = () => {
             setClaimed((prev) => ({ ...prev, telegram: true }));
           }, 5000);
         }}
-        Icon={LuCircleArrowOutUpRight}
+        Icon={FaTelegram}
         buttonLabel={"Go"}
         borderstyle={""}
         trackLoading={trackLoading2}
@@ -144,7 +141,6 @@ const Tasks = () => {
         textcolor={"text-white/80"}
         title={"Discord"}
         description={"Join the Discord Community"}
-        img={""}
         buttonDisabled={claimed.discord}
        onButtonClick={() => {
           setTrackLoading3(true);
@@ -153,7 +149,7 @@ const Tasks = () => {
             setClaimed((prev) => ({ ...prev, discord: true }));
           }, 5000);
         }}
-        Icon={LuCircleArrowOutUpRight}
+        Icon={FaDiscord}
         buttonLabel={"Go"}
         borderstyle={""}
         trackLoading={trackLoading3}
@@ -162,7 +158,6 @@ const Tasks = () => {
         textcolor={"text-white/80"}
         title={"Youtube"}
         description={"Subscribe to Youtube channel"}
-        img={""}
         buttonDisabled={claimed.youtube}
        onButtonClick={() => {
           setTrackLoading4(true);
@@ -171,7 +166,7 @@ const Tasks = () => {
             setClaimed((prev) => ({ ...prev, youtube: true }));
           }, 5000);
         }}
-        Icon={LuCircleArrowOutUpRight}
+        Icon={FaYoutube}
         buttonLabel={"Go"}
         borderstyle={"rounded-b-xl"}
         trackLoading={trackLoading4}

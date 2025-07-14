@@ -8,7 +8,7 @@ body {
   background-color: #22c55e86 !important; /* Tailwind green-600 */
   color: white !important;
   border-radius: 1rem !important;
-  padding: 0.5rem 1rem !important;
+  padding: 0.3rem 1rem !important;
   font-weight: 600 !important;
   font-size: 0.8rem !important;
   transition: all 0.3s ease !important;

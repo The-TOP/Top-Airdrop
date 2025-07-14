@@ -11,12 +11,12 @@ const HeaderNav = () => {
   const { connection } = useConnection();
 
   return (
-    <header className="flex items-center justify-between px-6 md:px-16 py-3 md:py-5 border-b border-gray-800 bg-black/30 backdrop-blur">
-      <div className="">
-        <Link to={"/"}>
+    <header className="flex items-center justify-between px-6 md:px-16 py-3 md:py-5 border-b border-gray-800 bg-black/30 backdrop-blur md:gap-8">
+      <div className="lg:flex-1">
+        <Link to={"/"} className="">
           <img src={mainLogo} alt="logo" className=" w-25 sm:w-30" />
-        </Link>
-        <div className="md:hidden flex items-center justify-between gap-2 my-1 mt-2 text-sm p-1">
+        </Link>{" "}
+        <div className="md:hidden flex  items-center justify-between gap-2 mt-2 text-sm p-1">
           <NavLink
             to={"/"}
             className={({ isActive }) =>
@@ -43,47 +43,48 @@ const HeaderNav = () => {
           </NavLink>
         </div>
       </div>
-      <nav className="hidden md:flex space-x-8 text-sm px-4 py-2 rounded-full bg-white/10">
-        <NavLink
-          to={"/"}
-          className={({ isActive }) =>
-            isActive ? " text-green-500 border-t" : "hover:text-green-400"
-          }
-        >
-          Home
-        </NavLink>
+      <div className="lg:flex flex-2 justify-center">
+        <nav className="hidden md:flex  items-center justify-center space-x-8 lg:gap-10 xl:gap-20 text-sm px-4 lg:px-8  py-2 rounded-full bg-white/10">
+          <NavLink
+            to={"/"}
+            className={({ isActive }) =>
+              isActive ? " text-green-500 border-t" : "hover:text-green-400"
+            }
+          >
+            Home
+          </NavLink>
 
-        <NavLink
-          to={"/about"}
-          className={({ isActive }) =>
-            isActive ? " text-green-500 border-t" : "hover:text-green-400"
-          }
-        >
-          About
-        </NavLink>
-        <NavLink
-          to={
-            "https://github.com/The-TOP/TOPx---A-Hybrid-Ecosystem-for-Intelligent-Trading-/releases/download/Whitepaper/TOPx.-.A.Hybrid.Ecosystem.For.Intelligent.Trading.pdf"
-          }
-          target="_blank"
-          className={({ isActive }) =>
-            isActive ? " text-green-500 border-t" : "hover:text-green-400"
-          }
-        >
-          Whitepaper
-        </NavLink>
+          <NavLink
+            to={"/about"}
+            className={({ isActive }) =>
+              isActive ? " text-green-500 border-t" : "hover:text-green-400"
+            }
+          >
+            About
+          </NavLink>
+          <NavLink
+            to={
+              "https://github.com/The-TOP/TOPx---A-Hybrid-Ecosystem-for-Intelligent-Trading-/releases/download/Whitepaper/TOPx.-.A.Hybrid.Ecosystem.For.Intelligent.Trading.pdf"
+            }
+            target="_blank"
+            className={({ isActive }) =>
+              isActive ? " text-green-500 border-t" : "hover:text-green-400"
+            }
+          >
+            Whitepaper
+          </NavLink>
 
-        <NavLink
-          to={"/dashboard"}
-          className="text-green-400 flex items-center gap-2 font-semibold flex-nowrap hover:text-white"
-        >
-          <span className="text-nowrap text-sm">Claim Now </span>
-          <span className="rounded-full p-1 border-white border bg-black text-green-500">
-            <FiArrowUpRight />
-          </span>
-        </NavLink>
-      </nav>
-
+          <NavLink
+            to={"/dashboard"}
+            className="text-green-400 flex items-center gap-2 font-semibold flex-nowrap hover:text-white"
+          >
+            <span className="text-nowrap text-sm">Claim Now </span>
+            <span className="rounded-full p-1 border-white border bg-black text-green-500">
+              <FiArrowUpRight />
+            </span>
+          </NavLink>
+        </nav>
+      </div>
       {/* <button
           onClick={connectWallet} 
         className="flex lg:py-2 text-sm items-center gap-2 bg-green-500 hover:bg-green-600 text-black px-4 py-1.5 rounded-full transition"
@@ -94,8 +95,7 @@ const HeaderNav = () => {
           ? `${address.slice(0, 4)}...${address.slice(-4)}`
           : "Connect Wallet"} 
       </button> */}
-
-      <div className="rounded-full text-green-400 ">
+      <div className="rounded-full text-green-400 md:flex flex-col lg:flex-1 justify-end  items-end">
         <WalletMultiButton />
       </div>
     </header>
