@@ -18,7 +18,7 @@ import DataContext from "../../context/DataContext";
 
 const HeroMain = () => {
   const { connected } = useWallet();
-  const {days, hours, minutes } = useContext(DataContext)
+  const { days, hours, minutes } = useContext(DataContext);
 
   return (
     <div className="text-center">
@@ -169,7 +169,20 @@ const HeroMain = () => {
             {/*  image */}
             <div className="flex-3 hidden md:flex justify-center  items-center  ">
               <div className="flex-3 hidden md:flex justify-center items-center ">
-                <motion.img src={heroMain} alt="hero image" className="w-4/5" />
+                <motion.img
+                  src={heroMain}
+                  alt="hero image"
+                  className="w-4/5 -mt-10"
+                  animate={{
+                    x: [0, -35,  25,  0, 0],
+                    scale: [0.95, 1, 0.95, 1,0.95 ],
+                  }}
+                  transition={{
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
               </div>
               {/*   <Lottie
                 animationData={animationData}
@@ -194,7 +207,8 @@ const HeroMain = () => {
                 <span className="">Distribution Countdown </span>
               </p>
               <p className="mt-3  md:border  md:bg-black/30 border-white/30 rounded-br-4xl  md:rounded-br-[30px] border-b-white/10 rounded-tl-4xl md:rounded-tl-[30px] text-2xl md:text-3xl text-white font-semibold p-4 ">
-                {days} D : {hours} H <span className="text-green-500">: {minutes} M</span>
+                {days} D : {hours} H{" "}
+                <span className="text-green-500">: {minutes} M</span>
               </p>
             </div>
           </div>
