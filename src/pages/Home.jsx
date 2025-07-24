@@ -3,38 +3,36 @@ import Hero from "../component/Ui/Hero";
 import { useNavigate } from "react-router-dom";
 import { useWallet } from "@solana/wallet-adapter-react";
 import DataContext from "../context/DataContext";
+import myWalletContext from "../context/WalletContext1";
 
 const Home = () => {
-  const { connected, connecting } = useWallet();
+  const { connected } = useWallet();
+  const address = useWallet().publicKey?.toString()
   const navigate = useNavigate();
-  const [checking, setChecking] = useState(true);
-  const {ondashboard} = useContext(DataContext)
-  console.log(ondashboard);
-  
-  
+  const { handleRegisterUser, } = useContext(myWalletContext);
+  const { ondashboard,   } =
+    useContext(DataContext);
 
   useEffect(() => {
     if (connected && !ondashboard) {
       navigate("/dashboard");
-    } else {
-      setChecking(false); // show home content if not connected
     }
   }, [connected]);
-/* 
-  if (checking || connecting) {
-    return (
-      <div className="h-screen bg-[#0a0a0f] flex items-center justify-center text-white text-lg">
-        Checking wallet...
-      </div>
-    );
-  } */
-
-    return (
-      <main className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden">
-        <Hero />
-      </main>
-    );
+  console.log(address);
   
+
+  useEffect(() => {
+    if (connected ) {
+      handleRegisterUser();
+    }
+  }, [address]);
+
+
+  return (
+    <main className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden">
+      <Hero />
+    </main>
+  );
 };
 
 export default Home;

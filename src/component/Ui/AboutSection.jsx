@@ -29,7 +29,7 @@ const features = [
 
 const AboutSection = () => {
   return (
-    <div className="mt-10">
+    <div className="  mt-35  sm:mt-40 md:mt-45 ">
       {/* about top */}
       <div className="p-3 md:p-8">
         <div className="bg-black/30 border w-full border-white/25 rounded-br-4xl md:rounded-br-[100px] border-b-white/10 rounded-tl-4xl md:rounded-tl-[100px] mx-auto max-w-7xl pt-6 md:pt-10">

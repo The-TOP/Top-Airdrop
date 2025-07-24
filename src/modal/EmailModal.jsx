@@ -55,7 +55,7 @@ const EmailModal = ({ isOpen, onClose, setClaimed, email, setMail }) => {
       setStep(3);
     }
   };
-  console.log(step);
+  
 
   return (
     <AnimatePresence>

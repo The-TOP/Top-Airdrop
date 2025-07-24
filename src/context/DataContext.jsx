@@ -1,9 +1,25 @@
- import React, { createContext, useEffect, useState } from "react";
+import { useWallet } from "@solana/wallet-adapter-react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [ondashboard, setOndashboard] = useState(false);
+  const [userTask, setUserTask] = useState("000");
+  const [userBalance, setUserbalance] = useState("00000");
+  const [userReferral, setUserReferral] = useState("000");
+  const [homeModal, setHomeModal] = useState(false);
+  const connected = useWallet().connected;
+  const handleDashBordNav = () => {
+    if (!connected) {
+      setHomeModal(true);
+    } else if (connected) {
+      navigate("/dashboard");
+    }
+  };
+
   const targetDate = new Date("2025-08-13T00:00:00Z"); // adjust as needed
 
   const [timeLeft, setTimeLeft] = useState(
@@ -36,15 +52,29 @@ export const DataProvider = ({ children }) => {
   };
 
   const { days, hours, minutes } = formatTime(timeLeft);
-  console.log(minutes)
 
   return (
-    <DataContext.Provider value={{ ondashboard, setOndashboard, days, hours, minutes }}>
+    <DataContext.Provider
+      value={{
+        ondashboard,
+        setOndashboard,
+        days,
+        hours,
+        minutes,
+        homeModal,
+        setHomeModal,
+        handleDashBordNav,
+        userBalance,
+        setUserbalance,
+        userReferral,
+        setUserReferral,
+        userTask,
+        setUserTask,
+      }}
+    >
       {children}
     </DataContext.Provider>
   );
 };
 
 export default DataContext;
- 
-

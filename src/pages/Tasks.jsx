@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import SocialtaskCard from "../component/task/SocialtaskCard";
 import { LuCircleArrowOutUpRight } from "react-icons/lu";
 import VerifyAccount from "../component/task/VerifyAccount";
@@ -7,8 +7,14 @@ import { FaCopy, FaSquareXTwitter } from "react-icons/fa6";
 import AirdropModal from "../modal/AirdropModal";
 import EmailModal from "../modal/EmailModal";
 import { FaDiscord, FaTelegram, FaYoutube } from "react-icons/fa";
+import myWalletContext from "../context/WalletContext1";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const Tasks = () => {
+  const { handleUserTasks, handleSocialTask } = useContext(myWalletContext);
+  const { publicKey } = useWallet();
+  const address = publicKey.toString();
+
   const [claimed, setClaimed] = useState({
     airdrop: false,
     account: false,
@@ -111,8 +117,9 @@ const Tasks = () => {
         onButtonClick={() => {
           setTrackLoading(true);
           setTimeout(() => {
-            setTrackLoading(false);
             setClaimed((prev) => ({ ...prev, twitter: true }));
+            setTrackLoading(false);
+            handleSocialTask(1, address);
           }, 5000);
         }}
         Icon={FaSquareXTwitter}
@@ -128,8 +135,9 @@ const Tasks = () => {
         onButtonClick={() => {
           setTrackLoading2(true);
           setTimeout(() => {
-            setTrackLoading2(false);
             setClaimed((prev) => ({ ...prev, telegram: true }));
+            setTrackLoading2(false);
+            handleSocialTask(2, address);
           }, 5000);
         }}
         Icon={FaTelegram}
@@ -142,11 +150,12 @@ const Tasks = () => {
         title={"Discord"}
         description={"Join the Discord Community"}
         buttonDisabled={claimed.discord}
-       onButtonClick={() => {
+        onButtonClick={() => {
           setTrackLoading3(true);
           setTimeout(() => {
-            setTrackLoading3(false);
             setClaimed((prev) => ({ ...prev, discord: true }));
+            setTrackLoading3(false);
+            handleSocialTask(4, address);
           }, 5000);
         }}
         Icon={FaDiscord}
@@ -159,11 +168,12 @@ const Tasks = () => {
         title={"Youtube"}
         description={"Subscribe to Youtube channel"}
         buttonDisabled={claimed.youtube}
-       onButtonClick={() => {
-          setTrackLoading4(true);
+        onButtonClick={() => {
+           setTrackLoading4(true);
           setTimeout(() => {
-            setTrackLoading4(false);
             setClaimed((prev) => ({ ...prev, youtube: true }));
+            setTrackLoading4(false);
+            handleSocialTask(5, address);
           }, 5000);
         }}
         Icon={FaYoutube}

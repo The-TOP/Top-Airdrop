@@ -4,8 +4,8 @@ body {
   font-family: "Exo", cursive;
 }
 /* Customize the WalletMultiButton */
-.wallet-adapter-button {
-  background-color: #22c55e86 !important; /* Tailwind green-600 */
+ .wallet-adapter-button {
+  background-color: #22c55e86 !important; 
   color: white !important;
   border-radius: 1rem !important;
   padding: 0.3rem 1rem !important;
@@ -14,7 +14,7 @@ body {
   transition: all 0.3s ease !important;
   margin-top: 0.2rem;
 }
-
 .wallet-adapter-button:hover {
-  background-color:  #16a34ae3 !important; /* Tailwind green-500 */
+  background-color:  #16a34ae3 !important; /*  Tailwind green-500  */
 }
+  

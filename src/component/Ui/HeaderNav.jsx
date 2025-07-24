@@ -1,21 +1,25 @@
 import React, { useContext } from "react";
-import { FaHome, FaInfoCircle, FaUserAlt, FaWallet } from "react-icons/fa";
+import { FaHome, FaInfoCircle, FaUserAlt } from "react-icons/fa";
 import { FiArrowUpRight } from "react-icons/fi";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import mainLogo from "../../img/MainLogo.png";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import DataContext from "../../context/DataContext";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const HeaderNav = () => {
-  const { publicKey, connected } = useWallet();
-  const { connection } = useConnection();
+  /*  const { handleDashBordNav } = useContext(DataContext) */
+  const connected = useWallet().connected;
 
   return (
-    <header className="flex items-center justify-between px-6 md:px-16 py-3 md:py-5 border-b border-gray-800 bg-black/30 backdrop-blur md:gap-8">
+    <header className="flex w-full absolute t-o items-center justify-between px-6 md:px-16 py-3 md:py-5 border-b border-gray-800 bg-black/30 backdrop-blur md:gap-8 z-20">
       <div className="lg:flex-1">
         <Link to={"/"} className="">
           <img src={mainLogo} alt="logo" className=" w-25 sm:w-30" />
-        </Link>{" "}
+        </Link>
+
+        {/* //// MOBILE NavLink //// */}
+
         <div className="md:hidden flex  items-center justify-between gap-2 mt-2 text-sm p-1">
           <NavLink
             to={"/"}
@@ -25,13 +29,20 @@ const HeaderNav = () => {
           >
             <FaHome className="w-8" />
           </NavLink>
+
           <NavLink
-            to={"/dashboard"}
+            onClick={() => {
+              if (!connected) {
+                setHomeModal(true);
+              } else if (connected) {
+                navigate("/dashboard");
+              }
+            }}
             className={({ isActive }) =>
-              isActive ? " text-green-500 " : "hover:text-green-400"
+              isActive ? " text-green-500 " : "hover:text-green-400 text-white"
             }
           >
-            <FaUserAlt className="w-8" />
+            <FaUserAlt className="w-8 text-white" />
           </NavLink>
           <NavLink
             to={"/about"}
@@ -75,7 +86,13 @@ const HeaderNav = () => {
           </NavLink>
 
           <NavLink
-            to={"/dashboard"}
+            onClick={() => {
+              if (!connected) {
+                setHomeModal(true);
+              } else if (connected) {
+                navigate("/dashboard");
+              }
+            }}
             className="text-green-400 flex items-center gap-2 font-semibold flex-nowrap hover:text-white"
           >
             <span className="text-nowrap text-sm">Claim Now </span>
@@ -85,17 +102,8 @@ const HeaderNav = () => {
           </NavLink>
         </nav>
       </div>
-      {/* <button
-          onClick={connectWallet} 
-        className="flex lg:py-2 text-sm items-center gap-2 bg-green-500 hover:bg-green-600 text-black px-4 py-1.5 rounded-full transition"
-      >
-        <FaWallet />
-        Connect Wallet
-           {address
-          ? `${address.slice(0, 4)}...${address.slice(-4)}`
-          : "Connect Wallet"} 
-      </button> */}
-      <div className="rounded-full text-green-400 md:flex flex-col lg:flex-1 justify-end  items-end">
+
+      <div className="rounded-full text-green-400 md:flex flex-col lg:flex-1 justify-end  items-end ">
         <WalletMultiButton />
       </div>
     </header>
@@ -103,37 +111,3 @@ const HeaderNav = () => {
 };
 
 export default HeaderNav;
-
-/* 
-import { useWallet } from "@solana/wallet-adapter-react";
-
-const CustomConnectButton = () => {
-  const { publicKey, connect, disconnect, connected } = useWallet();
-
-  return (
-  <div>
-    <button
-      onClick={connected ? disconnect : connect}
-      className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-500"
-    >
-      {connected ? "Disconnect Wallet" : "Connect Wallet"}
-    </button> 
-    {connected && (
-          <p className="mt-4 text-green-400">
-            Connected: {publicKey.toBase58()}
-          </p>
-        )}
-          
-        const handleDisconnect = async () => {
-    try {
-      await disconnect(); // disconnect the wallet
-      console.log("Wallet disconnected");
-    } catch (error) {
-      console.error("Failed to disconnect wallet:", error);
-    }
-  };</div>
-  );
-
-
-
-}; */

@@ -14,11 +14,11 @@ import { FaFacebookF, FaRegClock, FaTwitter } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaSquareYoutube } from "react-icons/fa6";
 import { useWallet } from "@solana/wallet-adapter-react";
-import DataContext from "../../context/DataContext";
+import  DataContext from "../../context/DataContext";
 
 const HeroMain = () => {
   const { connected } = useWallet();
-  const { days, hours, minutes } = useContext(DataContext);
+  const { days, hours, minutes, handleDashBordNav } = useContext(DataContext);
 
   return (
     <div className="text-center">
@@ -35,7 +35,7 @@ const HeroMain = () => {
       >
         {/* //// claim  ///// */}
         <div className="max-w-7xl mx-auto text-center px-3 py-6 md:pt-10 relative">
-          <div className="max-w-3xl  mt-4 md:mt-2 flex flex-col items-center mx-auto px-6 py-3 text-center ">
+          <div className="max-w-3xl  mt-30  sm:mt-40 md:mt-45 flex flex-col items-center mx-auto px-6 py-3 text-center ">
             <h2 className="text-3xl px-4 max-w-sm md:text-4xl md:leading-12 font-bold  tracking-wide text-white mb-8">
               Claim Free $TOP Tokens
             </h2>
@@ -52,6 +52,7 @@ const HeroMain = () => {
               <div className="flex  justify-center items-center gap-6 mt-10 mb-6">
                 {!connected && (
                   <motion.button
+                  onClick={handleDashBordNav}
                     whileHover={{ scale: 1.05 }}
                     className=" border border-green-500 text-white px-3 py-2 rounded-full text-sm font-medium"
                   >
@@ -61,6 +62,7 @@ const HeroMain = () => {
 
                 <div className="flex items-center gap-6 text-sm  z-20">
                   <motion.button
+                  onClick={handleDashBordNav}
                     whileHover={{ scale: 1.05 }}
                     className="text-green-400 cursor-pointer flex items-center gap-2 font-semibold"
                   >
@@ -174,8 +176,8 @@ const HeroMain = () => {
                   alt="hero image"
                   className="w-4/5 -mt-10"
                   animate={{
-                    x: [0, -35,  25,  0, 0],
-                    scale: [0.95, 1, 0.95, 1,0.95 ],
+                    x: [0, -35, 25, 0, 0],
+                    scale: [0.95, 1, 0.95, 1, 0.95],
                   }}
                   transition={{
                     duration: 6,

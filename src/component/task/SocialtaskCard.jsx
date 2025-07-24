@@ -43,7 +43,7 @@ const SocialtaskCard = ({
               <FaSyncAlt className="text-green-500 animate-spin" />
             </div>
           ) : (
-            <div className="flex gap-1 items-center justify-center p-1">
+            <div className="flex gap-1.5 items-center justify-center p-1">
               <LuCircleArrowOutUpRight className="text-white/50" />
               <span className=""> {buttonLabel}</span>
             </div>

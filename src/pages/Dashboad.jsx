@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import OverviewCards from "../component/dashboard/OverviewCards";
 import ReferralsTable from "../component/dashboard/ReferralsTable";
 import DistributionCountdown from "../component/dashboard/DistributionCountdown";
+import myWalletContext from "../context/WalletContext1";
 
 const Dashboad = () => {
+  const { handleUserBalance} = useContext(myWalletContext)
+  
   return (
     <div className="w-full p-1 md:p-3  max-w-6xl mx-auto  space-y-6 h-full ">
       <section className="mb-6 p-4 rounded-t-2xl bg-white/2">
