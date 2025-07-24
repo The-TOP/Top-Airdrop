@@ -8,9 +8,9 @@ import DataContext from "../../context/DataContext";
 import { useWallet } from "@solana/wallet-adapter-react";
 
 const HeaderNav = () => {
-  /*  const { handleDashBordNav } = useContext(DataContext) */
+ const { setHomeModal } = useContext(DataContext); 
   const connected = useWallet().connected;
-
+  const navigate = useNavigate();
   return (
     <header className="flex w-full absolute t-o items-center justify-between px-6 md:px-16 py-3 md:py-5 border-b border-gray-800 bg-black/30 backdrop-blur md:gap-8 z-20">
       <div className="lg:flex-1">
@@ -30,20 +30,18 @@ const HeaderNav = () => {
             <FaHome className="w-8" />
           </NavLink>
 
-          <NavLink
+          <p
             onClick={() => {
               if (!connected) {
                 setHomeModal(true);
-              } else if (connected) {
+              } else {
                 navigate("/dashboard");
               }
             }}
-            className={({ isActive }) =>
-              isActive ? " text-green-500 " : "hover:text-green-400 text-white"
-            }
+            className={"hover:text-green-400 cursor-pointer text-white"}
           >
             <FaUserAlt className="w-8 text-white" />
-          </NavLink>
+          </p>
           <NavLink
             to={"/about"}
             className={({ isActive }) =>
@@ -85,21 +83,21 @@ const HeaderNav = () => {
             Whitepaper
           </NavLink>
 
-          <NavLink
+          <p
             onClick={() => {
               if (!connected) {
                 setHomeModal(true);
-              } else if (connected) {
+              } else {
                 navigate("/dashboard");
               }
             }}
-            className="text-green-400 flex items-center gap-2 font-semibold flex-nowrap hover:text-white"
+            className="text-green-400 cursor-pointer flex items-center gap-2 font-semibold flex-nowrap hover:text-white"
           >
             <span className="text-nowrap text-sm">Claim Now </span>
             <span className="rounded-full p-1 border-white border bg-black text-green-500">
               <FiArrowUpRight />
             </span>
-          </NavLink>
+          </p>
         </nav>
       </div>
 

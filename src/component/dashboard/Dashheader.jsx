@@ -7,20 +7,25 @@ import DataContext from "../../context/DataContext";
 
 const Dashheader = ({ xstyle }) => {
   const wallet = useWallet().publicKey.toString();
-  const { handleUserBalance, handlePlatformStats, handleUserTasks, handleSocialTask } =
-    useContext(myWalletContext);
+  const {
+    handleUserBalance,
+    handlePlatformStats,
+    handleUserTasks,
+    handleSocialTask,
+  } = useContext(myWalletContext);
 
-  const { userBalance, setUserbalance, setUserReferral,setUserTask } =
+  const { userBalance, setUserbalance, setUserReferral, setUserTask } =
     useContext(DataContext);
+
   useEffect(() => {
-    const fetchBalance = async () => {
+    const fetchData = async () => {
       try {
         const result = await handleUserBalance();
         const referral = await handlePlatformStats();
         const task = await handleUserTasks();
         const humanReadable = result.toNumber() / 100000;
-        const completedCount = task.filter(task => task).length;
-        
+        const completedCount = task.filter((task) => task).length;
+
         setUserbalance(humanReadable);
         setUserTask(completedCount);
         setUserReferral(referral.totalReferrals);
@@ -29,7 +34,7 @@ const Dashheader = ({ xstyle }) => {
       }
     };
 
-    fetchBalance();
+    fetchData();
   }, []);
 
   return (
@@ -41,7 +46,10 @@ const Dashheader = ({ xstyle }) => {
           src={miniLogo}
           className="w-5"
           alt="top"
-          onClick={()=> {handleSocialTask(1, "delight")}}
+          onClick={async() => {
+           const task = await handleUserTasks()
+           console.log(task[0]);
+          }}
         />
         <p className="text-xs"> {userBalance} </p>
       </div>

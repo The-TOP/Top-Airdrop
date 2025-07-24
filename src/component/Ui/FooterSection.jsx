@@ -16,8 +16,8 @@ import { FaSquareYoutube } from "react-icons/fa6";
 import DataContext from "../../context/DataContext";
 
 const FooterSection = () => {
-  const {  connected } = useWallet();
- const { handleDashBordNav  } = useContext(DataContext);
+  const { connected } = useWallet();
+  const { handleDashBordNav } = useContext(DataContext);
   return (
     <footer
       className=" text-white px-4 sm:px-8 md:px- py-6 md:py-12 relative  "
@@ -47,7 +47,7 @@ const FooterSection = () => {
           <div className="flex items-center gap-4 md:gap-6 flex-shrink-0">
             {!connected && (
               <motion.button
-              onClick={handleDashBordNav}
+                onClick={handleDashBordNav}
                 whileHover={{ scale: 1.05 }}
                 className="bg-black text-white px-6 py-2 rounded-full text-sm font-medium"
               >
@@ -57,9 +57,9 @@ const FooterSection = () => {
 
             <div className="flex items-center gap-6 text-sm text-white/70">
               <motion.button
-              onClick={handleDashBordNav}
+                onClick={handleDashBordNav}
                 whileHover={{ scale: 1.05 }}
-                className="text-black flex items-center gap-2 font-semibold"
+                className="text-black flex cursor-pointer items-center gap-2 font-semibold"
               >
                 <span>Claim Now </span>
                 <span className="rounded-full p-1.5 bg-black text-green-500">
@@ -78,20 +78,26 @@ const FooterSection = () => {
 
             <div className="flex flex-col md:flex-row  items-center gap-4 md:gap-8 text-sm text-white/70">
               <div className="flex items-center gap-6 text-sm text-white/70">
-                <a href="#" className="hover:text-white transition">
+                <Link to={"/"} className="hover:text-white transition">
                   Home
-                </a>
-                <a href="#" className="hover:text-white transition">
+                </Link>
+                <Link to={"/about"} className="hover:text-white transition">
                   About
-                </a>
-                <a href="#" className="hover:text-white transition">
+                </Link>
+                <Link
+                  to={
+                    "https://github.com/The-TOP/TOPx---A-Hybrid-Ecosystem-for-Intelligent-Trading-/releases/download/Whitepaper/TOPx.-.A.Hybrid.Ecosystem.For.Intelligent.Trading.pdf"
+                  }
+                  target="_blank"
+                  className="hover:text-white transition"
+                >
                   White Paper
-                </a>
+                </Link>
               </div>
               <div className="flex items-center gap-6 text-sm text-white/70">
                 <a
                   onClick={handleDashBordNav}
-                  className="text-green-400 flex items-center gap-2 font-semibold"
+                  className="text-green-400 cursor-pointer flex items-center gap-2 font-semibold"
                 >
                   <span>Claim Now </span>
                   <span className="rounded-full p-1.5 bg-black text-green-500">
