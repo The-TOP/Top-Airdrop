@@ -103,6 +103,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
           pendingRewards: existingUser.pendingRewards.toString(),
           referralsCount: existingUser.referralsCount,
         });
+        alert("user already registered")
         return existingUser;
       } catch (e) {
         alert("User not registered yet. Proceeding...");
