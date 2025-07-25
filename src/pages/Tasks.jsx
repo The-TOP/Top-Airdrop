@@ -214,7 +214,7 @@ const Tasks = () => {
           setTimeout(() => {
             handleSocialTask(5, address);
             setTrackLoading4(false);
-          }, 5000);
+          }, 50000);
         }}
         Icon={FaYoutube}
         buttonLabel={"Go"}

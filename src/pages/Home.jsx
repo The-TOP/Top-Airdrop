@@ -30,7 +30,7 @@ const Home = () => {
 
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden">
-      <Hero />
+     <div className="text-center">{address}</div> <Hero />
     </main>
   );
 };
