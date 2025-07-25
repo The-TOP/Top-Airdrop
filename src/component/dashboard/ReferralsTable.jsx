@@ -1,11 +1,11 @@
 import React from "react";
 
-const dummyReferrals = Array(5).fill({
+const dummyReferrals =[] /* Array(5).fill({
   friend: "Cxao99.9a1c5",
   date: "10-03-25",
   reward: "+1",
   status: "Unclaimed",
-});
+}); */
 
 const ReferralsTable = () => {
   return (
@@ -31,7 +31,14 @@ const ReferralsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {dummyReferrals.map((row, i) => (
+           {dummyReferrals.length === 0 ? (
+            <tr>
+              <td colSpan={5} className="text-center py-6 text-zinc-500">
+                No records available.
+              </td>
+            </tr>
+          ) : ( 
+          dummyReferrals.map((row, i) => (
               <tr
                 key={i}
                 className="border-b border-zinc-800 hover:bg-zinc-800/50 transition"
@@ -47,7 +54,7 @@ const ReferralsTable = () => {
                   </button>
                 </td> */}
               </tr>
-            ))}
+            )))}
           </tbody>
         </table>
       </div>

@@ -11,7 +11,7 @@ const ReferralSocialTable = ({ Data }) => {
             <th className="py-3 px-4">#</th>
             <th>Account</th>
             <th>Task</th>
-            <th>Date</th>
+            <th>Date Registered</th>
             <th>Rewards</th>
             <th>Claim Status</th>
             {/* <th>Action</th> */}
@@ -36,7 +36,7 @@ const ReferralSocialTable = ({ Data }) => {
                   {row.account}
                 </td>
                 <td className="text-white">{row.task}</td>
-                <td className="text-white">{row.date}</td>
+                <td className="text-white ps-3">{row.date}</td>
                 <td className="text-white flex items-center just my-3 gap-1">
                   <img src={token} alt="rewards" className="w-5 " />
                   {row.reward}

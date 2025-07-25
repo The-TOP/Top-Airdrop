@@ -1,4 +1,4 @@
-import React from "react";
+/* import React from "react";
 import { motion } from "framer-motion";
 import { FiCopy } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +27,7 @@ const TaskCard = ({
       <h2 className="text-lg font-semibold">{title}</h2>
       <p className="text-sm text-zinc-400">{description}</p>
 
-     {/*  <div className="flex justify-between items-center gap-3 ">
+       <div className="flex justify-between items-center gap-3 ">
         <div className={`flex-1 flex items-center gap-2 ${textcolor} `}>
           { img && <img src={img} alt="" className="" />} <p className="">{description}</p>
         </div>
@@ -52,7 +52,7 @@ const TaskCard = ({
       </div>
       <p className="flex gap-1 items-center justify-center p-1">
         {icon} <span className=""> {buttonLabel}</span>
-      </p> */}
+      </p> 
       {showInput && (
         <div className="flex items-center gap-2">
           <input
@@ -122,3 +122,4 @@ const TaskCard = ({
 };
 
 export default TaskCard;
+ */

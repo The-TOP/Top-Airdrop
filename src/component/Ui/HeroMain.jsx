@@ -14,11 +14,15 @@ import { FaFacebookF, FaRegClock, FaTwitter } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FaInstagram, FaSquareYoutube } from "react-icons/fa6";
 import { useWallet } from "@solana/wallet-adapter-react";
-import  DataContext from "../../context/DataContext";
+import DataContext from "../../context/DataContext";
+import useCountdown from "../../hook/useCountdown";
 
 const HeroMain = () => {
   const { connected } = useWallet();
-  const { days, hours, minutes, handleDashBordNav } = useContext(DataContext);
+  const {  targetDate, handleDashBordNav } =
+    useContext(DataContext);
+
+  const { days, hours, minutes, secs } = useCountdown(targetDate);
 
   return (
     <div className="text-center">
@@ -52,7 +56,7 @@ const HeroMain = () => {
               <div className="flex  justify-center items-center gap-6 mt-10 mb-6">
                 {!connected && (
                   <motion.button
-                  onClick={handleDashBordNav}
+                    onClick={handleDashBordNav}
                     whileHover={{ scale: 1.05 }}
                     className=" border border-green-500 text-white px-3 py-2 rounded-full text-sm font-medium"
                   >
@@ -62,7 +66,7 @@ const HeroMain = () => {
 
                 <div className="flex items-center gap-6 text-sm  z-20">
                   <motion.button
-                  onClick={handleDashBordNav}
+                    onClick={handleDashBordNav}
                     whileHover={{ scale: 1.05 }}
                     className="text-green-400 cursor-pointer flex items-center gap-2 font-semibold"
                   >
@@ -186,31 +190,19 @@ const HeroMain = () => {
                   }}
                 />
               </div>
-              {/*   <Lottie
-                animationData={animationData}
-                loop={true}
-                autoplay={true}
-                 className="scale-120 -mt-28 "
-              /> */}
-              {/*  <DotLottieReact
-                src="https://lottie.host/98a67277-2f13-459c-b371-7a18eb6e0149/C3sz1rV4ez.lottie"
-                loop
-                autoplay
-                className="scale-250 "
-              /> */}
             </div>
 
             {/* time */}
-            <div className=" mt-6 md:flex-2 flex flex-col items-center justify-center md:justify-start md:items-start font-semibold text-white md:mt-2 p-3 md:p-0 bg-black/50 sm:bg-black/0 rounded-2xl ">
+            <div className=" mt-6 md:flex-2 flex flex-col items-center justify-center md:justify-start md:items-start font-semibold text-white md:mt-2 p-3 md:p-0 bg-black/50 md:bg-black/0 rounded-2xl w-68 sm:w-xs md:w-sm ">
               <p className=" flex items-center justify-center gap-2">
                 <span className="text-green-500">
                   <FaRegClock className="w-8 text-2xl" />
                 </span>
                 <span className="">Distribution Countdown </span>
               </p>
-              <p className="mt-3  md:border  md:bg-black/30 border-white/30 rounded-br-4xl  md:rounded-br-[30px] border-b-white/10 rounded-tl-4xl md:rounded-tl-[30px] text-2xl md:text-3xl text-white font-semibold p-4 ">
-                {days} D : {hours} H{" "}
-                <span className="text-green-500">: {minutes} M</span>
+              <p className="mt-3  md:border  md:bg-black/30  border-white/30 rounded-br-4xl  md:rounded-br-[30px] border-b-white/10 rounded-tl-4xl md:rounded-tl-[30px] text-xl md:text-2xl text-white font-semibold p-4 xl:w-xs lg:w-68 ">
+                {days} D : {hours} H : {minutes} M{" "}
+                <span className="text-green-500">: {secs} S </span>
               </p>
             </div>
           </div>

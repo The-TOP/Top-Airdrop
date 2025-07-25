@@ -188,10 +188,10 @@ const EmailModal = ({ isOpen, onClose, setClaimed, email, setMail }) => {
                   className="mx-auto my-4 w-20"
                 />
                 <h3 className="text-white font-semibold text-lg mb-2">
-                  +1,000 <span className="text-green-400">$TOP Token</span>
+                  +10,000 <span className="text-green-400">$TOP Token</span>
                 </h3>
                 <p className="text-white/60 text-xs mb-6">
-                  You have successfully claimed 1000 $TOP
+                  You have successfully claimed 10 000 $TOP
                 </p>
                 <motion.button
                   whileTap={{ scale: 0.95 }}

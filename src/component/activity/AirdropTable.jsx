@@ -40,8 +40,14 @@ const AirdropTable = ({ Data }) => {
                   <img src={token} alt="rewards" className="w-5 " />
                   {row.reward}
                 </td>
-                <td className="text-green-500 ps-2">{row.status}</td>
-               {/*  <td>
+                <td
+                  className={`${
+                    row.status== "Claimed"? "text-green-500 ps-2" : "text-orange-400 "
+                  }`}
+                >
+                  {row.status}
+                </td>
+                {/*  <td>
                   <button
                     disabled
                     className="bg-zinc-800 border border-zinc-600 text-zinc-500 px-3 py-1 rounded-md text-xs cursor-not-allowed"

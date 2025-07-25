@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  
-  FaRegArrowAltCircleLeft,
-  FaTimes,
-  FaWallet,
-} from "react-icons/fa";
+import { FaRegArrowAltCircleLeft, FaTimes, FaWallet } from "react-icons/fa";
 import miniLogo from "../img/miniLogo.png";
 import congrats from "../img/congratsAirdrop.png";
 
-const AirdropModal = ({ isOpen, onClose, setClaimed }) => {
+const AirdropModal = ({ isOpen, onClose, setClaimed, status }) => {
   const [step, setStep] = useState(1);
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
+ 
 
   const modalVariants = {
     hidden: { opacity: 0, scale: 0.9 },
@@ -40,7 +36,9 @@ const AirdropModal = ({ isOpen, onClose, setClaimed }) => {
           >
             {/* Close Button */}
             <button
-             onClick={() => onClose(false)}
+              onClick={() => {
+                      onClose(false), setStep(1);
+                    }}
               className="absolute top-4 right-4 text-white/60 hover:text-white transition"
             >
               <FaTimes />
@@ -69,7 +67,7 @@ const AirdropModal = ({ isOpen, onClose, setClaimed }) => {
                   />
                   <div>
                     <h2 className="text-white font font-semibold text-2xl">
-                      + 5 000 000
+                      + 50 000
                     </h2>
                     <h2 className="text-green-400 text-xs">$TOP Token</h2>
                   </div>
@@ -81,16 +79,12 @@ const AirdropModal = ({ isOpen, onClose, setClaimed }) => {
                   </p>
                   <motion.button
                     whileTap={{ scale: 0.95 }}
-                    onClick={() =>
-                      // Trigger wallet connection here
-                      {
-                        setClaimed((prev) => ({
-                          ...prev,
-                          airdrop: true,
-                        }));
+                    onClick={() => {
+                      setClaimed();
+                      setTimeout(() => {
                         nextStep();
-                      }
-                    }
+                      }, 10000);
+                    }}
                     className="bg-black hover:bg-green-500/30 border border-green-400 text-white py-2 px-6 rounded-full text-sm"
                   >
                     Claim Now
@@ -118,7 +112,7 @@ const AirdropModal = ({ isOpen, onClose, setClaimed }) => {
                   />
                   <div>
                     <h2 className="text-white font font-semibold text-xs">
-                      + 5 000 000{" "}
+                      + 50 000{" "}
                       <span className="text-green-400"> $TOP Token</span>
                     </h2>
                     <h2 className="text-white text-2xl">Congratulations</h2>
@@ -127,11 +121,13 @@ const AirdropModal = ({ isOpen, onClose, setClaimed }) => {
 
                 <div className="flex flex-col gap-2 items-center">
                   <p className="text-white/60 text-sm flex gap-2 items-center justify-center">
-                    You have Successfully claim 5000000 $TOP
+                    You have Successfully claim 50 000 $TOP
                   </p>
                   <motion.button
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => onClose(false)}
+                    onClick={() => {
+                      onClose(false), setStep(1);
+                    }}
                     className="  text-green-400 py-2 px-6 rounded-full flex gap-1 items-center text-sm font-semibold"
                   >
                     <FaRegArrowAltCircleLeft /> Back

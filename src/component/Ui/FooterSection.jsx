@@ -115,7 +115,7 @@ const FooterSection = () => {
               >
                 <FaFacebookF className="hover:text-white" />
               </Link>
-              <Link target="_blank" to={"#"}>
+              <Link target="_blank" to={"https://x.com/theTOPXchange"}>
                 <FaTwitter className="hover:text-white" />
               </Link>
               <Link

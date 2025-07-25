@@ -2,10 +2,12 @@ import React, { useContext } from "react";
 import { BsClockHistory } from "react-icons/bs";
 import countImg from "../../img/countdown.png";
 import DataContext from "../../context/DataContext";
+import useCountdown from "../../hook/useCountdown";
 
 const DistributionCountdown = () => {
 
-  const {days, hours, minutes } = useContext(DataContext)
+  const {targetDate } = useContext(DataContext)
+  const { days, hours, minutes, secs } = useCountdown(targetDate);
   
   return (
     <div className=" text-white p-4 rounded-xl shadow-md h-full">
@@ -26,7 +28,7 @@ const DistributionCountdown = () => {
             <p className="text-sm">:</p>
             <div className="tracking-widest">{hours} H</div>
             <p className="text-sm">:</p>
-            <div className="text-green-500 tracking-widest">{minutes} M</div>{" "}
+            <div className="tracking-widest">{minutes} M </div>{" "}<span className="text-green-500 text-xs">{secs} s</span>
             <p className="text-xs  text-center mt-2 text-zinc-400 font-normal">
               Period:
             </p>

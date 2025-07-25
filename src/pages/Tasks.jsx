@@ -9,22 +9,20 @@ import EmailModal from "../modal/EmailModal";
 import { FaDiscord, FaTelegram, FaYoutube } from "react-icons/fa";
 import myWalletContext from "../context/WalletContext1";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useNavigate } from "react-router-dom";
 
 const Tasks = () => {
   const { handleUserTasks, handleSocialTask } = useContext(myWalletContext);
   const { publicKey } = useWallet();
   const address = publicKey.toString();
-  const navigate = useNavigate();
 
   const [claimed, setClaimed] = useState({
     airdrop: false,
     account: false,
     twitter: false,
     telegram: false,
+    channel: false,
     discord: false,
     youtube: false,
-    email: false,
   });
   useEffect(() => {
     const fetchTasks = async () => {
@@ -32,7 +30,7 @@ const Tasks = () => {
       if (tasks[0]) setClaimed((prev) => ({ ...prev, airdrop: true }));
       if (tasks[1]) setClaimed((prev) => ({ ...prev, twitter: true }));
       if (tasks[2]) setClaimed((prev) => ({ ...prev, telegram: true }));
-      /* if (tasks[3]) setClaimed(prev => ({ ...prev, telegram: true })); */
+      if (tasks[3]) setClaimed((prev) => ({ ...prev, channel: true }));
       if (tasks[4]) setClaimed((prev) => ({ ...prev, discord: true }));
       if (tasks[5]) setClaimed((prev) => ({ ...prev, youtube: true }));
     };
@@ -45,6 +43,7 @@ const Tasks = () => {
   const [OpenEmailModal, setOpenEmailModal] = useState(false);
 
   const [trackLoading, setTrackLoading] = useState(false);
+  const [trackLoading1, setTrackLoading1] = useState(false);
   const [trackLoading2, setTrackLoading2] = useState(false);
   const [trackLoading3, setTrackLoading3] = useState(false);
   const [trackLoading4, setTrackLoading4] = useState(false);
@@ -132,7 +131,7 @@ const Tasks = () => {
         buttonDisabled={claimed?.twitter}
         onButtonClick={() => {
           setTrackLoading(true);
-          /*  navigate(); */
+          window.open("https://x.com/theTOPXchange", "_blank");
           setTimeout(() => {
             handleSocialTask(1, address);
             setTrackLoading(false);
@@ -149,9 +148,30 @@ const Tasks = () => {
         description={"Join the Telegram Community"}
         buttonDisabled={claimed.telegram}
         onButtonClick={() => {
-          setTrackLoading2(true);
+          setTrackLoading1(true);
+          window.open(" https://t.me/ProtocolChain", "_blank");
           setTimeout(() => {
             handleSocialTask(2, address);
+            setTrackLoading1(false);
+          }, 5000);
+        }}
+        Icon={FaTelegram}
+        buttonLabel={"Go"}
+        borderstyle={""}
+        trackLoading={trackLoading1}
+      />
+
+      <SocialtaskCard
+        textcolor={"text-white/80"}
+        title={"Telegram"}
+        description={"Join our Telegram Channel"}
+        buttonDisabled={claimed.channel}
+        onButtonClick={() => {
+          setTrackLoading2(true);
+          window.open("https://t.me/theTOPXchange", "_blank");
+
+          setTimeout(() => {
+            handleSocialTask(3, address);
             setTrackLoading2(false);
           }, 5000);
         }}
@@ -167,7 +187,7 @@ const Tasks = () => {
         buttonDisabled={claimed.discord}
         onButtonClick={() => {
           setTrackLoading3(true);
-          
+          window.open("https://discord.gg/YM4d3m2deg", "_blank");
           setTimeout(() => {
             handleSocialTask(4, address);
             setTrackLoading3(false);
@@ -205,7 +225,8 @@ const Tasks = () => {
       <AirdropModal
         isOpen={OpenAirdropModal}
         onClose={setOpenAirdropModal}
-        setClaimed={setClaimed}
+        setClaimed={() => handleSocialTask(0, address)}
+        status={claimed.airdrop}
       />
       <EmailModal
         isOpen={OpenEmailModal}
