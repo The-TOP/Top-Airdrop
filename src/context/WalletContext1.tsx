@@ -73,6 +73,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
           : userPublicKey;
 
       alert("\n=== REGISTERING USER ===");
+      if (userPublicKey) alert("publickey active")
 
       // Derive user account PDA
 

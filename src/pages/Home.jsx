@@ -25,7 +25,7 @@ const Home = () => {
     if (connected ) {
       handleRegisterUser();
     }
-  }, [address]);
+  }, [connected, publicKey]);
 
 
   return (
