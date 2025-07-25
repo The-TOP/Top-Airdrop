@@ -6,8 +6,8 @@ import DataContext from "../context/DataContext";
 import myWalletContext from "../context/WalletContext1";
 
 const Home = () => {
-  const { connected } = useWallet();
-  const address = useWallet().publicKey?.toString()
+  const { connected, publicKey} = useWallet();
+  const address = publicKey?.toString()
   const navigate = useNavigate();
   const { handleRegisterUser, } = useContext(myWalletContext);
   const { ondashboard,   } =

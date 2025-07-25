@@ -13,7 +13,7 @@ const AirdropTable = ({ Data }) => {
             <th>Date</th>
             <th>Rewards</th>
             <th>Claim Status</th>
-            <th>Action</th>
+            {/* <th>Action</th> */}
           </tr>
         </thead>
         <tbody className="bg-white/2">
@@ -40,15 +40,15 @@ const AirdropTable = ({ Data }) => {
                   <img src={token} alt="rewards" className="w-5 " />
                   {row.reward}
                 </td>
-                <td className="text-green-500">{row.status}</td>
-                <td>
+                <td className="text-green-500 ps-2">{row.status}</td>
+               {/*  <td>
                   <button
                     disabled
                     className="bg-zinc-800 border border-zinc-600 text-zinc-500 px-3 py-1 rounded-md text-xs cursor-not-allowed"
                   >
                     Claimed
                   </button>
-                </td>
+                </td> */}
               </tr>
             ))
           )}

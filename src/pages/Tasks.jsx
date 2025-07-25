@@ -9,11 +9,13 @@ import EmailModal from "../modal/EmailModal";
 import { FaDiscord, FaTelegram, FaYoutube } from "react-icons/fa";
 import myWalletContext from "../context/WalletContext1";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { useNavigate } from "react-router-dom";
 
 const Tasks = () => {
   const { handleUserTasks, handleSocialTask } = useContext(myWalletContext);
   const { publicKey } = useWallet();
   const address = publicKey.toString();
+  const navigate = useNavigate();
 
   const [claimed, setClaimed] = useState({
     airdrop: false,
@@ -130,9 +132,9 @@ const Tasks = () => {
         buttonDisabled={claimed?.twitter}
         onButtonClick={() => {
           setTrackLoading(true);
+          /*  navigate(); */
           setTimeout(() => {
             handleSocialTask(1, address);
-            setClaimed((prev) => ({ ...prev, twitter: true }));
             setTrackLoading(false);
           }, 5000);
         }}
@@ -165,6 +167,7 @@ const Tasks = () => {
         buttonDisabled={claimed.discord}
         onButtonClick={() => {
           setTrackLoading3(true);
+          
           setTimeout(() => {
             handleSocialTask(4, address);
             setTrackLoading3(false);
@@ -182,6 +185,12 @@ const Tasks = () => {
         buttonDisabled={claimed.youtube}
         onButtonClick={() => {
           setTrackLoading4(true);
+
+          window.open(
+            "https://youtube.com/@topxchange?feature=shared",
+            "_blank"
+          );
+
           setTimeout(() => {
             handleSocialTask(5, address);
             setTrackLoading4(false);

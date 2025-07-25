@@ -14,7 +14,7 @@ const ReferralSocialTable = ({ Data }) => {
             <th>Date</th>
             <th>Rewards</th>
             <th>Claim Status</th>
-            <th>Action</th>
+            {/* <th>Action</th> */}
           </tr>
         </thead>
         <tbody>
@@ -44,13 +44,13 @@ const ReferralSocialTable = ({ Data }) => {
                 <td
                   className={
                     row.status === "Claimed"
-                      ? "text-green-500"
+                      ? "text-green-500 ps-2"
                       : "text-orange-400"
                   }
                 >
-                  {row.status}
+                  {  row.status}
                 </td>
-                <td>
+                {/* <td>
                   {row.claimed ? (
                     <button
                       disabled
@@ -63,7 +63,7 @@ const ReferralSocialTable = ({ Data }) => {
                       Claim
                     </button>
                   )}
-                </td>
+                </td> */}
               </tr>
             ))
           )}

@@ -11,7 +11,7 @@ const Dashheader = ({ xstyle }) => {
     handleUserBalance,
     handlePlatformStats,
     handleUserTasks,
-    handleSocialTask,
+    handleFetchUserAccount,
   } = useContext(myWalletContext);
 
   const { userBalance, setUserbalance, setUserReferral, setUserTask } =
@@ -46,9 +46,8 @@ const Dashheader = ({ xstyle }) => {
           src={miniLogo}
           className="w-5"
           alt="top"
-          onClick={async() => {
-           const task = await handleUserTasks()
-           console.log(task[0]);
+          onClick={() => {
+            console.log(handlePlatformStats());
           }}
         />
         <p className="text-xs"> {userBalance} </p>

@@ -8,7 +8,7 @@ import DataContext from "../../context/DataContext";
 import { useWallet } from "@solana/wallet-adapter-react";
 
 const HeaderNav = () => {
- const { setHomeModal } = useContext(DataContext); 
+  const { setHomeModal } = useContext(DataContext);
   const connected = useWallet().connected;
   const navigate = useNavigate();
   return (

@@ -27,7 +27,7 @@ const ReferralsTable = () => {
               <th>Date</th>
               <th>Rewards</th>
               <th>Claim Status</th>
-              <th>Action</th>
+              {/* <th>Action</th> */}
             </tr>
           </thead>
           <tbody>
@@ -41,11 +41,11 @@ const ReferralsTable = () => {
                 <td>{row.date}</td>
                 <td className="text-green-400">{row.reward}</td>
                 <td className="text-yellow-400">{row.status}</td>
-                <td>
+                {/* <td>
                   <button className="bg-green-600 text-white px-3 py-1 rounded-md text-xs hover:bg-green-500">
                     View
                   </button>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

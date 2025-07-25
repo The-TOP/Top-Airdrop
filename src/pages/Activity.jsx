@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import AirdropTable from "../component/activity/AirdropTable";
 import ActivityTabs from "../component/activity/ActivityTabs";
 import ReferralSocialTable from "../component/activity/ReferralSocialTable";
 import WithdrawalTable from "../component/activity/WithdrawalTable";
 import profile from "../img/Pprofile.png";
-
+import myWalletContext from "../context/WalletContext1";
 
 const Referrals = [
   {
@@ -116,7 +116,8 @@ const Withdrawal = [
     date: "10-03-25",
     amount: "5,000",
     fee: "0.00004286",
-    status: "Success",profile:profile
+    status: "Success",
+    profile: profile,
   },
 ];
 
@@ -126,14 +127,16 @@ const Airdrop = [
     task: "Welcome Airdrop",
     date: "10-02-25",
     reward: "+5 000 000",
-    status: "Claimed",profile:profile
+    status: "Claimed",
+    profile: profile,
   },
   {
     account: "Cxao99..9a1c5",
     task: "Account Verification",
     date: "10-03-25",
     reward: "+5 000 000",
-    status: "Claimed",profile:profile
+    status: "Claimed",
+    profile: profile,
   },
 ];
 
@@ -142,6 +145,26 @@ const Airdrop = [
 
 const Activity = () => {
   const [activeTab, setActiveTab] = useState("Airdrop");
+  const { handleFetchUserAccount } = useContext(myWalletContext);
+  useEffect(() => {
+    const data = async () => {
+      try {
+        const result = await handleFetchUserAccount();
+       /*  const date = new Date(
+          Number(result.dateRegistered.toString()) * 1000
+        ).toLocaleDateString("en-GB"); */
+
+        console.log(result.pendingRewards
+);
+
+        /* setUserTask(completedCount); */
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    data();
+  }, []);
 
   return (
     <div className="w-full p-3 md:p-6 pb-10 space-y-6">

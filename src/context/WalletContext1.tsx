@@ -16,6 +16,7 @@ interface WalletContextProps {
   handlePlatformStats: () => Promise<any>;
   handleSocialTask: (taskType: number, proof: string) => Promise<any>;
   handleUserTasks: () => Promise<any>;
+  handleFetchUserAccount: () => Promise<any>;
 }
 
 export const myWalletContext = createContext<WalletContextProps | null>(null);
@@ -64,29 +65,46 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       const anchProvider = getProvider();
       const userPublicKey = anchProvider.publicKey;
       const program = new Program<TopxAirdrop>(idl_object, anchProvider);
+      console.log("\n=== GETTING USER BALANCE ===");
 
       const userPubKey =
         typeof userPublicKey === "string"
           ? new PublicKey(userPublicKey)
           : userPublicKey;
 
+      console.log("\n=== REGISTERING USER ===");
+
+      // Derive user account PDA
+
       const [userAccountPda] = PublicKey.findProgramAddressSync(
         [Buffer.from("user_account"), userPubKey.toBuffer()],
         program.programId
       );
 
+      // Derive PDA for airdrop state
       const [airdropStatePda] = PublicKey.findProgramAddressSync(
         [Buffer.from("airdrop_state")],
         program.programId
       );
 
+      console.log("User:", userPubKey.toString());
+      console.log("User Account PDA:", userAccountPda.toString());
+
+      // Check if user is already registered
       try {
         const existingUser = await program.account.userAccount.fetch(
           userAccountPda
         );
-        console.log("User already registered:", existingUser);
+        console.log("User already registered:", {
+          user: existingUser.user.toString(),
+          referrer: existingUser.referrer
+            ? existingUser.referrer.toString()
+            : "None",
+          pendingRewards: existingUser.pendingRewards.toString(),
+          referralsCount: existingUser.referralsCount,
+        });
         return existingUser;
-      } catch (_) {
+      } catch (e) {
         console.log("User not registered yet. Proceeding...");
       }
 
@@ -95,11 +113,15 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
 
       if (referrerPublicKey) {
         referrer = new PublicKey(referrerPublicKey);
+
+        // Derive referrer account PDA
         const [referrerAccountPda] = PublicKey.findProgramAddressSync(
           [Buffer.from("user_account"), referrer.toBuffer()],
           program.programId
         );
-        referrerAccount = referrerAccountPda;
+        const referrerAccount = referrerAccountPda;
+        console.log("Referrer:", referrer.toString());
+        console.log("Referrer Account PDA:", referrerAccount.toString());
       }
 
       const accounts: any = {
@@ -114,18 +136,37 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         accounts.referrerAccount = referrerAccount;
       }
 
+      console.log("Registering user...");
       const tx = await program.methods
         .registerUser(referrer)
         .accounts(accounts)
         .rpc();
       console.log("✅ User registered successfully!", tx);
+      console.log(
+        "View on Explorer: https://explorer.solana.com/tx/" +
+          tx +
+          "?cluster=devnet"
+      );
 
+      // Verify registration
       const userAccount = await program.account.userAccount.fetch(
         userAccountPda
       );
+      console.log("User account:", {
+        user: userAccount.user.toString(),
+        referrer: userAccount.referrer
+          ? userAccount.referrer.toString()
+          : "None",
+        pendingRewards: userAccount.pendingRewards.toString(),
+        dateRegistered: new Date(
+          Number(userAccount.dateRegistered) * 1000
+        ).toLocaleDateString("en-GB"),
+      });
+
       return userAccount;
     } catch (err: any) {
       console.error("❌ Failed to register user:", err.message);
+
       if (err.logs) {
         err.logs.forEach((log: string) => console.log(log));
       }
@@ -257,30 +298,29 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       // Convert taskType to the enum format expected by the program
 
       // ✅ Define strict SocialTaskType enum
-    type SocialTaskType =
-      | { followTwitter: {} }
-      | { likeAndRetweetPinned: {} }
-      | { joinTelegramGroup: {} }
-      | { joinTelegramChannel: {} }
-      | { joinDiscordServer: {} }
-      | { subscribeYouTube: {} };
+      type SocialTaskType =
+        | { followTwitter: {} }
+        | { likeAndRetweetPinned: {} }
+        | { joinTelegramGroup: {} }
+        | { joinTelegramChannel: {} }
+        | { joinDiscordServer: {} }
+        | { subscribeYouTube: {} };
 
-    // ✅ Strict enumMap matching Anchor expected types
-    const enumMap: Record<number, SocialTaskType> = {
-      0: { followTwitter: {} },
-      1: { likeAndRetweetPinned: {} },
-      2: { joinTelegramGroup: {} },
-      3: { joinTelegramChannel: {} },
-      4: { joinDiscordServer: {} },
-      5: { subscribeYouTube: {} },
-    };
+      // ✅ Strict enumMap matching Anchor expected types
+      const enumMap: Record<number, SocialTaskType> = {
+        0: { followTwitter: {} },
+        1: { likeAndRetweetPinned: {} },
+        2: { joinTelegramGroup: {} },
+        3: { joinTelegramChannel: {} },
+        4: { joinDiscordServer: {} },
+        5: { subscribeYouTube: {} },
+      };
 
-    const socialTaskType = enumMap[taskType];
+      const socialTaskType = enumMap[taskType];
 
-    if (!socialTaskType) {
-      throw new Error("Invalid task type index: " + taskType);
-    }
-
+      if (!socialTaskType) {
+        throw new Error("Invalid task type index: " + taskType);
+      }
 
       console.log("Completing social task...");
       const tx = await program.methods
@@ -375,6 +415,48 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
     }
   };
 
+  const handleFetchUserAccount = async (): Promise<any> => {
+  try {
+    const anchProvider = getProvider();
+    const userPublicKey = anchProvider.publicKey;
+    const program = new Program<TopxAirdrop>(idl_object, anchProvider);
+
+    const userPubKey =
+      typeof userPublicKey === "string"
+        ? new PublicKey(userPublicKey)
+        : userPublicKey;
+
+    // Derive user account PDA
+    const [userAccountPda] = PublicKey.findProgramAddressSync(
+      [Buffer.from("user_account"), userPubKey.toBuffer()],
+      program.programId
+    );
+
+    const userAccount = await program.account.userAccount.fetch(userAccountPda);
+
+    console.log("✅ User account found:", {
+      user: userAccount.user.toString(),
+      referrer: userAccount.referrer
+        ? userAccount.referrer.toString()
+        : "None",
+      pendingRewards: userAccount.pendingRewards.toString(),
+      dateRegistered: new Date(
+        Number(userAccount.dateRegistered) * 1000
+      ).toLocaleDateString("en-GB"),
+    });
+
+    return userAccount;
+  } catch (err: any) {
+    console.error("❌ Failed to fetch user account:", err.message);
+
+    if (err.logs) {
+      err.logs.forEach((log: string) => console.log(log));
+    }
+
+    throw err;
+  }
+};
+
   return (
     <myWalletContext.Provider
       value={{
@@ -384,6 +466,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         handlePlatformStats,
         handleSocialTask,
         handleUserTasks,
+        handleFetchUserAccount,
       }}
     >
       {children}
@@ -392,163 +475,3 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
 };
 
 export default myWalletContext;
-
-/* import React, { createContext, useEffect, useState, ReactNode } from "react";
-import {
-  useWallet,
-  useConnection,
-} from "@solana/wallet-adapter-react";
-
-import {
-  Program,
-  AnchorProvider,
-  web3,
-  utils,
-  BN,
-  setProvider,
-} from "@coral-xyz/anchor";
-import idl from "../idl/idl.json";
-import { TopxAirdrop } from "../idl/topx_airdrop";
-import { PublicKey } from "@solana/web3.js";
-
-const idl_string = JSON.stringify(idl);
-const idl_object = JSON.parse(idl_string);
-const programID = new PublicKey(idl.address);
-
-interface WalletContextProps {
-  name: string;
-  handleCompleteTask: () => Promise<void>;
-  handleStats: () => Promise<void>;
-  handleTasks: () => Promise<void>;
-  handlebalance: () => Promise<void>;
-}
-
-export const myWalletContext = createContext<WalletContextProps | null>(null);
-
-interface WalletProviderProps {
-  children: ReactNode;
-}
-
-export const WalletContextProvider: React.FC<WalletProviderProps> = ({
-  children,
-}) => {
-  const name = "devlight";
-
-  const myWallet = useWallet();
-  const { connection } = useConnection();
-  const [saveState, setSaveState] = useState<any[]>([]);
-
-  const getProvider = (): AnchorProvider => {
-    if (
-      !myWallet.publicKey ||
-      !myWallet.signTransaction ||
-      !myWallet.signAllTransactions
-    ) {
-      throw new Error("Wallet not connected or missing signing methods");
-    }
-
-    const wallet = {
-      publicKey: myWallet.publicKey,
-      signTransaction: myWallet.signTransaction,
-      signAllTransactions: myWallet.signAllTransactions,
-    };
-
-    const provider = new AnchorProvider(
-      connection,
-      wallet,
-      AnchorProvider.defaultOptions()
-    );
-
-    setProvider(provider);
-    return provider;
-  };
-
-  const handleCompleteTask = async (): Promise<void> => {
-    try {
-      const anchProvider = getProvider();
-      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
-
-      await program.methods
-        .completeSocialTask({ followTwitter: {} }, "New Bank")
-        .accounts({
-          user: anchProvider.publicKey,
-        })
-        .rpc();
-
-      console.log("Wow, you just followed our twitterpage");
-    } catch (error) {
-      console.error("Error while following twitter " + error);
-    }
-  };
-
-  const handlebalance = async (): Promise<void> => {
-    if (!myWallet?.publicKey) throw new Error("Wallet not connected");
-
-    try {
-      const anchProvider = getProvider();
-      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
-
-      const balance = await program.methods
-        .getUserBalance()
-        .accounts({})
-        .view();
-
-      console.log("balance" + balance);
-    } catch (error) {
-      console.error("Error fetching balance " + error);
-    }
-  };
-
-  const handleStats = async (): Promise<void> => {
-    if (!myWallet?.publicKey) throw new Error("Wallet not connected");
-
-    try {
-      const anchProvider = getProvider();
-      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
-
-      const stats = await program.methods
-        .getPlatformStats()
-        .accounts({})
-        .view();
-
-      console.log("stats" + stats);
-    } catch (error) {
-      console.error("Error fetching stats " + error);
-    }
-  };
-
-  const handleTasks = async (): Promise<void> => {
-    if (!myWallet?.publicKey) throw new Error("Wallet not connected");
-
-    try {
-      const anchProvider = getProvider();
-      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
-
-      // Uncomment and use if needed:
-     
-
-      const stats = await program.methods.getUserTasks().accounts({}).view();
-
-      console.log("stats" + stats);
-    } catch (error) {
-      console.error("Error fetching Task " + error);
-    }
-  };
-
-  return (
-    <myWalletContext.Provider
-      value={{
-        name,
-        handleCompleteTask,
-        handleStats,
-        handleTasks,
-        handlebalance,
-      }}
-    >
-      {children}
-    </myWalletContext.Provider>
-  );
-};
-
-export default myWalletContext;
- */

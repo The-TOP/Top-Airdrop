@@ -15,8 +15,8 @@ import {
 } from "@solana/wallet-adapter-wallets";
 
 // Buffer polyfill
-/* import { Buffer } from "buffer";
-globalThis.Buffer = Buffer; */
+ import { Buffer } from "buffer";
+globalThis.Buffer = Buffer; 
 
 function Providers() {
   const network = "devnet";
