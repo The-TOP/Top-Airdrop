@@ -72,7 +72,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
           ? new PublicKey(userPublicKey)
           : userPublicKey;
 
-      console.log("\n=== REGISTERING USER ===");
+      alert("\n=== REGISTERING USER ===");
 
       // Derive user account PDA
 
@@ -105,7 +105,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         });
         return existingUser;
       } catch (e) {
-        console.log("User not registered yet. Proceeding...");
+        alert("User not registered yet. Proceeding...");
       }
 
       let referrerAccount: PublicKey | null = null;
@@ -136,12 +136,13 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         accounts.referrerAccount = referrerAccount;
       }
 
-      console.log("Registering user...");
+      alert("Registering user...");
       const tx = await program.methods
         .registerUser(referrer)
         .accounts(accounts)
         .rpc();
       console.log("✅ User registered successfully!", tx);
+      alert("✅ User registered successfully!");
       console.log(
         "View on Explorer: https://explorer.solana.com/tx/" +
           tx +
@@ -166,7 +167,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       return userAccount;
     } catch (err: any) {
       console.error("❌ Failed to register user:", err.message);
-
+       alert("failed to register")
       if (err.logs) {
         err.logs.forEach((log: string) => console.log(log));
       }
