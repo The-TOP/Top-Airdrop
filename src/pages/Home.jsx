@@ -6,31 +6,28 @@ import DataContext from "../context/DataContext";
 import myWalletContext from "../context/WalletContext1";
 
 const Home = () => {
-  const { connected, publicKey} = useWallet();
-  const address = publicKey?.toString()
+  const { connected, publicKey } = useWallet();
+  /* const address = publicKey?.toString(); */
   const navigate = useNavigate();
-  const { handleRegisterUser, } = useContext(myWalletContext);
-  const { ondashboard,   } =
-    useContext(DataContext);
+  const { handleRegisterUser } = useContext(myWalletContext);
+  const { ondashboard } = useContext(DataContext);
 
   useEffect(() => {
     if (connected && !ondashboard) {
       navigate("/dashboard");
     }
   }, [connected]);
-  console.log(address);
-  
+  /* console.log(address); */
 
   useEffect(() => {
-    if (connected ) {
+    if (connected) {
       handleRegisterUser();
     }
   }, [connected, publicKey]);
 
-
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden">
-     <div className="text-center">{address}</div> <Hero />
+       <Hero />
     </main>
   );
 };

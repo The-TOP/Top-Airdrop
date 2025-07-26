@@ -9,6 +9,7 @@ import EmailModal from "../modal/EmailModal";
 import { FaDiscord, FaTelegram, FaYoutube } from "react-icons/fa";
 import myWalletContext from "../context/WalletContext1";
 import { useWallet } from "@solana/wallet-adapter-react";
+import TaskCard from "../component/task/TaskCard";
 
 const Tasks = () => {
   const { handleUserTasks, handleSocialTask } = useContext(myWalletContext);
@@ -47,6 +48,12 @@ const Tasks = () => {
   const [trackLoading2, setTrackLoading2] = useState(false);
   const [trackLoading3, setTrackLoading3] = useState(false);
   const [trackLoading4, setTrackLoading4] = useState(false);
+
+  const [checkState, setcheckState] = useState(false);
+  const [checkState1, setcheckState1] = useState(false);
+  const [checkState2, setcheckState2] = useState(false);
+  const [checkState3, setcheckState3] = useState(false);
+  const [checkState4, setcheckState4] = useState(false);
 
   return (
     <motion.div
@@ -124,81 +131,100 @@ const Tasks = () => {
           Earn free $TOP tokens by simply engaging with us online!
         </p>
       </div>
-      <SocialtaskCard
+
+      <TaskCard
         textcolor={"text-white/80"}
         title={"Twitter (X)"}
         description={"Follow TOP on Twitter (X)"}
         buttonDisabled={claimed?.twitter}
         onButtonClick={() => {
           setTrackLoading(true);
+
           window.open("https://x.com/theTOPXchange", "_blank");
+
           setTimeout(() => {
-            handleSocialTask(1, address);
             setTrackLoading(false);
-          }, 5000);
+            setcheckState(true);
+          }, 300000);
         }}
+        onButtonClick2={() => handleSocialTask(1, address)}
         Icon={FaSquareXTwitter}
         buttonLabel={"Go"}
         borderstyle={"rounded-t-xl"}
         trackLoading={trackLoading}
+        check={checkState}
       />
-      <SocialtaskCard
+
+      <TaskCard
         textcolor={"text-white/80"}
         title={"Telegram"}
         description={"Join the Telegram Community"}
         buttonDisabled={claimed.telegram}
         onButtonClick={() => {
           setTrackLoading1(true);
+
           window.open(" https://t.me/ProtocolChain", "_blank");
+
           setTimeout(() => {
-            handleSocialTask(2, address);
             setTrackLoading1(false);
-          }, 5000);
+            setcheckState1(true);
+          }, 300000);
         }}
+        onButtonClick2={() => handleSocialTask(2, address)}
         Icon={FaTelegram}
         buttonLabel={"Go"}
         borderstyle={""}
         trackLoading={trackLoading1}
+        check={checkState1}
       />
 
-      <SocialtaskCard
+      <TaskCard
         textcolor={"text-white/80"}
         title={"Telegram"}
         description={"Join our Telegram Channel"}
         buttonDisabled={claimed.channel}
         onButtonClick={() => {
           setTrackLoading2(true);
+
           window.open("https://t.me/theTOPXchange", "_blank");
 
           setTimeout(() => {
-            handleSocialTask(3, address);
             setTrackLoading2(false);
-          }, 5000);
+            setcheckState2(true);
+          }, 300000);
         }}
+        onButtonClick2={() => handleSocialTask(3, address)}
         Icon={FaTelegram}
         buttonLabel={"Go"}
         borderstyle={""}
         trackLoading={trackLoading2}
+        check={checkState2}
       />
-      <SocialtaskCard
+
+      <TaskCard
         textcolor={"text-white/80"}
         title={"Discord"}
         description={"Join the Discord Community"}
         buttonDisabled={claimed.discord}
         onButtonClick={() => {
           setTrackLoading3(true);
+
           window.open("https://discord.gg/YM4d3m2deg", "_blank");
+
           setTimeout(() => {
-            handleSocialTask(4, address);
             setTrackLoading3(false);
-          }, 50000);
+            setcheckState3(true);
+          }, 300000);
         }}
+        onButtonClick2={() => handleSocialTask(4, address)}
         Icon={FaDiscord}
         buttonLabel={"Go"}
         borderstyle={""}
         trackLoading={trackLoading3}
+        check={checkState3}
       />
-      <SocialtaskCard
+
+      <TaskCard
         textcolor={"text-white/80"}
         title={"Youtube"}
         description={"Subscribe to Youtube channel"}
@@ -212,14 +238,16 @@ const Tasks = () => {
           );
 
           setTimeout(() => {
-            handleSocialTask(5, address);
             setTrackLoading4(false);
-          }, 50000);
+            setcheckState4(true);
+          }, 300000);
         }}
+        onButtonClick2={() => handleSocialTask(5, address)}
         Icon={FaYoutube}
         buttonLabel={"Go"}
         borderstyle={"rounded-b-xl"}
         trackLoading={trackLoading4}
+        check={checkState4}
       />
 
       <AirdropModal
@@ -240,3 +268,24 @@ const Tasks = () => {
 };
 
 export default Tasks;
+
+{
+  /*   <SocialtaskCard
+        textcolor={"text-white/80"}
+        title={"Telegram"}
+        description={"Join the Telegram Community"}
+        buttonDisabled={claimed.telegram}
+        onButtonClick={() => {
+          setTrackLoading1(true);
+          window.open(" https://t.me/ProtocolChain", "_blank");
+          setTimeout(() => {
+            handleSocialTask(2, address);
+            setTrackLoading1(false);
+          }, 5000);
+        }}
+        Icon={FaTelegram}
+        buttonLabel={"Go"}
+        borderstyle={""}
+        trackLoading={trackLoading1}
+      /> */
+}

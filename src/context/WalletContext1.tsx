@@ -72,8 +72,8 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
           ? new PublicKey(userPublicKey)
           : userPublicKey;
 
-      alert("\n=== REGISTERING USER ===");
-      if (userPublicKey) alert("publickey active")
+      console.log("\n=== REGISTERING USER ===");
+      /* if (userPublicKey) alert("publickey active"); */
 
       // Derive user account PDA
 
@@ -104,10 +104,12 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
           pendingRewards: existingUser.pendingRewards.toString(),
           referralsCount: existingUser.referralsCount,
         });
-        alert("user already registered")
+       /*  alert("user already registered"); */
+        console.log("user already registered");
         return existingUser;
       } catch (e) {
-        alert("User not registered yet. Proceeding...");
+        console.log("User not registered yet. Proceeding...");
+        /* alert("User not registered yet. Proceeding..."); */
       }
 
       let referrerAccount: PublicKey | null = null;
@@ -138,13 +140,14 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         accounts.referrerAccount = referrerAccount;
       }
 
-      alert("Registering user...");
+     /*  alert("Registering user..."); */
+      console.log("Registering user...");
       const tx = await program.methods
         .registerUser(referrer)
         .accounts(accounts)
         .rpc();
       console.log("✅ User registered successfully!", tx);
-      alert("✅ User registered successfully!");
+     /*  alert("✅ User registered successfully!"); */
       console.log(
         "View on Explorer: https://explorer.solana.com/tx/" +
           tx +
@@ -169,7 +172,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       return userAccount;
     } catch (err: any) {
       console.error("❌ Failed to register user:", err.message);
-       alert("failed to register")
+     /*  alert("failed to register"); */
       if (err.logs) {
         err.logs.forEach((log: string) => console.log(log));
       }
@@ -419,46 +422,48 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
   };
 
   const handleFetchUserAccount = async (): Promise<any> => {
-  try {
-    const anchProvider = getProvider();
-    const userPublicKey = anchProvider.publicKey;
-    const program = new Program<TopxAirdrop>(idl_object, anchProvider);
+    try {
+      const anchProvider = getProvider();
+      const userPublicKey = anchProvider.publicKey;
+      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
 
-    const userPubKey =
-      typeof userPublicKey === "string"
-        ? new PublicKey(userPublicKey)
-        : userPublicKey;
+      const userPubKey =
+        typeof userPublicKey === "string"
+          ? new PublicKey(userPublicKey)
+          : userPublicKey;
 
-    // Derive user account PDA
-    const [userAccountPda] = PublicKey.findProgramAddressSync(
-      [Buffer.from("user_account"), userPubKey.toBuffer()],
-      program.programId
-    );
+      // Derive user account PDA
+      const [userAccountPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("user_account"), userPubKey.toBuffer()],
+        program.programId
+      );
 
-    const userAccount = await program.account.userAccount.fetch(userAccountPda);
+      const userAccount = await program.account.userAccount.fetch(
+        userAccountPda
+      );
 
-    console.log("✅ User account found:", {
-      user: userAccount.user.toString(),
-      referrer: userAccount.referrer
-        ? userAccount.referrer.toString()
-        : "None",
-      pendingRewards: userAccount.pendingRewards.toString(),
-      dateRegistered: new Date(
-        Number(userAccount.dateRegistered) * 1000
-      ).toLocaleDateString("en-GB"),
-    });
+      console.log("✅ User account found:", {
+        user: userAccount.user.toString(),
+        referrer: userAccount.referrer
+          ? userAccount.referrer.toString()
+          : "None",
+        pendingRewards: userAccount.pendingRewards.toString(),
+        dateRegistered: new Date(
+          Number(userAccount.dateRegistered) * 1000
+        ).toLocaleDateString("en-GB"),
+      });
 
-    return userAccount;
-  } catch (err: any) {
-    console.error("❌ Failed to fetch user account:", err.message);
+      return userAccount;
+    } catch (err: any) {
+      console.error("❌ Failed to fetch user account:", err.message);
 
-    if (err.logs) {
-      err.logs.forEach((log: string) => console.log(log));
+      if (err.logs) {
+        err.logs.forEach((log: string) => console.log(log));
+      }
+
+      throw err;
     }
-
-    throw err;
-  }
-};
+  };
 
   return (
     <myWalletContext.Provider

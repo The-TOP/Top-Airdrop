@@ -220,6 +220,23 @@ const Activity = () => {
         ? address.slice(0, 5) + "...." + address.slice(-4)
         : "xxxxx....xxxx",
 
+      task: "Join Telegram Channel ",
+      date: accountData.dateRegistered
+        ? new Date(
+            Number(accountData.dateRegistered.toString()) * 1000
+          ).toLocaleDateString("en-GB")
+        : "loadin...",
+
+      reward: "+10 000",
+      status: taskStatus[3] ? "Claimed" : "UnClaimed",
+      claimed: taskStatus[3],
+      profile: profile,
+    },
+    {
+      account: address
+        ? address.slice(0, 5) + "...." + address.slice(-4)
+        : "xxxxx....xxxx",
+
       task: "Join Our Discord ",
       date: accountData.dateRegistered
         ? new Date(
