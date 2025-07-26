@@ -191,7 +191,7 @@ const Tasks = () => {
           setTimeout(() => {
             handleSocialTask(4, address);
             setTrackLoading3(false);
-          }, 5000);
+          }, 50000);
         }}
         Icon={FaDiscord}
         buttonLabel={"Go"}
