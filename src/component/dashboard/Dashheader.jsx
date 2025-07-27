@@ -6,7 +6,8 @@ import myWalletContext from "../../context/WalletContext1";
 import DataContext from "../../context/DataContext";
 
 const Dashheader = ({ xstyle }) => {
-  const wallet = useWallet().publicKey.toString();
+  const { publicKey } = useWallet();
+  const wallet = publicKey ? publicKey.toString() : null;
   const {
     handleUserBalance,
     handlePlatformStats,
@@ -14,7 +15,7 @@ const Dashheader = ({ xstyle }) => {
     handleFetchUserAccount,
   } = useContext(myWalletContext);
 
-  const { userBalance, setUserbalance, setUserReferral, setUserTask } =
+  const { userBalance, setUserbalance, setUserReferral, setUserTask, refresh } =
     useContext(DataContext);
 
   useEffect(() => {
@@ -35,21 +36,14 @@ const Dashheader = ({ xstyle }) => {
     };
 
     fetchData();
-  }, []);
+  }, [refresh]);
 
   return (
     <div
       className={`flex rounded-bl-xl bg-white/10 justify-between gap-3 items-center px-4 py-3 ${xstyle}`}
     >
       <div className="flex justify-center items-center gap-2">
-        <img
-          src={miniLogo}
-          className="w-5"
-          alt="top"
-          onClick={() => {
-            console.log(handlePlatformStats());
-          }}
-        />
+        <img src={miniLogo} className="w-5" alt="top" />
         <p className="text-xs"> {userBalance} </p>
       </div>
       <div className="flex gap-2 justify-center items-center">

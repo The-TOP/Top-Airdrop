@@ -10,9 +10,12 @@ import { FaDiscord, FaTelegram, FaYoutube } from "react-icons/fa";
 import myWalletContext from "../context/WalletContext1";
 import { useWallet } from "@solana/wallet-adapter-react";
 import TaskCard from "../component/task/TaskCard";
+import useTaskTimer from "../hook/useTaskTimer";
+import DataContext from "../context/DataContext";
 
 const Tasks = () => {
   const { handleUserTasks, handleSocialTask } = useContext(myWalletContext);
+  const {setRefresh} = useContext(DataContext);
   const { publicKey } = useWallet();
   const address = publicKey.toString();
 
@@ -43,7 +46,7 @@ const Tasks = () => {
   const [OpenAirdropModal, setOpenAirdropModal] = useState(false);
   const [OpenEmailModal, setOpenEmailModal] = useState(false);
 
-  const [trackLoading, setTrackLoading] = useState(false);
+/*   const [trackLoading, setTrackLoading] = useState(false);
   const [trackLoading1, setTrackLoading1] = useState(false);
   const [trackLoading2, setTrackLoading2] = useState(false);
   const [trackLoading3, setTrackLoading3] = useState(false);
@@ -53,7 +56,13 @@ const Tasks = () => {
   const [checkState1, setcheckState1] = useState(false);
   const [checkState2, setcheckState2] = useState(false);
   const [checkState3, setcheckState3] = useState(false);
-  const [checkState4, setcheckState4] = useState(false);
+  const [checkState4, setcheckState4] = useState(false); */
+
+  const twitterTimer = useTaskTimer("task_start_twitter");
+  const telegramTimer = useTaskTimer("task_start_telegram");
+  const channelTimer = useTaskTimer("task_start_channel");
+  const discordTimer = useTaskTimer("task_start_discord");
+  const youtubeTimer = useTaskTimer("task_start_youtube");
 
   return (
     <motion.div
@@ -136,23 +145,20 @@ const Tasks = () => {
         textcolor={"text-white/80"}
         title={"Twitter (X)"}
         description={"Follow TOP on Twitter (X)"}
-        buttonDisabled={claimed?.twitter}
+        buttonDisabled={claimed.twitter}
         onButtonClick={() => {
-          setTrackLoading(true);
-
+          twitterTimer.startTimer(); // Start and store timestamp
           window.open("https://x.com/theTOPXchange", "_blank");
-
-          setTimeout(() => {
-            setTrackLoading(false);
-            setcheckState(true);
-          }, 300000);
         }}
-        onButtonClick2={() => handleSocialTask(1, address)}
+        onButtonClick2={async () => {
+          await handleSocialTask(1, address);
+           setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+        }}
         Icon={FaSquareXTwitter}
         buttonLabel={"Go"}
         borderstyle={"rounded-t-xl"}
-        trackLoading={trackLoading}
-        check={checkState}
+        trackLoading={twitterTimer.loading}
+        check={twitterTimer.check}
       />
 
       <TaskCard
@@ -161,21 +167,19 @@ const Tasks = () => {
         description={"Join the Telegram Community"}
         buttonDisabled={claimed.telegram}
         onButtonClick={() => {
-          setTrackLoading1(true);
+           telegramTimer.startTimer(); // Start and store timestamp
 
           window.open(" https://t.me/ProtocolChain", "_blank");
-
-          setTimeout(() => {
-            setTrackLoading1(false);
-            setcheckState1(true);
-          }, 300000);
         }}
-        onButtonClick2={() => handleSocialTask(2, address)}
+        onButtonClick2={async () => {
+          await handleSocialTask(2, address);
+           setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+        }}
         Icon={FaTelegram}
         buttonLabel={"Go"}
         borderstyle={""}
-        trackLoading={trackLoading1}
-        check={checkState1}
+        trackLoading={telegramTimer.loading}
+        check={telegramTimer.check}
       />
 
       <TaskCard
@@ -184,21 +188,19 @@ const Tasks = () => {
         description={"Join our Telegram Channel"}
         buttonDisabled={claimed.channel}
         onButtonClick={() => {
-          setTrackLoading2(true);
+           channelTimer.startTimer(); // Start and store timestamp
 
           window.open("https://t.me/theTOPXchange", "_blank");
-
-          setTimeout(() => {
-            setTrackLoading2(false);
-            setcheckState2(true);
-          }, 300000);
         }}
-        onButtonClick2={() => handleSocialTask(3, address)}
+          onButtonClick2={async () => {
+          await handleSocialTask(3, address);
+           setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+        }}
         Icon={FaTelegram}
         buttonLabel={"Go"}
         borderstyle={""}
-        trackLoading={trackLoading2}
-        check={checkState2}
+        trackLoading={channelTimer.loading}
+        check={channelTimer.check}
       />
 
       <TaskCard
@@ -207,21 +209,20 @@ const Tasks = () => {
         description={"Join the Discord Community"}
         buttonDisabled={claimed.discord}
         onButtonClick={() => {
-          setTrackLoading3(true);
+           discordTimer.startTimer(); // Start and store timestamp
 
           window.open("https://discord.gg/YM4d3m2deg", "_blank");
 
-          setTimeout(() => {
-            setTrackLoading3(false);
-            setcheckState3(true);
-          }, 300000);
         }}
-        onButtonClick2={() => handleSocialTask(4, address)}
+         onButtonClick2={async () => {
+          await handleSocialTask(4, address);
+           setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+        }}
         Icon={FaDiscord}
         buttonLabel={"Go"}
         borderstyle={""}
-        trackLoading={trackLoading3}
-        check={checkState3}
+         trackLoading={discordTimer.loading}
+        check={discordTimer.check}
       />
 
       <TaskCard
@@ -230,25 +231,23 @@ const Tasks = () => {
         description={"Subscribe to Youtube channel"}
         buttonDisabled={claimed.youtube}
         onButtonClick={() => {
-          setTrackLoading4(true);
-
+          youtubeTimer.startTimer();
           window.open(
             "https://youtube.com/@topxchange?feature=shared",
             "_blank"
           );
-
-          setTimeout(() => {
-            setTrackLoading4(false);
-            setcheckState4(true);
-          }, 300000);
         }}
-        onButtonClick2={() => handleSocialTask(5, address)}
+        onButtonClick2={async () => {
+          await handleSocialTask(5, address);
+           setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+        }}
         Icon={FaYoutube}
         buttonLabel={"Go"}
         borderstyle={"rounded-b-xl"}
-        trackLoading={trackLoading4}
-        check={checkState4}
+        trackLoading={youtubeTimer.loading}
+        check={youtubeTimer.check}
       />
+    
 
       <AirdropModal
         isOpen={OpenAirdropModal}

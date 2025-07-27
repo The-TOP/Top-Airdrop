@@ -9,7 +9,6 @@ const AirdropModal = ({ isOpen, onClose, setClaimed, status }) => {
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
- 
 
   const modalVariants = {
     hidden: { opacity: 0, scale: 0.9 },
@@ -37,8 +36,8 @@ const AirdropModal = ({ isOpen, onClose, setClaimed, status }) => {
             {/* Close Button */}
             <button
               onClick={() => {
-                      onClose(false), setStep(1);
-                    }}
+                onClose(false), setStep(1);
+              }}
               className="absolute top-4 right-4 text-white/60 hover:text-white transition"
             >
               <FaTimes />
@@ -81,9 +80,7 @@ const AirdropModal = ({ isOpen, onClose, setClaimed, status }) => {
                     whileTap={{ scale: 0.95 }}
                     onClick={() => {
                       setClaimed();
-                      setTimeout(() => {
-                        nextStep();
-                      }, 10000);
+                      nextStep();
                     }}
                     className="bg-black hover:bg-green-500/30 border border-green-400 text-white py-2 px-6 rounded-full text-sm"
                   >

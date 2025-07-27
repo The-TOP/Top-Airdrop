@@ -11,6 +11,7 @@ export const DataProvider = ({ children }) => {
   const [userBalance, setUserbalance] = useState("00000");
   const [userReferral, setUserReferral] = useState("000");
   const [homeModal, setHomeModal] = useState(false);
+  const [refresh, setRefresh] = useState(0);
   const connected = useWallet().connected;
   const handleDashBordNav = () => {
     if (!connected) {
@@ -21,7 +22,6 @@ export const DataProvider = ({ children }) => {
   };
   const [isCountdownComplete, setIsCountdownComplete] = useState(false);
   const targetDate = new Date("2025-08-13T00:00:00Z");
-  
 
   return (
     <DataContext.Provider
@@ -40,6 +40,8 @@ export const DataProvider = ({ children }) => {
         setUserReferral,
         userTask,
         setUserTask,
+        refresh,
+        setRefresh,
       }}
     >
       {children}
