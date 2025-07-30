@@ -46,17 +46,6 @@ const Tasks = () => {
   const [OpenAirdropModal, setOpenAirdropModal] = useState(false);
   const [OpenEmailModal, setOpenEmailModal] = useState(false);
 
-/*   const [trackLoading, setTrackLoading] = useState(false);
-  const [trackLoading1, setTrackLoading1] = useState(false);
-  const [trackLoading2, setTrackLoading2] = useState(false);
-  const [trackLoading3, setTrackLoading3] = useState(false);
-  const [trackLoading4, setTrackLoading4] = useState(false);
-
-  const [checkState, setcheckState] = useState(false);
-  const [checkState1, setcheckState1] = useState(false);
-  const [checkState2, setcheckState2] = useState(false);
-  const [checkState3, setcheckState3] = useState(false);
-  const [checkState4, setcheckState4] = useState(false); */
 
   const twitterTimer = useTaskTimer("task_start_twitter");
   const telegramTimer = useTaskTimer("task_start_telegram");
@@ -211,7 +200,7 @@ const Tasks = () => {
         onButtonClick={() => {
            discordTimer.startTimer(); // Start and store timestamp
 
-          window.open("https://discord.gg/YM4d3m2deg", "_blank");
+          window.open(" https://discord.gg/yTxsnK6CgA", "_blank");
 
         }}
          onButtonClick2={async () => {

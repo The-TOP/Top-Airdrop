@@ -6,13 +6,14 @@ import myWalletContext from "../../context/WalletContext1";
 import DataContext from "../../context/DataContext";
 
 const Dashheader = ({ xstyle }) => {
+  const check = useWallet();
   const { publicKey } = useWallet();
   const wallet = publicKey ? publicKey.toString() : null;
   const {
     handleUserBalance,
     handlePlatformStats,
     handleUserTasks,
-    handleFetchUserAccount,
+    handleWithdrawTokens,
   } = useContext(myWalletContext);
 
   const { userBalance, setUserbalance, setUserReferral, setUserTask, refresh } =
@@ -43,7 +44,9 @@ const Dashheader = ({ xstyle }) => {
       className={`flex rounded-bl-xl bg-white/10 justify-between gap-3 items-center px-4 py-3 ${xstyle}`}
     >
       <div className="flex justify-center items-center gap-2">
-        <img src={miniLogo} className="w-5" alt="top" />
+        <img
+        onClick={()=>{ handleWithdrawTokens(check, 5)}}
+        src={miniLogo} className="w-5" alt="top" />
         <p className="text-xs"> {userBalance} </p>
       </div>
       <div className="flex gap-2 justify-center items-center">

@@ -1,9 +1,25 @@
 import React, { createContext, useState, ReactNode, useEffect } from "react";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
-import { Program, AnchorProvider, web3, setProvider } from "@coral-xyz/anchor";
+import {
+  Program,
+  AnchorProvider,
+  web3,
+  setProvider,
+  BN,
+} from "@coral-xyz/anchor";
 import idl from "../idl/idl.json";
 import { TopxAirdrop } from "../idl/topx_airdrop";
-import { PublicKey } from "@solana/web3.js";
+import { PublicKey, Transaction } from "@solana/web3.js";
+import type { WalletContextState } from "@solana/wallet-adapter-react";
+import type { TransactionSignature } from "@solana/web3.js";
+/////////////
+/* import {
+  TOKEN_PROGRAM_ID,
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+  getAssociatedTokenAddress,
+  createAssociatedTokenAccountInstruction,
+  getAccount,
+} from "@solana/spl-token";  */
 
 const idl_string = JSON.stringify(idl);
 const idl_object = JSON.parse(idl_string);
@@ -17,6 +33,10 @@ interface WalletContextProps {
   handleSocialTask: (taskType: number, proof: string) => Promise<any>;
   handleUserTasks: () => Promise<any>;
   handleFetchUserAccount: () => Promise<any>;
+  handleWithdrawTokens: (
+    userWallet: WalletContextState,
+    amount: number
+  ) => Promise<TransactionSignature>;
 }
 
 export const myWalletContext = createContext<WalletContextProps | null>(null);
@@ -58,14 +78,14 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
     return provider;
   };
 
-  const handleRegisterUser = async (
+  /*  const handleRegisterUser = async (
     referrerPublicKey: string | null = null
   ): Promise<any> => {
     try {
       const anchProvider = getProvider();
       const userPublicKey = anchProvider.publicKey;
       const program = new Program<TopxAirdrop>(idl_object, anchProvider);
-      console.log("\n=== GETTING USER BALANCE ===");
+      
 
       const userPubKey =
         typeof userPublicKey === "string"
@@ -73,7 +93,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
           : userPublicKey;
 
       console.log("\n=== REGISTERING USER ===");
-      /* if (userPublicKey) alert("publickey active"); */
+    
 
       // Derive user account PDA
 
@@ -104,12 +124,12 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
           pendingRewards: existingUser.pendingRewards.toString(),
           referralsCount: existingUser.referralsCount,
         });
-       /*  alert("user already registered"); */
+       
         console.log("user already registered");
         return existingUser;
       } catch (e) {
         console.log("User not registered yet. Proceeding...");
-        /* alert("User not registered yet. Proceeding..."); */
+       
       }
 
       let referrerAccount: PublicKey | null = null;
@@ -140,14 +160,14 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         accounts.referrerAccount = referrerAccount;
       }
 
-     /*  alert("Registering user..."); */
+      
       console.log("Registering user...");
       const tx = await program.methods
         .registerUser(referrer)
         .accounts(accounts)
         .rpc();
       console.log("✅ User registered successfully!", tx);
-     /*  alert("✅ User registered successfully!"); */
+     
       console.log(
         "View on Explorer: https://explorer.solana.com/tx/" +
           tx +
@@ -172,10 +192,152 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       return userAccount;
     } catch (err: any) {
       console.error("❌ Failed to register user:", err.message);
-     /*  alert("failed to register"); */
+     
       if (err.logs) {
         err.logs.forEach((log: string) => console.log(log));
       }
+      throw err;
+    }
+  }; */
+
+  const handleRegisterUser = async (
+    referrerPublicKey: string | null = null
+  ): Promise<any> => {
+    try {
+      const anchProvider = getProvider();
+      const userPublicKey = anchProvider.publicKey;
+      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
+      const connection = anchProvider.connection;
+
+      const userPubKey =
+        typeof userPublicKey === "string"
+          ? new PublicKey(userPublicKey)
+          : userPublicKey;
+
+      console.log("\n=== REGISTERING USER ===");
+
+      // === Derive user + airdrop PDAs ===
+      const [userAccountPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("user_account"), userPubKey.toBuffer()],
+        program.programId
+      );
+
+      const [airdropStatePda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("airdrop_state")],
+        program.programId
+      );
+
+      console.log("User:", userPubKey.toString());
+      console.log("User Account PDA:", userAccountPda.toString());
+
+      // === Check if user already registered ===
+      try {
+        const existingUser = await program.account.userAccount.fetch(
+          userAccountPda
+        );
+        console.log("User already registered:", {
+          user: existingUser.user.toString(),
+          referrer: existingUser.referrer?.toString() || "None",
+          pendingRewards: existingUser.pendingRewards.toString(),
+          referralsCount: existingUser.referralsCount,
+        });
+        console.log("user already registered");
+        return existingUser;
+      } catch {
+        console.log("User not registered yet. Proceeding...");
+      }
+
+      // === Handle optional referrer ===
+      let referrer = PublicKey.default;
+      let referrerAccount: PublicKey | null = null;
+
+      if (referrerPublicKey) {
+        referrer = new PublicKey(referrerPublicKey);
+
+        const [referrerAccountPda] = PublicKey.findProgramAddressSync(
+          [Buffer.from("user_account"), referrer.toBuffer()],
+          program.programId
+        );
+
+        referrerAccount = referrerAccountPda;
+
+        console.log("Referrer:", referrer.toString());
+        console.log("Referrer Account PDA:", referrerAccount.toString());
+      }
+
+      // === Build accounts object ===
+      const accounts: any = {
+        userAccount: userAccountPda,
+        airdropState: airdropStatePda,
+        referrerAccount: null,
+        user: userPubKey,
+        systemProgram: web3.SystemProgram.programId,
+      };
+
+      if (referrerAccount) {
+        accounts.referrerAccount = referrerAccount;
+      }
+
+      // === Create transaction ===
+      const tx = new web3.Transaction();
+
+      const instruction = await program.methods
+        .registerUser(referrer)
+        .accounts(accounts)
+        .instruction();
+
+      tx.add(instruction);
+
+      const latestBlockhash = await connection.getLatestBlockhash("finalized");
+      tx.recentBlockhash = latestBlockhash.blockhash;
+      tx.feePayer = userPubKey;
+
+      // === Sign & sponsor ===
+      const signedTx = await anchProvider.wallet.signTransaction(tx);
+
+      const serialized = signedTx
+        .serialize({ requireAllSignatures: false })
+        .toString("base64");
+
+      const res = await fetch(
+        "https://solana-verification.onrender.com/sponsor/",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userTransaction: serialized,
+            userPublicKey: userPubKey.toBase58(),
+          }),
+        }
+      );
+
+      const { signature } = await res.json();
+      if (!signature) throw new Error("Sponsored transaction failed.");
+
+      console.log("✅ User registered successfully!");
+      console.log(
+        "Explorer: https://explorer.solana.com/tx/" +
+          signature +
+          "?cluster=devnet"
+      );
+
+      const userAccount = await program.account.userAccount.fetch(
+        userAccountPda
+      );
+
+      console.log("User account:", {
+        user: userAccount.user.toString(),
+        referrer: userAccount.referrer?.toString() || "None",
+        pendingRewards: userAccount.pendingRewards.toString(),
+        dateRegistered: new Date(
+          Number(userAccount.dateRegistered) * 1000
+        ).toLocaleDateString("en-GB"),
+      });
+
+      return userAccount;
+    } catch (err: any) {
+      console.error("❌ Failed to register user:", err.message);
+      if (err.logs) err.logs.forEach((log: string) => console.log(log));
       throw err;
     }
   };
@@ -259,7 +421,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
     }
   };
 
-  const handleSocialTask = async (
+  /*  const handleSocialTask = async (
     taskType: number,
     proof: string
   ): Promise<any> => {
@@ -267,7 +429,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       const anchProvider = getProvider();
       const userPublicKey = anchProvider.publicKey;
       const program = new Program<TopxAirdrop>(idl_object, anchProvider);
-      console.log("\n=== GETTING USER BALANCE ===");
+      
 
       const userPubKey =
         typeof userPublicKey === "string"
@@ -365,6 +527,142 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         err.logs.forEach((log: string) => console.log(log));
       }
 
+      throw err;
+    }
+  }; */
+
+  const handleSocialTask = async (
+    taskType: number,
+    proof: string
+  ): Promise<any> => {
+    try {
+      const anchProvider = getProvider();
+      const connection = anchProvider.connection;
+      const userPublicKey = anchProvider.publicKey;
+      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
+
+      const userPubKey =
+        typeof anchProvider.publicKey === "string"
+          ? new PublicKey(userPublicKey)
+          : userPublicKey;
+
+      // Task type mapping
+      const taskTypes = {
+        0: "FollowTwitter",
+        1: "LikeAndRetweetPinned",
+        2: "JoinTelegramGroup",
+        3: "JoinTelegramChannel",
+        4: "JoinDiscordServer",
+        5: "SubscribeYouTube",
+      };
+
+      // === Derive PDAs ===
+      const [userAccountPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("user_account"), userPubKey.toBuffer()],
+        program.programId
+      );
+
+      const [airdropStatePda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("airdrop_state")],
+        program.programId
+      );
+
+      console.log(`Task: ${taskTypes[taskType] || taskType}`);
+      console.log(`Proof: ${proof}`);
+
+      // Convert taskType to the enum format expected by the program
+
+      // ✅ Define strict SocialTaskType enum
+      type SocialTaskType =
+        | { followTwitter: {} }
+        | { likeAndRetweetPinned: {} }
+        | { joinTelegramGroup: {} }
+        | { joinTelegramChannel: {} }
+        | { joinDiscordServer: {} }
+        | { subscribeYouTube: {} };
+
+      // ✅ Strict enumMap matching Anchor expected types
+      const enumMap: Record<number, SocialTaskType> = {
+        0: { followTwitter: {} },
+        1: { likeAndRetweetPinned: {} },
+        2: { joinTelegramGroup: {} },
+        3: { joinTelegramChannel: {} },
+        4: { joinDiscordServer: {} },
+        5: { subscribeYouTube: {} },
+      };
+      const socialTaskType = enumMap[taskType];
+
+      if (!socialTaskType) {
+        throw new Error("Invalid task type index: " + taskType);
+      }
+      console.log("Completing social task...");
+
+      // === Build Transaction ===
+      const tx = new web3.Transaction();
+
+      const instruction = await program.methods
+        .completeSocialTask(socialTaskType, proof)
+        .accounts({
+          userAccount: userAccountPda,
+          airdropState: airdropStatePda,
+          user: userPubKey,
+        })
+        .instruction();
+
+      tx.add(instruction);
+
+      // === Set blockhash & fee payer ===
+      const latestBlockhash = await connection.getLatestBlockhash("finalized");
+      tx.recentBlockhash = latestBlockhash.blockhash;
+      tx.feePayer = userPubKey;
+
+      // === Sign Locally ===
+      const signedTx = await anchProvider.wallet.signTransaction(tx);
+
+      // === Send to Sponsor Backend ===
+      const serialized = signedTx
+        .serialize({ requireAllSignatures: false })
+        .toString("base64");
+
+      const res = await fetch(
+        "https://martian-crescent-241154.postman.co/workspace/Team-Workspace~65e514e1-acdb-45f1-8ca7-b121f0041912/collection/23659108-df7020c1-a8a4-4d67-a003-a61cfb14768a?action=share&source=copy-link&creator=23659108",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userTransaction: serialized,
+            userPublicKey: userPubKey.toBase58(),
+          }),
+        }
+      );
+
+      const { signature } = await res.json();
+      if (!signature) {
+        throw new Error("Sponsored transaction failed.");
+      }
+
+      console.log("✅ Social task completed!");
+      console.log("Tx Signature:", signature);
+      console.log(
+        "Explorer: https://explorer.solana.com/tx/" +
+          signature +
+          "?cluster=devnet"
+      );
+
+      // Get updated user account
+      const userAccount = await program.account.userAccount.fetch(
+        userAccountPda
+      );
+      console.log(
+        "Updated pending rewards:",
+        userAccount.pendingRewards.toString()
+      );
+      console.log("Completed tasks:", userAccount.completedTasks);
+
+      return signature;
+    } catch (err: any) {
+      console.error("❌ Social task failed:", err.message);
+      if (err.logs) err.logs.forEach((log: string) => console.log(log));
       throw err;
     }
   };
@@ -465,6 +763,179 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
     }
   };
 
+  const checkTokenAccount = async (tokenAccount, accountName) => {
+    const { getAccount } = await import("@solana/spl-token");
+
+    try {
+      console.log(`Checking ${accountName}: ${tokenAccount.toString()}`);
+
+      const accountInfo = await getAccount(connection, tokenAccount);
+
+      console.log(
+        `✅ ${accountName} exists with balance: ${accountInfo.amount.toString()}`
+      );
+      return accountInfo;
+    } catch (err) {
+      if (err.name === "TokenAccountNotFoundError") {
+        console.log(`❌ ${accountName} not found`);
+        return null;
+      }
+      throw err;
+    }
+  };
+
+  const handleWithdrawTokens = async (
+    userWallet: WalletContextState,
+    amountInTokens: number
+  ): Promise<TransactionSignature> => {
+    // inside a function
+
+    if (!userWallet || !userWallet.publicKey) {
+      throw new Error("Wallet not connected or missing public key");
+    }
+    const {
+      TOKEN_PROGRAM_ID,
+      ASSOCIATED_TOKEN_PROGRAM_ID,
+      getAssociatedTokenAddress,
+      createAssociatedTokenAccountInstruction,
+      getAccount,
+    } = await import("@solana/spl-token");
+
+    try {
+      const TOKEN_MINT = new PublicKey(
+        "AFxAyQqpnqazUkP3RYpvcpVpvNPpvPGE9JuQmSzaCA8m"
+      );
+
+      const anchProvider = getProvider();
+      const userPublicKey = anchProvider.publicKey;
+      // const program = new Program<TopxAirdrop>(idl_object, anchProvider);
+      const program = new Program(idl_object as TopxAirdrop, anchProvider);
+      const userPubKey =
+        typeof userPublicKey === "string"
+          ? new PublicKey(userPublicKey)
+          : userPublicKey;
+
+      console.log("\n=== WITHDRAWING TOKENS ===");
+
+      // Convert amount to BN with proper decimals (assuming 9 decimals)
+      const amount = new BN(amountInTokens).mul(new BN(10).pow(new BN(9)));
+      console.log(
+        `Withdrawing ${amountInTokens} tokens (${amount.toString()} base units)`
+      );
+
+      // Derive user account PDA
+      const [userAccountPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("user_account"), userPubKey.toBuffer()],
+        program.programId
+      );
+
+      // Derive airdrop token account PDA
+      const [airdropTokenAccount] = PublicKey.findProgramAddressSync(
+        [Buffer.from("airdrop_token_account"), TOKEN_MINT.toBuffer()],
+        program.programId
+      );
+
+      // Get user's associated token account
+      const userTokenAccount = await getAssociatedTokenAddress(
+        TOKEN_MINT,
+        userWallet.publicKey || userPubKey ////check this later
+      );
+
+      console.log("User token account:", userTokenAccount.toString());
+
+      // Check if user token account exists, create if needed
+      const userTokenAccountInfo = await checkTokenAccount(
+        userTokenAccount,
+        "User token account"
+      );
+
+      if (!userTokenAccountInfo) {
+        console.log("Creating user token account...");
+
+        const createIx = createAssociatedTokenAccountInstruction(
+          userWallet.publicKey, // payer
+          userTokenAccount, // ata
+          userWallet.publicKey, // owner
+          TOKEN_MINT // mint
+        );
+
+        const createTx = new Transaction().add(createIx);
+        /* const createSignature = await connection.sendTransaction(createTx, [userWallet]);
+      await connection.confirmTransaction(createSignature); */
+
+        await anchProvider.sendAndConfirm(createTx, []);
+        console.log("✅ User token account created!");
+      }
+
+      // Get airdrop state to find admin
+
+      // Derive airdropState PDA
+      const [airdropStatePda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("airdrop_state")],
+        program.programId
+      );
+
+      const airdropState = await program.account.airdropState.fetch(
+        airdropStatePda
+      );
+
+      console.log("Withdrawing tokens...");
+
+      const tx = await program.methods
+        .withdrawTokens(amount)
+        .accounts({
+          userAccount: userAccountPda,
+          airdropState: airdropStatePda,
+          airdropTokenAccount: airdropTokenAccount,
+          userTokenAccount: userTokenAccount,
+          tokenMint: TOKEN_MINT,
+          user: userWallet.publicKey,
+          admin: airdropState.admin,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          systemProgram: web3.SystemProgram.programId,
+        })
+
+        .rpc();
+
+      console.log("✅ Tokens withdrawn successfully!");
+      console.log("Transaction signature:", tx);
+      console.log(
+        "View on Explorer: https://explorer.solana.com/tx/" +
+          tx +
+          "?cluster=devnet"
+      );
+
+      // Verify withdrawal
+      const updatedUserAccount = await program.account.userAccount.fetch(
+        userAccountPda
+      );
+      const updatedUserTokenAccount = await checkTokenAccount(
+        userTokenAccount,
+        "Updated user token account"
+      );
+
+      console.log(
+        "Updated pending rewards:",
+        updatedUserAccount.pendingRewards.toString()
+      );
+      console.log(
+        "User token balance:",
+        updatedUserTokenAccount.amount.toString()
+      );
+
+      return tx;
+    } catch (err) {
+      console.error("❌ Failed to withdraw tokens:", err.message);
+
+      if (err.logs) {
+        console.error("Program logs:");
+        err.logs.forEach((log) => console.log(log));
+      }
+
+      throw err;
+    }
+  };
+
   return (
     <myWalletContext.Provider
       value={{
@@ -475,6 +946,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         handleSocialTask,
         handleUserTasks,
         handleFetchUserAccount,
+        handleWithdrawTokens,
       }}
     >
       {children}

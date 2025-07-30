@@ -4,10 +4,15 @@ import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import miniLogo from "../../img/miniLogo.png";
 import mainLogo from "../../img/MainLogo.png";
 import { FiGift, FiDollarSign, FiHome, FiClock } from "react-icons/fi";
-import { FaChartLine, FaSquare } from "react-icons/fa6";
+import {
+  FaArrowRightFromBracket,
+  FaChartLine,
+  FaSquare,
+} from "react-icons/fa6";
 import { useContext } from "react";
 import DataContext from "../../context/DataContext";
 import Dashheader from "./Dashheader";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const DashboardMenu = () => {
   const navigate = useNavigate();
@@ -18,6 +23,7 @@ const DashboardMenu = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [collapsed, setCollapsed] = useState(window.innerWidth < 768);
   const [activePath, setActivePath] = useState(location.pathname);
+  const { disconnect } = useWallet();
 
   // Watch window resize to collapse on mobile
   useEffect(() => {
@@ -94,7 +100,7 @@ const DashboardMenu = () => {
           }}
         >
           <div
-            className={`mb-8 md:mb-12 md:mt-6 md:ms-4 ${!collapsed && "ms-1 "}`}
+            className={`mb-8 md:mb-12 md:mt-6 md:ms-2 ${!collapsed && "ms-1 "}`}
           >
             <img
               src={collapsed ? miniLogo : mainLogo}
@@ -128,6 +134,19 @@ const DashboardMenu = () => {
               {!collapsed && item.label}
             </MenuItem>
           ))}
+
+          <div
+            className={`mt-12 gap-2 items-center cursor-pointer hover:text-red-300 justify-center flex md:justify-start  text-red-400  md:ms-4 ${
+              !collapsed ? "ps-2 " : ""
+            }`}
+            onClick={() => {
+              disconnect();
+              navigate("/");
+            }}
+          >
+            <FaArrowRightFromBracket className="rotate-180" />
+            <span className="">{collapsed ? "" : "Disconnect"} </span>
+          </div>
         </Menu>
       </Sidebar>
 
@@ -139,7 +158,11 @@ const DashboardMenu = () => {
             alt=""
             className="fixed right-10 w-20 top-4 md:top-6"
           /> */}
-          <Dashheader xstyle={"fixed -right-4 md:right-3 md:w-60 top-1 md:top-3.5 scale-75 md:scale-100"} />
+          <Dashheader
+            xstyle={
+              "fixed -right-4 md:right-3 md:w-60 top-1 md:top-3.5 scale-75 md:scale-100"
+            }
+          />
         </div>
 
         <Outlet />

@@ -1,7 +1,15 @@
+// 🔁 FIRST: import polyfills before anything else!
+import { Buffer } from "buffer";
+import process from "process";
 
- import React, { useMemo } from "react";
+// Set globals
+window.Buffer = Buffer;
+window.process = process;
+
+import React, { useMemo } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+
 import "@solana/wallet-adapter-react-ui/styles.css";
 import App from "./App.jsx";
 import { clusterApiUrl } from "@solana/web3.js";
@@ -15,10 +23,6 @@ import {
   SolflareWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 
-// Buffer polyfill
- import { Buffer } from "buffer";
-globalThis.Buffer = Buffer; 
-
 function Providers() {
   const network = "devnet";
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
@@ -26,6 +30,8 @@ function Providers() {
     () => [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
     [network]
   );
+
+  
 
   return (
     <ConnectionProvider endpoint={endpoint}>
@@ -42,12 +48,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Providers />
   </React.StrictMode>
-); 
-
-
-
-
-
+);
 
 /* import React, { useMemo } from "react";
 import ReactDOM from "react-dom/client";
