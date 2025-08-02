@@ -13,10 +13,11 @@ const Dashheader = ({ xstyle }) => {
     handleUserBalance,
     handlePlatformStats,
     handleUserTasks,
-    handleWithdrawTokens,
+    handleReferralStats,
+    handleWithdrawStats,
   } = useContext(myWalletContext);
 
-  const { userBalance, setUserbalance, setUserReferral, setUserTask, refresh } =
+  const { userBalance, setUserbalance, setUserReferral, setUserTask, refresh,  setwithdrawStats } =
     useContext(DataContext);
 
   useEffect(() => {
@@ -25,14 +26,17 @@ const Dashheader = ({ xstyle }) => {
         const result = await handleUserBalance();
         const referral = await handlePlatformStats();
         const task = await handleUserTasks();
+        const withdrawstats = await handleWithdrawStats();
         const humanReadable = result.toNumber() / 100000;
         const completedCount = task.filter((task) => task).length;
 
         setUserbalance(humanReadable);
         setUserTask(completedCount);
         setUserReferral(referral.totalReferrals);
+        setwithdrawStats(withdrawstats);
+        
       } catch (error) {
-        console.error("Error fetching balance:", error);
+        console.error("Error fetching  Data:", error);
       }
     };
 
@@ -45,12 +49,24 @@ const Dashheader = ({ xstyle }) => {
     >
       <div className="flex justify-center items-center gap-2">
         <img
-        onClick={()=>{ handleWithdrawTokens(check, 5)}}
-        src={miniLogo} className="w-5" alt="top" />
+          onClick={() => {
+            handleReferralStats();
+          }}
+          src={miniLogo}
+          className="w-5"
+          alt="top"
+        />
         <p className="text-xs"> {userBalance} </p>
       </div>
       <div className="flex gap-2 justify-center items-center">
-        <img src={user} className="w-5" alt="top" />
+        <img
+          onClick={() => {
+            handleWithdrawStats();
+          }}
+          src={user}
+          className="w-5"
+          alt="top"
+        />
         <p className="text-xs">
           {wallet
             ? `${wallet.slice(0, 5)}....${wallet.slice(-4)}`

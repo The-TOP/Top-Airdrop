@@ -2,7 +2,7 @@
   "address": "EkPyiBUk6Unr6XUB9kbXNVs534RoaS7zVcsWn2ZYWBj8",
   "metadata": {
     "name": "topx_airdrop",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "spec": "0.1.0",
     "description": "Created with Anchor"
   },
@@ -492,6 +492,60 @@
       }
     },
     {
+      "name": "get_referral_stats",
+      "discriminator": [
+        175,
+        132,
+        28,
+        234,
+        49,
+        218,
+        79,
+        255
+      ],
+      "accounts": [
+        {
+          "name": "referral_tracker",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  102,
+                  101,
+                  114,
+                  114,
+                  97,
+                  108,
+                  95,
+                  116,
+                  114,
+                  97,
+                  99,
+                  107,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "referral_tracker.account",
+                "account": "ReferralTracker"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [],
+      "returns": {
+        "defined": {
+          "name": "ReferralStats"
+        }
+      }
+    },
+    {
       "name": "get_user_balance",
       "docs": [
         "Get user balance (view function)"
@@ -592,6 +646,62 @@
       }
     },
     {
+      "name": "get_withdrawal_stats",
+      "discriminator": [
+        224,
+        127,
+        195,
+        151,
+        28,
+        201,
+        177,
+        204
+      ],
+      "accounts": [
+        {
+          "name": "withdrawal_tracker",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  105,
+                  116,
+                  104,
+                  100,
+                  114,
+                  97,
+                  119,
+                  97,
+                  108,
+                  95,
+                  116,
+                  114,
+                  97,
+                  99,
+                  107,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "withdrawal_tracker.account",
+                "account": "WithdrawalTracker"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [],
+      "returns": {
+        "defined": {
+          "name": "WithdrawalStats"
+        }
+      }
+    },
+    {
       "name": "initialize",
       "docs": [
         "Initialize the airdrop program (admin only)"
@@ -653,6 +763,104 @@
           "type": "u64"
         }
       ]
+    },
+    {
+      "name": "initialize_airdrop_token_account",
+      "docs": [
+        "Initialize the airdrop token account (admin only)"
+      ],
+      "discriminator": [
+        69,
+        205,
+        208,
+        25,
+        184,
+        139,
+        48,
+        18
+      ],
+      "accounts": [
+        {
+          "name": "airdrop_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "airdrop_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
     },
     {
       "name": "register_user",
@@ -721,6 +929,40 @@
                   116,
                   101
                 ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "referral_tracker",
+          "writable": true,
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  102,
+                  101,
+                  114,
+                  114,
+                  97,
+                  108,
+                  95,
+                  116,
+                  114,
+                  97,
+                  99,
+                  107,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
               }
             ]
           }
@@ -967,19 +1209,19 @@
           }
         },
         {
+          "name": "token_mint"
+        },
+        {
+          "name": "admin",
+          "signer": true
+        },
+        {
           "name": "token_program",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
           "name": "system_program",
           "address": "11111111111111111111111111111111"
-        },
-        {
-          "name": "token_mint"
-        },
-        {
-          "name": "admin",
-          "signer": true
         }
       ],
       "args": []
@@ -1051,6 +1293,41 @@
                   116,
                   101
                 ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "withdrawal_tracker",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  105,
+                  116,
+                  104,
+                  100,
+                  114,
+                  97,
+                  119,
+                  97,
+                  108,
+                  95,
+                  116,
+                  114,
+                  97,
+                  99,
+                  107,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
               }
             ]
           }
@@ -1227,6 +1504,19 @@
       ]
     },
     {
+      "name": "ReferralTracker",
+      "discriminator": [
+        244,
+        194,
+        53,
+        58,
+        139,
+        143,
+        113,
+        96
+      ]
+    },
+    {
       "name": "UserAccount",
       "discriminator": [
         211,
@@ -1237,6 +1527,19 @@
         110,
         242,
         127
+      ]
+    },
+    {
+      "name": "WithdrawalTracker",
+      "discriminator": [
+        62,
+        56,
+        77,
+        73,
+        100,
+        254,
+        155,
+        145
       ]
     }
   ],
@@ -1304,6 +1607,19 @@
         188,
         219,
         204
+      ]
+    },
+    {
+      "name": "AirdropTokenAccountInitialized",
+      "discriminator": [
+        57,
+        208,
+        9,
+        21,
+        8,
+        43,
+        176,
+        187
       ]
     },
     {
@@ -1635,6 +1951,26 @@
       }
     },
     {
+      "name": "AirdropTokenAccountInitialized",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "token_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "token_account",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
       "name": "EmergencyPauseActivated",
       "type": {
         "kind": "struct",
@@ -1719,6 +2055,50 @@
       }
     },
     {
+      "name": "ReferralStats",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "account",
+            "type": "pubkey"
+          },
+          {
+            "name": "task",
+            "type": "string"
+          },
+          {
+            "name": "total_referrals",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ReferralTracker",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "account",
+            "type": "pubkey"
+          },
+          {
+            "name": "task",
+            "type": "string"
+          },
+          {
+            "name": "total_referrals",
+            "type": "u32"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
       "name": "SocialTaskCompleted",
       "type": {
         "kind": "struct",
@@ -1752,6 +2132,9 @@
         "kind": "enum",
         "variants": [
           {
+            "name": "WelcomeAirdop"
+          },
+          {
             "name": "FollowTwitter"
           },
           {
@@ -1761,13 +2144,13 @@
             "name": "JoinTelegramGroup"
           },
           {
-            "name": "JoinTelegramChannel"
-          },
-          {
             "name": "JoinDiscordServer"
           },
           {
             "name": "SubscribeYouTube"
+          },
+          {
+            "name": "AccountVerification"
           }
         ]
       }
@@ -1852,6 +2235,58 @@
           {
             "name": "registration_time",
             "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawalStats",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "account",
+            "type": "pubkey"
+          },
+          {
+            "name": "task",
+            "type": "string"
+          },
+          {
+            "name": "total_withdrawals",
+            "type": "u64"
+          },
+          {
+            "name": "last_withdrawal",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawalTracker",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "account",
+            "type": "pubkey"
+          },
+          {
+            "name": "task",
+            "type": "string"
+          },
+          {
+            "name": "total_withdrawals",
+            "type": "u64"
+          },
+          {
+            "name": "last_withdrawal",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
           }
         ]
       }

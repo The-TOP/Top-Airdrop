@@ -8,7 +8,7 @@ export type TopxAirdrop = {
   "address": "EkPyiBUk6Unr6XUB9kbXNVs534RoaS7zVcsWn2ZYWBj8",
   "metadata": {
     "name": "topxAirdrop",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "spec": "0.1.0",
     "description": "Created with Anchor"
   },
@@ -498,6 +498,60 @@ export type TopxAirdrop = {
       }
     },
     {
+      "name": "getReferralStats",
+      "discriminator": [
+        175,
+        132,
+        28,
+        234,
+        49,
+        218,
+        79,
+        255
+      ],
+      "accounts": [
+        {
+          "name": "referralTracker",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  102,
+                  101,
+                  114,
+                  114,
+                  97,
+                  108,
+                  95,
+                  116,
+                  114,
+                  97,
+                  99,
+                  107,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "referral_tracker.account",
+                "account": "referralTracker"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [],
+      "returns": {
+        "defined": {
+          "name": "referralStats"
+        }
+      }
+    },
+    {
       "name": "getUserBalance",
       "docs": [
         "Get user balance (view function)"
@@ -598,6 +652,62 @@ export type TopxAirdrop = {
       }
     },
     {
+      "name": "getWithdrawalStats",
+      "discriminator": [
+        224,
+        127,
+        195,
+        151,
+        28,
+        201,
+        177,
+        204
+      ],
+      "accounts": [
+        {
+          "name": "withdrawalTracker",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  105,
+                  116,
+                  104,
+                  100,
+                  114,
+                  97,
+                  119,
+                  97,
+                  108,
+                  95,
+                  116,
+                  114,
+                  97,
+                  99,
+                  107,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "withdrawal_tracker.account",
+                "account": "withdrawalTracker"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [],
+      "returns": {
+        "defined": {
+          "name": "withdrawalStats"
+        }
+      }
+    },
+    {
       "name": "initialize",
       "docs": [
         "Initialize the airdrop program (admin only)"
@@ -659,6 +769,104 @@ export type TopxAirdrop = {
           "type": "u64"
         }
       ]
+    },
+    {
+      "name": "initializeAirdropTokenAccount",
+      "docs": [
+        "Initialize the airdrop token account (admin only)"
+      ],
+      "discriminator": [
+        69,
+        205,
+        208,
+        25,
+        184,
+        139,
+        48,
+        18
+      ],
+      "accounts": [
+        {
+          "name": "airdropState",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "airdropTokenAccount",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  116,
+                  111,
+                  107,
+                  101,
+                  110,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "tokenMint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tokenMint"
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
     },
     {
       "name": "registerUser",
@@ -727,6 +935,40 @@ export type TopxAirdrop = {
                   116,
                   101
                 ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "referralTracker",
+          "writable": true,
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  102,
+                  101,
+                  114,
+                  114,
+                  97,
+                  108,
+                  95,
+                  116,
+                  114,
+                  97,
+                  99,
+                  107,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
               }
             ]
           }
@@ -973,19 +1215,19 @@ export type TopxAirdrop = {
           }
         },
         {
+          "name": "tokenMint"
+        },
+        {
+          "name": "admin",
+          "signer": true
+        },
+        {
           "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
           "name": "systemProgram",
           "address": "11111111111111111111111111111111"
-        },
-        {
-          "name": "tokenMint"
-        },
-        {
-          "name": "admin",
-          "signer": true
         }
       ],
       "args": []
@@ -1057,6 +1299,41 @@ export type TopxAirdrop = {
                   116,
                   101
                 ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "withdrawalTracker",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  105,
+                  116,
+                  104,
+                  100,
+                  114,
+                  97,
+                  119,
+                  97,
+                  108,
+                  95,
+                  116,
+                  114,
+                  97,
+                  99,
+                  107,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
               }
             ]
           }
@@ -1233,6 +1510,19 @@ export type TopxAirdrop = {
       ]
     },
     {
+      "name": "referralTracker",
+      "discriminator": [
+        244,
+        194,
+        53,
+        58,
+        139,
+        143,
+        113,
+        96
+      ]
+    },
+    {
       "name": "userAccount",
       "discriminator": [
         211,
@@ -1243,6 +1533,19 @@ export type TopxAirdrop = {
         110,
         242,
         127
+      ]
+    },
+    {
+      "name": "withdrawalTracker",
+      "discriminator": [
+        62,
+        56,
+        77,
+        73,
+        100,
+        254,
+        155,
+        145
       ]
     }
   ],
@@ -1310,6 +1613,19 @@ export type TopxAirdrop = {
         188,
         219,
         204
+      ]
+    },
+    {
+      "name": "airdropTokenAccountInitialized",
+      "discriminator": [
+        57,
+        208,
+        9,
+        21,
+        8,
+        43,
+        176,
+        187
       ]
     },
     {
@@ -1641,6 +1957,26 @@ export type TopxAirdrop = {
       }
     },
     {
+      "name": "airdropTokenAccountInitialized",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "tokenMint",
+            "type": "pubkey"
+          },
+          {
+            "name": "tokenAccount",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
       "name": "emergencyPauseActivated",
       "type": {
         "kind": "struct",
@@ -1725,6 +2061,50 @@ export type TopxAirdrop = {
       }
     },
     {
+      "name": "referralStats",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "account",
+            "type": "pubkey"
+          },
+          {
+            "name": "task",
+            "type": "string"
+          },
+          {
+            "name": "totalReferrals",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "referralTracker",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "account",
+            "type": "pubkey"
+          },
+          {
+            "name": "task",
+            "type": "string"
+          },
+          {
+            "name": "totalReferrals",
+            "type": "u32"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
       "name": "socialTaskCompleted",
       "type": {
         "kind": "struct",
@@ -1758,6 +2138,9 @@ export type TopxAirdrop = {
         "kind": "enum",
         "variants": [
           {
+            "name": "welcomeAirdop"
+          },
+          {
             "name": "followTwitter"
           },
           {
@@ -1767,13 +2150,13 @@ export type TopxAirdrop = {
             "name": "joinTelegramGroup"
           },
           {
-            "name": "joinTelegramChannel"
-          },
-          {
             "name": "joinDiscordServer"
           },
           {
             "name": "subscribeYouTube"
+          },
+          {
+            "name": "accountVerification"
           }
         ]
       }
@@ -1858,6 +2241,58 @@ export type TopxAirdrop = {
           {
             "name": "registrationTime",
             "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "withdrawalStats",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "account",
+            "type": "pubkey"
+          },
+          {
+            "name": "task",
+            "type": "string"
+          },
+          {
+            "name": "totalWithdrawals",
+            "type": "u64"
+          },
+          {
+            "name": "lastWithdrawal",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "withdrawalTracker",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "account",
+            "type": "pubkey"
+          },
+          {
+            "name": "task",
+            "type": "string"
+          },
+          {
+            "name": "totalWithdrawals",
+            "type": "u64"
+          },
+          {
+            "name": "lastWithdrawal",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
           }
         ]
       }

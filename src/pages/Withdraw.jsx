@@ -1,18 +1,30 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 import top from "../img/miniLogo.png";
+import solana from "../img/solana.png";
 import WithdrawModal from "../modal/WithdrawModal";
+import profile from "../img/Pprofile.png";
+import { useWallet } from "@solana/wallet-adapter-react";
+import DataContext from "../context/DataContext";
+import myWalletContext from "../context/WalletContext1";
 
 const Withdraw = () => {
   const [withdraw, setWithdraw] = useState("");
   const [openWithdrawModal, setopenWithdrawModal] = useState(false);
+  const { publicKey, connected } = useWallet();
+  const userwallet = useWallet();
+  const address = publicKey.toString();
+  const { userBalance, setRefresh } = useContext(DataContext);
+  const { handleWithdrawTokens } = useContext(myWalletContext);
+  const withdrawAmount = Number(withdraw) / 10000;
+  /* console.log("chek11111111111111:", withdrawAmount); */
 
   const handleWithdraw = () => {
-    setopenWithdrawModal(true)
+    setopenWithdrawModal(true);
     console.log("withdraw Transaction Details:", {
       withdraw,
-      wallet: "Cxa99...8a1c5",
+      wallet: address,
       fee: "0.00004286 SOL",
     });
   };
@@ -46,7 +58,12 @@ const Withdraw = () => {
 
         {/* Input */}
         <div className="mb-6">
-          <label htmlFor="withdraw" className="block mb-2 text-sm text-gray-300">Amount:_ _</label>
+          <label
+            htmlFor="withdraw"
+            className="block mb-2 text-sm text-gray-300"
+          >
+            Amount:_ _
+          </label>
           <div className="relative">
             <input
               type="number"
@@ -66,8 +83,13 @@ const Withdraw = () => {
           </div>
 
           <div className="flex gap-4 text-xs items-center mt-2  ">
-            <p className=" text-zinc-400 ">Balance: 9,999.999 </p>
-            <button className=" text-green-400"> MAX</button>
+            <p className=" text-zinc-400 ">{userBalance.toString()} </p>
+            <button
+              onClick={() => setWithdraw(userBalance)}
+              className="cursor-pointer text-green-400"
+            >
+              MAX
+            </button>
           </div>
         </div>
 
@@ -88,13 +110,26 @@ const Withdraw = () => {
           <div className="flex justify-between">
             <span>Wallet Connected:</span>
             <span className="text-white flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              Cxab39...9e1c5
+              <img
+                src={profile}
+                alt="user"
+                className="w-4 h-4 rounded-full bg-green-400 animate-pulse"
+              />
+              {connected
+                ? address.slice(0, 7) + "...." + address.slice(-4)
+                : "xxxxx...xxx"}
             </span>
           </div>
           <div className="flex justify-between border-t border-gray-700 pt-3 mt-4">
             <span>Fee:</span>
-            <span className="text-green-400">≈ 0.00004265 SOL</span>
+            <div className="text-green-400 flex gap-0.5 items-center">
+              <img
+                src={solana}
+                alt="network"
+                className="w-4 h-4 rounded-full bg-green-400 animate-pulse"
+              />{" "}
+              0.00004265 SOL
+            </div>
           </div>
         </div>
 
@@ -108,7 +143,18 @@ const Withdraw = () => {
           </button>
         </div>
       </div>
-      <WithdrawModal isOpen={openWithdrawModal} onClose={setopenWithdrawModal} withdrawAmount={withdraw} />
+      <WithdrawModal
+        isOpen={openWithdrawModal}
+        onClose={setopenWithdrawModal}
+        onWithdraw={async () => {
+          const withdawtoken = await handleWithdrawTokens(
+            userwallet,
+            withdrawAmount
+          );
+         withdawtoken && setRefresh((prev) => prev + 1);
+        }}
+        withdrawAmount={withdraw} // to display on screen
+      />
     </motion.div>
   );
 };

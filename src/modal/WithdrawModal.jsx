@@ -4,7 +4,7 @@ import { FaRegArrowAltCircleLeft, FaTimes } from "react-icons/fa";
 import withdraw from "../img/withdrawtoken.png";
 import top from "../img/miniLogo.png";
 
-const WithdrawModal = ({ isOpen, onClose, withdrawAmount }) => {
+const WithdrawModal = ({ isOpen, onClose, withdrawAmount, onWithdraw }) => {
   const [step, setStep] = useState(1);
 
   const nextStep = () => setStep((prev) => prev + 1);
@@ -75,7 +75,7 @@ const WithdrawModal = ({ isOpen, onClose, withdrawAmount }) => {
                       <div className="flex items-center gap-2 text-white font-medium text-xs ">
                         <div className="flex gap-1 justify-center items-center p-1 px-4 rounded-2xl bg-white/20">
                           <img src={top} alt="top token" className=" w-4" />
-                          <span className="">{"USDT"}</span>
+                          <span className="">{"Top"}</span>
                         </div>
                       </div>
                     </div>
@@ -92,7 +92,10 @@ const WithdrawModal = ({ isOpen, onClose, withdrawAmount }) => {
                   <motion.button
                     whileTap={{ scale: 0.95 }}
                     onClick={
-                      () => nextStep()
+                      () => {
+                        onWithdraw();
+                        nextStep();
+                      }
                       // Trigger wallet connection here
                     }
                     className="bg-black hover:bg-green-500/30 border border-green-400 text-white py-2 px-6 rounded-full text-sm"

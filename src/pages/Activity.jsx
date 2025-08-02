@@ -3,9 +3,11 @@ import React, { useContext, useEffect, useState } from "react";
 import AirdropTable from "../component/activity/AirdropTable";
 import ActivityTabs from "../component/activity/ActivityTabs";
 import ReferralSocialTable from "../component/activity/ReferralSocialTable";
-import WithdrawalTable from "../component/activity/WithdrawalTable";
 import profile from "../img/Pprofile.png";
 import myWalletContext from "../context/WalletContext1";
+import WithdrawalCards from "../component/activity/WithdrawalCard";
+import DataContext from "../context/DataContext";
+import ReferralCard from "../component/activity/ReferralCard";
 
 const Referrals = [
   /* {
@@ -73,72 +75,16 @@ const Referrals = [
   }, */
 ];
 
-const Withdrawal = [
-  /*  {
-    account: "Cxae99...8ac5",
-    task: "withdrawal",
-    date: "10-03-25",
-    amount: "5,000",
-    fee: "0.00004286",
-    status: "Success",
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "withdrawal",
-    date: "10-03-25",
-    amount: "5,000",
-    fee: "0.00004286",
-    status: "Success",
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "withdrawal",
-    date: "10-03-25",
-    amount: "5,000",
-    fee: "0.00004286",
-    status: "Success",
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "withdrawal",
-    date: "10-03-25",
-    amount: "5,000",
-    fee: "0.00004286",
-    status: "Success",
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "withdrawal",
-    date: "10-03-25",
-    amount: "5,000",
-    fee: "0.00004286",
-    status: "Success",
-    profile: profile,
-  }, */
-];
-
-/* const Social = [ {
-    account: "Cxae99...8ac5",
-    task: "Referral",
-    date: "10-03-25",
-    reward: "+1",
-    status: "Unclaimed",
-    claimed: false,
-    profile: profile,
-  },] */
-
 const Activity = () => {
   const [activeTab, setActiveTab] = useState("Airdrop");
 
   const { handleFetchUserAccount, handleUserTasks } =
     useContext(myWalletContext);
+  const { withdrawStats } = useContext(DataContext);
   const [accountData, setAccountData] = useState([]);
   const [taskStatus, setTaskStatus] = useState([]);
   const address = accountData.user?.toString();
+  console.log(withdrawStats);
 
   const Airdrop = [
     {
@@ -268,6 +214,54 @@ const Activity = () => {
     },
   ];
 
+  const Withdrawal = [
+    /*  {
+    account: "Cxae99...8ac5",
+    task: "withdrawal",
+    date: "10-03-25",
+    amount: "5,000",
+    fee: "0.00004286",
+    status: "Success",
+    profile: profile,
+  },
+  {
+    account: "Cxae99...8ac5",
+    task: "withdrawal",
+    date: "10-03-25",
+    amount: "5,000",
+    fee: "0.00004286",
+    status: "Success",
+    profile: profile,
+  },
+  {
+    account: "Cxae99...8ac5",
+    task: "withdrawal",
+    date: "10-03-25",
+    amount: "5,000",
+    fee: "0.00004286",
+    status: "Success",
+    profile: profile,
+  },
+  {
+    account: "Cxae99...8ac5",
+    task: "withdrawal",
+    date: "10-03-25",
+    amount: "5,000",
+    fee: "0.00004286",
+    status: "Success",
+    profile: profile,
+  },
+  {
+    account: "Cxae99...8ac5",
+    task: "withdrawal",
+    date: "10-03-25",
+    amount: "5,000",
+    fee: "0.00004286",
+    status: "Success",
+    profile: profile,
+  }, */
+  ];
+
   useEffect(() => {
     const data = async () => {
       try {
@@ -296,9 +290,9 @@ const Activity = () => {
       <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {activeTab === "Airdrop" && <AirdropTable Data={Airdrop} />}
-      {activeTab === "Referrals" && <ReferralSocialTable Data={Referrals} />}
+      {activeTab === "Referrals" && <ReferralCard data={""} />}
       {activeTab === "Social" && <ReferralSocialTable Data={Social} />}
-      {activeTab === "Withdrawal" && <WithdrawalTable Data={Withdrawal} />}
+      {activeTab === "Withdrawal" && <WithdrawalCards data={withdrawStats} />}
     </div>
   );
 };
