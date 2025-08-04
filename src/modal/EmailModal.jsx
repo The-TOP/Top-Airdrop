@@ -8,7 +8,7 @@ const EmailModal = ({ isOpen, onClose, setClaimed, email, setMail }) => {
   const [step, setStep] = useState(1);
   const [code, setCode] = useState(["", "", "", "", ""]);
 
-  const handleChange = (value, index) => {
+ /*  const handleChange = (value, index) => {
     if (/^\d$/.test(value)) {
       const newCode = [...code];
       newCode[index] = value;
@@ -36,17 +36,18 @@ const EmailModal = ({ isOpen, onClose, setClaimed, email, setMail }) => {
         }
       }
     }
-  };
+  }; */
 
   const handleProceed = (e) => {
     e.preventDefault();
     if (!email) return;
     console.log(email);
     setStep(2);
+    setClaimed()
     // Trigger parent logic
   };
 
-  const handleSubmit = () => {
+  /* const handleSubmit = () => {
     if (code.join("").length === 5) {
       setClaimed((prev) => ({
         ...prev,
@@ -54,7 +55,7 @@ const EmailModal = ({ isOpen, onClose, setClaimed, email, setMail }) => {
       }));
       setStep(3);
     }
-  };
+  }; */
   
 
   return (
@@ -76,6 +77,7 @@ const EmailModal = ({ isOpen, onClose, setClaimed, email, setMail }) => {
               className="absolute top-4 right-4 text-white/50 hover:text-white"
               onClick={() => {
                 onClose(false);
+                setStep(1);
               }}
             >
               <IoClose size={22} />
@@ -122,7 +124,7 @@ const EmailModal = ({ isOpen, onClose, setClaimed, email, setMail }) => {
                 </div>
               </div>
             )}
-            {step === 2 && (
+            {/* {step === 2 && (
               <div className="flex flex-col text-center justify-center items-center gap-3">
                 <div className=" border-dashed border-white/10 border-b-2 w-full">
                   <h2 className="text-base text-start md:text-lg font-semibold text-white">
@@ -175,9 +177,9 @@ const EmailModal = ({ isOpen, onClose, setClaimed, email, setMail }) => {
                   Verify
                 </motion.button>
               </div>
-            )}
+            )} */}
 
-            {step === 3 && (
+            {step === 2 && (
               <div className="text-center items-center flex flex-col py-4 gap-4">
                 <h4 className="text-white text-2xl font-semibold mt-4">
                   Account Verification Successful
@@ -191,12 +193,13 @@ const EmailModal = ({ isOpen, onClose, setClaimed, email, setMail }) => {
                   +10,000 <span className="text-green-400">$TOP Token</span>
                 </h3>
                 <p className="text-white/60 text-xs mb-6">
-                  You have successfully claimed 10 000 $TOP
+                  You have successfully processed 10 000 $TOP
                 </p>
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   onClick={() => {
                     onClose(false);
+                    setStep(1);
                   }}
                   className="  text-green-400 py-2 px-6 rounded-full flex gap-1 items-center text-sm font-semibold"
                 >

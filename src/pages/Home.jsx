@@ -21,13 +21,22 @@ const Home = () => {
 
   useEffect(() => {
     if (connected) {
-      handleRegisterUser();
+      const referral = localStorage.getItem("referrer");
+      if (referral) {
+        console.log(referral);
+        
+        handleRegisterUser(referral);
+        /* localStorage.removeItem("referrer"); */
+
+      } else {
+        handleRegisterUser();
+      }
     }
   }, [connected, publicKey]);
 
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-white overflow-x-hidden">
-       <Hero />
+      <Hero />
     </main>
   );
 };

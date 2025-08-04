@@ -15,9 +15,21 @@ import DataContext from "../context/DataContext";
 
 const Tasks = () => {
   const { handleUserTasks, handleSocialTask } = useContext(myWalletContext);
-  const {setRefresh} = useContext(DataContext);
+  const { setRefresh } = useContext(DataContext);
   const { publicKey } = useWallet();
   const address = publicKey.toString();
+  /////////
+  const generateReferralLink = (walletAddress) => {
+    return `${window.location.origin}/?ref=${walletAddress}`;
+  };
+  const referralLink = generateReferralLink(address);
+
+console.log(referralLink);
+
+
+
+
+  /////////
 
   const [claimed, setClaimed] = useState({
     airdrop: false,
@@ -37,6 +49,7 @@ const Tasks = () => {
       if (tasks[3]) setClaimed((prev) => ({ ...prev, channel: true }));
       if (tasks[4]) setClaimed((prev) => ({ ...prev, discord: true }));
       if (tasks[5]) setClaimed((prev) => ({ ...prev, youtube: true }));
+      if (tasks[6]) setClaimed((prev) => ({ ...prev, account: true }));
     };
 
     fetchTasks();
@@ -45,7 +58,6 @@ const Tasks = () => {
   const [userEmail, setUserEmail] = useState("");
   const [OpenAirdropModal, setOpenAirdropModal] = useState(false);
   const [OpenEmailModal, setOpenEmailModal] = useState(false);
-
 
   const twitterTimer = useTaskTimer("task_start_twitter");
   const telegramTimer = useTaskTimer("task_start_telegram");
@@ -111,10 +123,10 @@ const Tasks = () => {
       <SocialtaskCard
         textcolor={"text-white/80"}
         title={"Your unique link"}
-        description={"https://airdrop.topprotocol.xyz/ref/yourwalletaddress"}
+        description={referralLink}
         onButtonClick={() => {
           navigator.clipboard.writeText(
-            "https://airdrop.topprotocol.xyz/ref/yourwalletaddress"
+          referralLink
           );
         }}
         Icon={FaCopy}
@@ -141,7 +153,7 @@ const Tasks = () => {
         }}
         onButtonClick2={async () => {
           await handleSocialTask(1, address);
-           setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+          setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaSquareXTwitter}
         buttonLabel={"Go"}
@@ -156,13 +168,13 @@ const Tasks = () => {
         description={"Join the Telegram Community"}
         buttonDisabled={claimed.telegram}
         onButtonClick={() => {
-           telegramTimer.startTimer(); // Start and store timestamp
+          telegramTimer.startTimer(); // Start and store timestamp
 
           window.open(" https://t.me/ProtocolChain", "_blank");
         }}
         onButtonClick2={async () => {
           await handleSocialTask(2, address);
-           setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+          setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaTelegram}
         buttonLabel={"Go"}
@@ -177,13 +189,13 @@ const Tasks = () => {
         description={"Join our Telegram Channel"}
         buttonDisabled={claimed.channel}
         onButtonClick={() => {
-           channelTimer.startTimer(); // Start and store timestamp
+          channelTimer.startTimer(); // Start and store timestamp
 
           window.open("https://t.me/theTOPXchange", "_blank");
         }}
-          onButtonClick2={async () => {
+        onButtonClick2={async () => {
           await handleSocialTask(3, address);
-           setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+          setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaTelegram}
         buttonLabel={"Go"}
@@ -198,19 +210,18 @@ const Tasks = () => {
         description={"Join the Discord Community"}
         buttonDisabled={claimed.discord}
         onButtonClick={() => {
-           discordTimer.startTimer(); // Start and store timestamp
+          discordTimer.startTimer(); // Start and store timestamp
 
           window.open(" https://discord.gg/yTxsnK6CgA", "_blank");
-
         }}
-         onButtonClick2={async () => {
+        onButtonClick2={async () => {
           await handleSocialTask(4, address);
-           setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+          setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaDiscord}
         buttonLabel={"Go"}
         borderstyle={""}
-         trackLoading={discordTimer.loading}
+        trackLoading={discordTimer.loading}
         check={discordTimer.check}
       />
 
@@ -228,7 +239,7 @@ const Tasks = () => {
         }}
         onButtonClick2={async () => {
           await handleSocialTask(5, address);
-           setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+          setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaYoutube}
         buttonLabel={"Go"}
@@ -236,7 +247,6 @@ const Tasks = () => {
         trackLoading={youtubeTimer.loading}
         check={youtubeTimer.check}
       />
-    
 
       <AirdropModal
         isOpen={OpenAirdropModal}
@@ -247,7 +257,10 @@ const Tasks = () => {
       <EmailModal
         isOpen={OpenEmailModal}
         onClose={setOpenEmailModal}
-        setClaimed={setClaimed}
+        setClaimed={async () => {
+          const check = await handleSocialTask(6, address);
+          check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+        }}
         email={userEmail}
         setMail={setUserEmail}
       />

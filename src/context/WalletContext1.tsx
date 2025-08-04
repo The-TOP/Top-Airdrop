@@ -123,9 +123,9 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       } catch (e) {
         console.log("User not registered yet. Proceeding...");
       }
-
+      /////
+      /* let referrer = PublicKey.default;
       let referrerAccount: PublicKey | null = null;
-      let referrer = PublicKey.default;
 
       if (referrerPublicKey) {
         referrer = new PublicKey(referrerPublicKey);
@@ -138,7 +138,40 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         const referrerAccount = referrerAccountPda;
         console.log("Referrer:", referrer.toString());
         console.log("Referrer Account PDA:", referrerAccount.toString());
+      } */
+
+      let referrer = PublicKey.default;
+      let referrerAccount: PublicKey | null = null;
+
+      if (referrerPublicKey) {
+        try {
+          referrer = new PublicKey(referrerPublicKey);
+
+          // Derive referrer account PDA
+          const [referrerAccountPda] = PublicKey.findProgramAddressSync(
+            [Buffer.from("user_account"), referrer.toBuffer()],
+            program.programId
+          );
+
+          // 🧠 Try to fetch the referrer's user account to confirm they exist
+          const referrerUser = await program.account.userAccount.fetch(
+            referrerAccountPda
+          );
+
+          if (referrerUser) {
+            referrerAccount = referrerAccountPda;
+            console.log("Valid referrer:", referrer.toString());
+          }
+        } catch (err) {
+          console.warn(
+            "❌ Invalid or non-registered referrer:",
+            referrerPublicKey
+          );
+          referrer = PublicKey.default; // reset to default
+        }
       }
+
+      ////
 
       const accounts: any = {
         userAccount: userAccountPda,
@@ -547,7 +580,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       console.log("Referral Tracker PDA:", referralTrackerPda.toString());
 
       ///////
-      
+
       const accountInfo = await anchProvider.connection.getAccountInfo(
         referralTrackerPda
       );
@@ -558,11 +591,10 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       }
 
       const stats = await program.account.referralTracker.fetch(
-       referralTrackerPda
+        referralTrackerPda
       );
       console.log("✅ Referral tracker account data:", stats);
 
-   
       console.log("Referral Stats:", {
         account: stats.account.toString(),
         task: stats.task,
@@ -579,7 +611,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
     }
   };
 
-  /*  const handleSocialTask = async (
+  const handleSocialTask = async (
     taskType: number,
     proof: string
   ): Promise<any> => {
@@ -587,7 +619,6 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       const anchProvider = getProvider();
       const userPublicKey = anchProvider.publicKey;
       const program = new Program<TopxAirdrop>(idl_object, anchProvider);
-      
 
       const userPubKey =
         typeof userPublicKey === "string"
@@ -596,59 +627,47 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
 
       console.log("\n=== COMPLETING SOCIAL TASK ===");
 
-      // Task type mapping
+      // ✅ Logging helper only (not used in program call)
       const taskTypes = {
-        0: "FollowTwitter",
-        1: "LikeAndRetweetPinned",
-        2: "JoinTelegramGroup",
-        3: "JoinTelegramChannel",
-        4: "JoinDiscordServer",
-        5: "SubscribeYouTube",
+        0: "welcomeAirdrop",
+        1: "followTwitter",
+        2: "likeAndRetweetPinned",
+        3: "joinTelegramGroup",
+        4: "joinDiscordServer",
+        5: "subscribeYouTube",
+        6: "accountVerification",
       };
 
       console.log(`Task: ${taskTypes[taskType] || taskType}`);
       console.log(`Proof: ${proof}`);
 
-      // Derive user account PDA
+      // ✅ PDA derivation
       const [userAccountPda] = PublicKey.findProgramAddressSync(
         [Buffer.from("user_account"), userPubKey.toBuffer()],
         program.programId
       );
 
-      // Derive PDA for airdrop state
       const [airdropStatePda] = PublicKey.findProgramAddressSync(
         [Buffer.from("airdrop_state")],
         program.programId
       );
 
-      // Convert taskType to the enum format expected by the program
-
-      // ✅ Define strict SocialTaskType enum
-      type SocialTaskType =
-        | { followTwitter: {} }
-        | { likeAndRetweetPinned: {} }
-        | { joinTelegramGroup: {} }
-        | { joinTelegramChannel: {} }
-        | { joinDiscordServer: {} }
-        | { subscribeYouTube: {} };
-
-      // ✅ Strict enumMap matching Anchor expected types
-      const enumMap: Record<number, SocialTaskType> = {
-        0: { followTwitter: {} },
-        1: { likeAndRetweetPinned: {} },
-        2: { joinTelegramGroup: {} },
-        3: { joinTelegramChannel: {} },
+      // ✅ Enum values that match Anchor IDL exactly
+      const enumMap: Record<number, any> = {
+        0: { welcomeAirdop: {} },
+        1: { followTwitter: {} },
+        2: { likeAndRetweetPinned: {} },
+        3: { joinTelegramGroup: {} },
         4: { joinDiscordServer: {} },
         5: { subscribeYouTube: {} },
+        6: { accountVerification: {} },
       };
 
       const socialTaskType = enumMap[taskType];
-
-      if (!socialTaskType) {
+      if (!socialTaskType)
         throw new Error("Invalid task type index: " + taskType);
-      }
-
       console.log("Completing social task...");
+      // ✅ Transaction call
       const tx = await program.methods
         .completeSocialTask(socialTaskType, proof)
         .accounts({
@@ -666,7 +685,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
           "?cluster=devnet"
       );
 
-      // Get updated user account
+      // ✅ Fetch updated account info
       const userAccount = await program.account.userAccount.fetch(
         userAccountPda
       );
@@ -687,9 +706,9 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
 
       throw err;
     }
-  }; */
+  };
 
-  const handleSocialTask = async (
+  /*  const handleSocialTask = async (
     taskType: number,
     proof: string
   ): Promise<any> => {
@@ -823,7 +842,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       if (err.logs) err.logs.forEach((log: string) => console.log(log));
       throw err;
     }
-  };
+  }; */
 
   const handleUserTasks = async (): Promise<any> => {
     try {
@@ -855,12 +874,13 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         .view();
 
       const taskNames = [
+        "WelcomeAirdop",
         "FollowTwitter",
         "LikeAndRetweetPinned",
         "JoinTelegramGroup",
-        "JoinTelegramChannel",
         "JoinDiscordServer",
         "SubscribeYouTube",
+        "accountVerification",
       ];
 
       console.log("Task completion status:");
@@ -869,6 +889,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         const status = completed ? "✅ Completed" : "❌ Not completed";
         console.log(`  ${index}. ${taskNames[index]}: ${status}`);
       });
+      /* console.log(tasks.length); */
 
       return tasks;
     } catch (err) {

@@ -66,7 +66,7 @@ const AirdropModal = ({ isOpen, onClose, setClaimed, status }) => {
                   />
                   <div>
                     <h2 className="text-white font font-semibold text-2xl">
-                      + 50 000
+                      + 10 000
                     </h2>
                     <h2 className="text-green-400 text-xs">$TOP Token</h2>
                   </div>
@@ -109,7 +109,7 @@ const AirdropModal = ({ isOpen, onClose, setClaimed, status }) => {
                   />
                   <div>
                     <h2 className="text-white font font-semibold text-xs">
-                      + 50 000{" "}
+                      + 10 000{" "}
                       <span className="text-green-400"> $TOP Token</span>
                     </h2>
                     <h2 className="text-white text-2xl">Congratulations</h2>
@@ -118,7 +118,7 @@ const AirdropModal = ({ isOpen, onClose, setClaimed, status }) => {
 
                 <div className="flex flex-col gap-2 items-center">
                   <p className="text-white/60 text-sm flex gap-2 items-center justify-center">
-                    You have Successfully claim 50 000 $TOP
+                    You have Successfully processed 10 000 $TOP
                   </p>
                   <motion.button
                     whileTap={{ scale: 0.95 }}

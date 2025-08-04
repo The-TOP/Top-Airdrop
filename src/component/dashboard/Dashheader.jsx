@@ -15,6 +15,7 @@ const Dashheader = ({ xstyle }) => {
     handleUserTasks,
     handleReferralStats,
     handleWithdrawStats,
+    handleFetchUserAccount
   } = useContext(myWalletContext);
 
   const { userBalance, setUserbalance, setUserReferral, setUserTask, refresh,  setwithdrawStats } =
@@ -24,16 +25,19 @@ const Dashheader = ({ xstyle }) => {
     const fetchData = async () => {
       try {
         const result = await handleUserBalance();
-        const referral = await handlePlatformStats();
+        const referral = await handleFetchUserAccount();
         const task = await handleUserTasks();
         const withdrawstats = await handleWithdrawStats();
         const humanReadable = result.toNumber() / 100000;
         const completedCount = task.filter((task) => task).length;
+        //const account = await handleFetchUserAccount();
 
         setUserbalance(humanReadable);
         setUserTask(completedCount);
-        setUserReferral(referral.totalReferrals);
+        setUserReferral(referral.referralsCount);
         setwithdrawStats(withdrawstats);
+        console.log("ACCOUNT",referral.referralsCount);
+        
         
       } catch (error) {
         console.error("Error fetching  Data:", error);

@@ -100,7 +100,7 @@ const Activity = () => {
           ).toLocaleDateString("en-GB")
         : "loadin...",
 
-      reward: "+50 000",
+      reward: "+10 000",
       status: taskStatus[0] ? "Claimed" : "UnClaimed",
 
       profile: profile,
@@ -119,8 +119,8 @@ const Activity = () => {
           ).toLocaleDateString("en-GB")
         : "loadin...",
 
-      reward: "+50 000 ",
-      status: taskStatus[3] ? "Claimed" : "UnClaimed",
+      reward: "+10 000 ",
+      status: taskStatus[6] ? "Claimed" : "UnClaimed",
       profile: profile,
     },
   ];
@@ -214,53 +214,7 @@ const Activity = () => {
     },
   ];
 
-  const Withdrawal = [
-    /*  {
-    account: "Cxae99...8ac5",
-    task: "withdrawal",
-    date: "10-03-25",
-    amount: "5,000",
-    fee: "0.00004286",
-    status: "Success",
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "withdrawal",
-    date: "10-03-25",
-    amount: "5,000",
-    fee: "0.00004286",
-    status: "Success",
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "withdrawal",
-    date: "10-03-25",
-    amount: "5,000",
-    fee: "0.00004286",
-    status: "Success",
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "withdrawal",
-    date: "10-03-25",
-    amount: "5,000",
-    fee: "0.00004286",
-    status: "Success",
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "withdrawal",
-    date: "10-03-25",
-    amount: "5,000",
-    fee: "0.00004286",
-    status: "Success",
-    profile: profile,
-  }, */
-  ];
+ 
 
   useEffect(() => {
     const data = async () => {

@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/topx_airdrop.json`.
  */
 export type TopxAirdrop = {
-  "address": "EkPyiBUk6Unr6XUB9kbXNVs534RoaS7zVcsWn2ZYWBj8",
+  "address": "BDG6UUaDAKkwfzq4Fq4Deh7MpHSbmhrRBFoxo3RWoDrF",
   "metadata": {
     "name": "topxAirdrop",
     "version": "0.1.1",
@@ -13,6 +13,89 @@ export type TopxAirdrop = {
     "description": "Created with Anchor"
   },
   "instructions": [
+    {
+      "name": "addSocialTask",
+      "docs": [
+        "Add a new social task (admin only)"
+      ],
+      "discriminator": [
+        231,
+        108,
+        210,
+        182,
+        109,
+        180,
+        131,
+        216
+      ],
+      "accounts": [
+        {
+          "name": "airdropState",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "taskRegistry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  97,
+                  115,
+                  107,
+                  95,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "taskName",
+          "type": "string"
+        },
+        {
+          "name": "rewardTokens",
+          "type": "u64"
+        }
+      ]
+    },
     {
       "name": "changeAdmin",
       "docs": [
@@ -139,11 +222,51 @@ export type TopxAirdrop = {
           }
         },
         {
+          "name": "taskRegistry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  97,
+                  115,
+                  107,
+                  95,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
           "name": "user",
+          "docs": [
+            "The user proving intent (signs but doesn't pay)"
+          ],
           "signer": true,
           "relations": [
             "userAccount"
           ]
+        },
+        {
+          "name": "sponsor",
+          "docs": [
+            "The sponsor paying fees"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
@@ -552,6 +675,57 @@ export type TopxAirdrop = {
       }
     },
     {
+      "name": "getSocialTasks",
+      "docs": [
+        "Get all social tasks"
+      ],
+      "discriminator": [
+        254,
+        93,
+        92,
+        89,
+        143,
+        130,
+        195,
+        186
+      ],
+      "accounts": [
+        {
+          "name": "taskRegistry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  97,
+                  115,
+                  107,
+                  95,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [],
+      "returns": {
+        "vec": {
+          "defined": {
+            "name": "dynamicSocialTask"
+          }
+        }
+      }
+    },
+    {
       "name": "getUserBalance",
       "docs": [
         "Get user balance (view function)"
@@ -869,6 +1043,86 @@ export type TopxAirdrop = {
       "args": []
     },
     {
+      "name": "initializeTaskRegistry",
+      "docs": [
+        "Initialize social task registry (admin only)"
+      ],
+      "discriminator": [
+        65,
+        207,
+        222,
+        58,
+        180,
+        61,
+        200,
+        118
+      ],
+      "accounts": [
+        {
+          "name": "airdropState",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "taskRegistry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  97,
+                  115,
+                  107,
+                  95,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "registerUser",
       "docs": [
         "Register a new user for the airdrop"
@@ -974,12 +1228,55 @@ export type TopxAirdrop = {
           }
         },
         {
+          "name": "referrerUserAccount",
+          "docs": [
+            "The referrer's user account (optional - only needed when there's a referrer)"
+          ],
+          "writable": true,
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "referrerAccount"
+              }
+            ]
+          }
+        },
+        {
           "name": "referrerAccount",
           "writable": true,
           "optional": true
         },
         {
           "name": "user",
+          "docs": [
+            "The user proving intent (signs but doesn't pay)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "sponsor",
+          "docs": [
+            "The sponsor paying fees and rent"
+          ],
           "writable": true,
           "signer": true
         },
@@ -992,6 +1289,85 @@ export type TopxAirdrop = {
         {
           "name": "referrer",
           "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "removeSocialTask",
+      "docs": [
+        "Remove a social task (admin only)"
+      ],
+      "discriminator": [
+        39,
+        244,
+        161,
+        3,
+        133,
+        248,
+        113,
+        104
+      ],
+      "accounts": [
+        {
+          "name": "airdropState",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "taskRegistry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  97,
+                  115,
+                  107,
+                  95,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "taskId",
+          "type": "u8"
         }
       ]
     },
@@ -1523,6 +1899,19 @@ export type TopxAirdrop = {
       ]
     },
     {
+      "name": "socialTaskRegistry",
+      "discriminator": [
+        158,
+        250,
+        166,
+        205,
+        141,
+        58,
+        102,
+        191
+      ]
+    },
+    {
       "name": "userAccount",
       "discriminator": [
         211,
@@ -1668,6 +2057,19 @@ export type TopxAirdrop = {
       ]
     },
     {
+      "name": "socialTaskAdded",
+      "discriminator": [
+        181,
+        226,
+        208,
+        217,
+        88,
+        161,
+        75,
+        225
+      ]
+    },
+    {
       "name": "socialTaskCompleted",
       "discriminator": [
         238,
@@ -1678,6 +2080,32 @@ export type TopxAirdrop = {
         89,
         138,
         53
+      ]
+    },
+    {
+      "name": "socialTaskRemoved",
+      "discriminator": [
+        180,
+        1,
+        241,
+        218,
+        97,
+        150,
+        243,
+        229
+      ]
+    },
+    {
+      "name": "taskRegistryInitialized",
+      "discriminator": [
+        190,
+        197,
+        44,
+        6,
+        37,
+        40,
+        198,
+        4
       ]
     },
     {
@@ -1817,6 +2245,36 @@ export type TopxAirdrop = {
       "code": 6021,
       "name": "noTokensAvailable",
       "msg": "No tokens available for withdrawal"
+    },
+    {
+      "code": 6022,
+      "name": "taskNameRequired",
+      "msg": "Task name is required"
+    },
+    {
+      "code": 6023,
+      "name": "taskNameTooLong",
+      "msg": "Task name is too long"
+    },
+    {
+      "code": 6024,
+      "name": "invalidRewardAmount",
+      "msg": "Invalid reward amount"
+    },
+    {
+      "code": 6025,
+      "name": "maxTasksExceeded",
+      "msg": "Maximum tasks exceeded"
+    },
+    {
+      "code": 6026,
+      "name": "cannotRemoveHardcodedTask",
+      "msg": "Cannot remove hardcoded task"
+    },
+    {
+      "code": 6027,
+      "name": "taskNotFound",
+      "msg": "Task not found"
     }
   ],
   "types": [
@@ -1950,6 +2408,10 @@ export type TopxAirdrop = {
             "type": "bool"
           },
           {
+            "name": "hasTaskRegistry",
+            "type": "bool"
+          },
+          {
             "name": "bump",
             "type": "u8"
           }
@@ -1972,6 +2434,30 @@ export type TopxAirdrop = {
           {
             "name": "tokenAccount",
             "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "dynamicSocialTask",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "taskId",
+            "type": "u8"
+          },
+          {
+            "name": "taskName",
+            "type": "string"
+          },
+          {
+            "name": "rewardTokens",
+            "type": "u64"
+          },
+          {
+            "name": "isActive",
+            "type": "bool"
           }
         ]
       }
@@ -2105,6 +2591,30 @@ export type TopxAirdrop = {
       }
     },
     {
+      "name": "socialTaskAdded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "taskId",
+            "type": "u8"
+          },
+          {
+            "name": "taskName",
+            "type": "string"
+          },
+          {
+            "name": "rewardTokens",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "socialTaskCompleted",
       "type": {
         "kind": "struct",
@@ -2128,6 +2638,48 @@ export type TopxAirdrop = {
           {
             "name": "proof",
             "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "socialTaskRegistry",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "tasks",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "dynamicSocialTask"
+                }
+              }
+            }
+          },
+          {
+            "name": "taskCount",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "socialTaskRemoved",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "taskId",
+            "type": "u8"
           }
         ]
       }
@@ -2157,6 +2709,18 @@ export type TopxAirdrop = {
           },
           {
             "name": "accountVerification"
+          }
+        ]
+      }
+    },
+    {
+      "name": "taskRegistryInitialized",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
           }
         ]
       }

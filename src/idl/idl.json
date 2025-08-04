@@ -1,5 +1,5 @@
 {
-  "address": "EkPyiBUk6Unr6XUB9kbXNVs534RoaS7zVcsWn2ZYWBj8",
+  "address": "BDG6UUaDAKkwfzq4Fq4Deh7MpHSbmhrRBFoxo3RWoDrF",
   "metadata": {
     "name": "topx_airdrop",
     "version": "0.1.1",
@@ -7,6 +7,89 @@
     "description": "Created with Anchor"
   },
   "instructions": [
+    {
+      "name": "add_social_task",
+      "docs": [
+        "Add a new social task (admin only)"
+      ],
+      "discriminator": [
+        231,
+        108,
+        210,
+        182,
+        109,
+        180,
+        131,
+        216
+      ],
+      "accounts": [
+        {
+          "name": "airdrop_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "task_registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  97,
+                  115,
+                  107,
+                  95,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "task_name",
+          "type": "string"
+        },
+        {
+          "name": "reward_tokens",
+          "type": "u64"
+        }
+      ]
+    },
     {
       "name": "change_admin",
       "docs": [
@@ -133,11 +216,51 @@
           }
         },
         {
+          "name": "task_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  97,
+                  115,
+                  107,
+                  95,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
           "name": "user",
+          "docs": [
+            "The user proving intent (signs but doesn't pay)"
+          ],
           "signer": true,
           "relations": [
             "user_account"
           ]
+        },
+        {
+          "name": "sponsor",
+          "docs": [
+            "The sponsor paying fees"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
@@ -546,6 +669,57 @@
       }
     },
     {
+      "name": "get_social_tasks",
+      "docs": [
+        "Get all social tasks"
+      ],
+      "discriminator": [
+        254,
+        93,
+        92,
+        89,
+        143,
+        130,
+        195,
+        186
+      ],
+      "accounts": [
+        {
+          "name": "task_registry",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  97,
+                  115,
+                  107,
+                  95,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [],
+      "returns": {
+        "vec": {
+          "defined": {
+            "name": "DynamicSocialTask"
+          }
+        }
+      }
+    },
+    {
       "name": "get_user_balance",
       "docs": [
         "Get user balance (view function)"
@@ -863,6 +1037,86 @@
       "args": []
     },
     {
+      "name": "initialize_task_registry",
+      "docs": [
+        "Initialize social task registry (admin only)"
+      ],
+      "discriminator": [
+        65,
+        207,
+        222,
+        58,
+        180,
+        61,
+        200,
+        118
+      ],
+      "accounts": [
+        {
+          "name": "airdrop_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "task_registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  97,
+                  115,
+                  107,
+                  95,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "register_user",
       "docs": [
         "Register a new user for the airdrop"
@@ -968,12 +1222,55 @@
           }
         },
         {
+          "name": "referrer_user_account",
+          "docs": [
+            "The referrer's user account (optional - only needed when there's a referrer)"
+          ],
+          "writable": true,
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "referrer_account"
+              }
+            ]
+          }
+        },
+        {
           "name": "referrer_account",
           "writable": true,
           "optional": true
         },
         {
           "name": "user",
+          "docs": [
+            "The user proving intent (signs but doesn't pay)"
+          ],
+          "signer": true
+        },
+        {
+          "name": "sponsor",
+          "docs": [
+            "The sponsor paying fees and rent"
+          ],
           "writable": true,
           "signer": true
         },
@@ -986,6 +1283,85 @@
         {
           "name": "referrer",
           "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "remove_social_task",
+      "docs": [
+        "Remove a social task (admin only)"
+      ],
+      "discriminator": [
+        39,
+        244,
+        161,
+        3,
+        133,
+        248,
+        113,
+        104
+      ],
+      "accounts": [
+        {
+          "name": "airdrop_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "task_registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  97,
+                  115,
+                  107,
+                  95,
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "task_id",
+          "type": "u8"
         }
       ]
     },
@@ -1517,6 +1893,19 @@
       ]
     },
     {
+      "name": "SocialTaskRegistry",
+      "discriminator": [
+        158,
+        250,
+        166,
+        205,
+        141,
+        58,
+        102,
+        191
+      ]
+    },
+    {
       "name": "UserAccount",
       "discriminator": [
         211,
@@ -1662,6 +2051,19 @@
       ]
     },
     {
+      "name": "SocialTaskAdded",
+      "discriminator": [
+        181,
+        226,
+        208,
+        217,
+        88,
+        161,
+        75,
+        225
+      ]
+    },
+    {
       "name": "SocialTaskCompleted",
       "discriminator": [
         238,
@@ -1672,6 +2074,32 @@
         89,
         138,
         53
+      ]
+    },
+    {
+      "name": "SocialTaskRemoved",
+      "discriminator": [
+        180,
+        1,
+        241,
+        218,
+        97,
+        150,
+        243,
+        229
+      ]
+    },
+    {
+      "name": "TaskRegistryInitialized",
+      "discriminator": [
+        190,
+        197,
+        44,
+        6,
+        37,
+        40,
+        198,
+        4
       ]
     },
     {
@@ -1811,6 +2239,36 @@
       "code": 6021,
       "name": "NoTokensAvailable",
       "msg": "No tokens available for withdrawal"
+    },
+    {
+      "code": 6022,
+      "name": "TaskNameRequired",
+      "msg": "Task name is required"
+    },
+    {
+      "code": 6023,
+      "name": "TaskNameTooLong",
+      "msg": "Task name is too long"
+    },
+    {
+      "code": 6024,
+      "name": "InvalidRewardAmount",
+      "msg": "Invalid reward amount"
+    },
+    {
+      "code": 6025,
+      "name": "MaxTasksExceeded",
+      "msg": "Maximum tasks exceeded"
+    },
+    {
+      "code": 6026,
+      "name": "CannotRemoveHardcodedTask",
+      "msg": "Cannot remove hardcoded task"
+    },
+    {
+      "code": 6027,
+      "name": "TaskNotFound",
+      "msg": "Task not found"
     }
   ],
   "types": [
@@ -1944,6 +2402,10 @@
             "type": "bool"
           },
           {
+            "name": "has_task_registry",
+            "type": "bool"
+          },
+          {
             "name": "bump",
             "type": "u8"
           }
@@ -1966,6 +2428,30 @@
           {
             "name": "token_account",
             "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DynamicSocialTask",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "task_id",
+            "type": "u8"
+          },
+          {
+            "name": "task_name",
+            "type": "string"
+          },
+          {
+            "name": "reward_tokens",
+            "type": "u64"
+          },
+          {
+            "name": "is_active",
+            "type": "bool"
           }
         ]
       }
@@ -2099,6 +2585,30 @@
       }
     },
     {
+      "name": "SocialTaskAdded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "task_id",
+            "type": "u8"
+          },
+          {
+            "name": "task_name",
+            "type": "string"
+          },
+          {
+            "name": "reward_tokens",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "SocialTaskCompleted",
       "type": {
         "kind": "struct",
@@ -2122,6 +2632,48 @@
           {
             "name": "proof",
             "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SocialTaskRegistry",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "tasks",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "DynamicSocialTask"
+                }
+              }
+            }
+          },
+          {
+            "name": "task_count",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SocialTaskRemoved",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "task_id",
+            "type": "u8"
           }
         ]
       }
@@ -2151,6 +2703,18 @@
           },
           {
             "name": "AccountVerification"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TaskRegistryInitialized",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
           }
         ]
       }
