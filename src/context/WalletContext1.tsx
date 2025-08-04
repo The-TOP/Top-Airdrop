@@ -101,8 +101,15 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         program.programId
       );
 
+      // Derive referral tracker PDA for the user being registered
+      const [referralTrackerPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("referral_tracker"), userPubKey.toBuffer()],
+        program.programId
+      );
+
       console.log("User:", userPubKey.toString());
       console.log("User Account PDA:", userAccountPda.toString());
+      console.log("Referral Tracker PDA:", referralTrackerPda.toString());
 
       // Check if user is already registered
       try {
@@ -123,67 +130,49 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       } catch (e) {
         console.log("User not registered yet. Proceeding...");
       }
-      /////
-      /* let referrer = PublicKey.default;
+      let referrer = PublicKey.default;
       let referrerAccount: PublicKey | null = null;
+      let referrerUserAccount: PublicKey | null = null;
 
       if (referrerPublicKey) {
         referrer = new PublicKey(referrerPublicKey);
-
-        // Derive referrer account PDA
         const [referrerAccountPda] = PublicKey.findProgramAddressSync(
           [Buffer.from("user_account"), referrer.toBuffer()],
           program.programId
         );
-        const referrerAccount = referrerAccountPda;
-        console.log("Referrer:", referrer.toString());
-        console.log("Referrer Account PDA:", referrerAccount.toString());
-      } */
 
-      let referrer = PublicKey.default;
-      let referrerAccount: PublicKey | null = null;
+        referrerAccount = referrerAccountPda;
+        referrerUserAccount = referrerAccountPda;
 
-      if (referrerPublicKey) {
-        try {
-          referrer = new PublicKey(referrerPublicKey);
-
-          // Derive referrer account PDA
-          const [referrerAccountPda] = PublicKey.findProgramAddressSync(
-            [Buffer.from("user_account"), referrer.toBuffer()],
-            program.programId
-          );
-
-          // 🧠 Try to fetch the referrer's user account to confirm they exist
-          const referrerUser = await program.account.userAccount.fetch(
-            referrerAccountPda
-          );
-
-          if (referrerUser) {
-            referrerAccount = referrerAccountPda;
-            console.log("Valid referrer:", referrer.toString());
-          }
-        } catch (err) {
-          console.warn(
-            "❌ Invalid or non-registered referrer:",
-            referrerPublicKey
-          );
-          referrer = PublicKey.default; // reset to default
-        }
+        console.log("✅ Referrer:", referrer.toBase58());
+        console.log("✅ Referrer Account PDA:", referrerAccount.toBase58());
+      } else {
+        // 👇 Add this fallback even if no referrer is provided
+        const [dummyReferrerPda] = PublicKey.findProgramAddressSync(
+          [Buffer.from("user_account"), PublicKey.default.toBuffer()],
+          program.programId
+        );
+        referrerAccount = dummyReferrerPda;
+        referrerUserAccount = dummyReferrerPda;
       }
-
-      ////
 
       const accounts: any = {
         userAccount: userAccountPda,
         airdropState: airdropStatePda,
-        referrerAccount: null,
+        referralTracker: referralTrackerPda,
         user: userPubKey,
+        sponsor: userPubKey,
+        referrerAccount,
+        referrerUserAccount,
         systemProgram: web3.SystemProgram.programId,
       };
 
-      if (referrerAccount) {
+      if (referrerAccount && referrerUserAccount) {
         accounts.referrerAccount = referrerAccount;
+        accounts.referrerUserAccount = referrerUserAccount;
       }
+
+      console.log("🚀 Final Accounts Object:", accounts);
 
       console.log("Registering user...");
       const tx = await program.methods
@@ -646,6 +635,11 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         [Buffer.from("user_account"), userPubKey.toBuffer()],
         program.programId
       );
+      // Derive task registry PDA
+      const [taskRegistryPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("task_registry")],
+        program.programId
+      );
 
       const [airdropStatePda] = PublicKey.findProgramAddressSync(
         [Buffer.from("airdrop_state")],
@@ -670,10 +664,13 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       // ✅ Transaction call
       const tx = await program.methods
         .completeSocialTask(socialTaskType, proof)
-        .accounts({
+        .accountsStrict({
           userAccount: userAccountPda,
           airdropState: airdropStatePda,
+          taskRegistry: taskRegistryPda,
           user: userPubKey,
+          sponsor: userPubKey, // Added sponsor
+          systemProgram: SystemProgram.programId,
         })
         .rpc();
 
