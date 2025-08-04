@@ -152,8 +152,8 @@ console.log(referralLink);
           window.open("https://x.com/theTOPXchange", "_blank");
         }}
         onButtonClick2={async () => {
-          await handleSocialTask(1, address);
-          setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+         const check=  await handleSocialTask(1, address);
+         check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaSquareXTwitter}
         buttonLabel={"Go"}
@@ -173,8 +173,8 @@ console.log(referralLink);
           window.open(" https://t.me/ProtocolChain", "_blank");
         }}
         onButtonClick2={async () => {
-          await handleSocialTask(2, address);
-          setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+          const check = await handleSocialTask(2, address);
+         check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaTelegram}
         buttonLabel={"Go"}
@@ -194,8 +194,8 @@ console.log(referralLink);
           window.open("https://t.me/theTOPXchange", "_blank");
         }}
         onButtonClick2={async () => {
-          await handleSocialTask(3, address);
-          setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+         const check= await handleSocialTask(3, address);
+         check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaTelegram}
         buttonLabel={"Go"}
@@ -215,8 +215,8 @@ console.log(referralLink);
           window.open(" https://discord.gg/yTxsnK6CgA", "_blank");
         }}
         onButtonClick2={async () => {
-          await handleSocialTask(4, address);
-          setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+         const check = await handleSocialTask(4, address);
+          check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaDiscord}
         buttonLabel={"Go"}
@@ -238,8 +238,8 @@ console.log(referralLink);
           );
         }}
         onButtonClick2={async () => {
-          await handleSocialTask(5, address);
-          setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+        const check=  await handleSocialTask(5, address);
+         check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaYoutube}
         buttonLabel={"Go"}
