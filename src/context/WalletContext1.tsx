@@ -73,6 +73,136 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
     return provider;
   };
 
+  /* const handleRegisterUser = async (
+    referrerPublicKey: string | null = null
+  ): Promise<any> => {
+    try {
+      const anchProvider = getProvider();
+      const userPublicKey = anchProvider.publicKey;
+      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
+
+      const userPubKey =
+        typeof userPublicKey === "string"
+          ? new PublicKey(userPublicKey)
+          : userPublicKey;
+
+      console.log("\n=== REGISTERING USER ===");
+
+      const [userAccountPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("user_account"), userPubKey.toBuffer()],
+        program.programId
+      );
+
+      const [airdropStatePda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("airdrop_state")],
+        program.programId
+      );
+
+      const [referralTrackerPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("referral_tracker"), userPubKey.toBuffer()],
+        program.programId
+      );
+
+      console.log("User:", userPubKey.toString());
+      console.log("User Account PDA:", userAccountPda.toString());
+      console.log("Referral Tracker PDA:", referralTrackerPda.toString());
+
+      try {
+        const existingUser = await program.account.userAccount.fetch(
+          userAccountPda
+        );
+        console.log("User already registered:", {
+          user: existingUser.user.toString(),
+          referrer: existingUser.referrer
+            ? existingUser.referrer.toString()
+            : "None",
+          pendingRewards: existingUser.pendingRewards.toString(),
+          referralsCount: existingUser.referralsCount,
+        });
+
+        return existingUser;
+      } catch {
+        console.log("User not registered yet. Proceeding...");
+      }
+
+      
+      let referrer = PublicKey.default;
+      let [dummyPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("user_account"), PublicKey.default.toBuffer()],
+        program.programId
+      );
+
+      let referrerAccount: PublicKey = dummyPda;
+      let referrerUserAccount: PublicKey = dummyPda;
+
+      if (referrerPublicKey) {
+        referrer = new PublicKey(referrerPublicKey);
+
+        const [referrerAccountPda] = PublicKey.findProgramAddressSync(
+          [Buffer.from("user_account"), referrer.toBuffer()],
+          program.programId
+        );
+
+        try {
+          const referrerData = await program.account.userAccount.fetch(
+            referrerAccountPda
+          );
+          referrerAccount = referrerAccountPda;
+          referrerUserAccount = referrerAccountPda;
+        } catch (err) {
+          console.warn("⚠️ Referrer not registered. Ignoring referral.");
+        }
+      }
+
+      const accounts = {
+        userAccount: userAccountPda,
+        airdropState: airdropStatePda,
+        referralTracker: referralTrackerPda,
+        user: userPubKey,
+        sponsor: userPubKey,
+        systemProgram: web3.SystemProgram.programId,
+        referrerAccount,
+        referrerUserAccount,
+      };
+
+      console.log("🚀 Final Accounts Object:", accounts);
+
+      const tx = await program.methods
+        .registerUser(referrer)
+        .accounts(accounts)
+        .rpc();
+
+      console.log("✅ User registered successfully!", tx);
+      console.log(
+        "View on Explorer: https://explorer.solana.com/tx/" +
+          tx +
+          "?cluster=devnet"
+      );
+
+      const userAccount = await program.account.userAccount.fetch(
+        userAccountPda
+      );
+      console.log("User account:", {
+        user: userAccount.user.toString(),
+        referrer: userAccount.referrer
+          ? userAccount.referrer.toString()
+          : "None",
+        pendingRewards: userAccount.pendingRewards.toString(),
+        dateRegistered: new Date(
+          Number(userAccount.dateRegistered) * 1000
+        ).toLocaleDateString("en-GB"),
+      });
+
+      return userAccount;
+    } catch (err: any) {
+      console.error("❌ Failed to register user:", err.message);
+      if (err.logs) {
+        err.logs.forEach((log: string) => console.log(log));
+      }
+      throw err;
+    }
+  }; */
+
   const handleRegisterUser = async (
     referrerPublicKey: string | null = null
   ): Promise<any> => {
@@ -136,6 +266,8 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
 
       if (referrerPublicKey) {
         referrer = new PublicKey(referrerPublicKey);
+
+        // Derive referrer account PDA
         const [referrerAccountPda] = PublicKey.findProgramAddressSync(
           [Buffer.from("user_account"), referrer.toBuffer()],
           program.programId
@@ -146,33 +278,23 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
 
         console.log("✅ Referrer:", referrer.toBase58());
         console.log("✅ Referrer Account PDA:", referrerAccount.toBase58());
-      } else {
-        // 👇 Add this fallback even if no referrer is provided
-        const [dummyReferrerPda] = PublicKey.findProgramAddressSync(
-          [Buffer.from("user_account"), PublicKey.default.toBuffer()],
-          program.programId
-        );
-        referrerAccount = dummyReferrerPda;
-        referrerUserAccount = dummyReferrerPda;
       }
-
-      const accounts: any = {
+ 
+      const accounts = {
         userAccount: userAccountPda,
         airdropState: airdropStatePda,
         referralTracker: referralTrackerPda,
         user: userPubKey,
         sponsor: userPubKey,
-        referrerAccount,
-        referrerUserAccount,
         systemProgram: web3.SystemProgram.programId,
+        referrerUserAccount,
+        referrerAccount,
       };
 
-      if (referrerAccount && referrerUserAccount) {
+      if (referrerAccount) {
         accounts.referrerAccount = referrerAccount;
-        accounts.referrerUserAccount = referrerUserAccount;
+         accounts.referrerUserAccount = referrerUserAccount;
       }
-
-      console.log("🚀 Final Accounts Object:", accounts);
 
       console.log("Registering user...");
       const tx = await program.methods
@@ -213,8 +335,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
     }
   };
 
-  /* 
-  const handleRegisterUser = async (
+  /*  const handleRegisterUser = async (
     referrerPublicKey: string | null = null
   ): Promise<any> => {
     const SPONSOR_URL =
@@ -1085,17 +1206,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
 
       const tx = await program.methods
         .withdrawTokens(amount)
-        /*  .accounts({
-          userAccount: userAccountPda,
-          airdropState: airdropStatePda,
-          airdropTokenAccount: airdropTokenAccount,
-          userTokenAccount: userTokenAccount,
-          tokenMint: TOKEN_MINT,
-          user: userWallet.publicKey,
-          admin: airdropState.admin,
-          tokenProgram: TOKEN_PROGRAM_ID,
-          systemProgram: web3.SystemProgram.programId,
-        }) */ .accountsStrict({
+        .accountsStrict({
           userAccount: userAccountPda,
           airdropState: airdropStatePda,
           withdrawalTracker: withdrawalTrackerPda, // ✅ now included

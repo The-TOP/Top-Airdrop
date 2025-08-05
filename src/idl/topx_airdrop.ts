@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/topx_airdrop.json`.
  */
 export type TopxAirdrop = {
-  "address": "BDG6UUaDAKkwfzq4Fq4Deh7MpHSbmhrRBFoxo3RWoDrF",
+  "address": "5AabgEhFn1hFUXCUQA6qDBw2k9TGcpnFET4toPg4bhgb",
   "metadata": {
     "name": "topxAirdrop",
     "version": "0.1.1",
@@ -1233,32 +1233,7 @@ export type TopxAirdrop = {
             "The referrer's user account (optional - only needed when there's a referrer)"
           ],
           "writable": true,
-          "optional": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  117,
-                  115,
-                  101,
-                  114,
-                  95,
-                  97,
-                  99,
-                  99,
-                  111,
-                  117,
-                  110,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "referrerAccount"
-              }
-            ]
-          }
+          "optional": true
         },
         {
           "name": "referrerAccount",

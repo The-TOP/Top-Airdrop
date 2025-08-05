@@ -270,23 +270,3 @@ console.log(referralLink);
 
 export default Tasks;
 
-{
-  /*   <SocialtaskCard
-        textcolor={"text-white/80"}
-        title={"Telegram"}
-        description={"Join the Telegram Community"}
-        buttonDisabled={claimed.telegram}
-        onButtonClick={() => {
-          setTrackLoading1(true);
-          window.open(" https://t.me/ProtocolChain", "_blank");
-          setTimeout(() => {
-            handleSocialTask(2, address);
-            setTrackLoading1(false);
-          }, 5000);
-        }}
-        Icon={FaTelegram}
-        buttonLabel={"Go"}
-        borderstyle={""}
-        trackLoading={trackLoading1}
-      /> */
-}
