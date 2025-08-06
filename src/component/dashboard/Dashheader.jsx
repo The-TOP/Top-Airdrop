@@ -15,7 +15,8 @@ const Dashheader = ({ xstyle }) => {
     handleUserTasks,
     handleReferralStats,
     handleWithdrawStats,
-    handleFetchUserAccount
+    handleFetchUserAccount,
+    getCompleteReferralInfo,
   } = useContext(myWalletContext);
 
   const { userBalance, setUserbalance, setUserReferral, setUserTask, refresh,  setwithdrawStats } =
@@ -54,7 +55,7 @@ const Dashheader = ({ xstyle }) => {
       <div className="flex justify-center items-center gap-2">
         <img
           onClick={() => {
-            handleReferralStats();
+            getCompleteReferralInfo();
           }}
           src={miniLogo}
           className="w-5"

@@ -26,7 +26,7 @@ const Home = () => {
         console.log(referral);
         
         handleRegisterUser(referral);
-        localStorage.removeItem("referrer"); 
+       // localStorage.removeItem("referrer"); 
 
       } else {
         handleRegisterUser();
