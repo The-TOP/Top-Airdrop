@@ -25,6 +25,7 @@ const Dashheader = ({ xstyle }) => {
     setUserTask,
     refresh,
     setwithdrawStats,
+    setReferralStats,
   } = useContext(DataContext);
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const Dashheader = ({ xstyle }) => {
         const referral = await handleFetchUserAccount();
         const task = await handleUserTasks();
         const withdrawstats = await handleWithdrawStats();
+        const refferalstats = await getCompleteReferralInfo();
         const humanReadable = result.toNumber() / 100000;
         const completedCount = task.filter((task) => task).length;
         //const account = await handleFetchUserAccount();
@@ -42,7 +44,7 @@ const Dashheader = ({ xstyle }) => {
         setUserTask(completedCount);
         setUserReferral(referral.referralsCount);
         setwithdrawStats(withdrawstats);
-        
+       setReferralStats(refferalstats);
       } catch (error) {
         console.error("Error fetching  Data:", error);
       }

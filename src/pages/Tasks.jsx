@@ -15,7 +15,7 @@ import DataContext from "../context/DataContext";
 
 const Tasks = () => {
   const { handleUserTasks, handleSocialTask } = useContext(myWalletContext);
-  const { setRefresh } = useContext(DataContext);
+  const { refresh, setRefresh } = useContext(DataContext);
   const { publicKey } = useWallet();
   const address = publicKey.toString();
 
@@ -24,7 +24,7 @@ const Tasks = () => {
   };
   const referralLink = generateReferralLink(address);
 
-   //console.log(referralLink);
+  //console.log(referralLink);
 
   const [claimed, setClaimed] = useState({
     airdrop: false,
@@ -48,7 +48,7 @@ const Tasks = () => {
     };
 
     fetchTasks();
-  }, []);
+  }, [refresh]);
 
   const [userEmail, setUserEmail] = useState("");
   const [OpenAirdropModal, setOpenAirdropModal] = useState(false);
@@ -122,10 +122,10 @@ const Tasks = () => {
         description={referralLink}
         onButtonClick={() => {
           setlinkTracker(true);
-          navigator.clipboard.writeText(
-          referralLink
-          );
-          setTimeout(()=>{setlinkTracker(false)},500)
+          navigator.clipboard.writeText(referralLink);
+          setTimeout(() => {
+            setlinkTracker(false);
+          }, 500);
         }}
         Tracker={linkTracker}
         Icon={FaCopy}
@@ -151,8 +151,8 @@ const Tasks = () => {
           window.open("https://x.com/theTOPXchange", "_blank");
         }}
         onButtonClick2={async () => {
-         const check=  await handleSocialTask(1, address);
-         check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+          const check = await handleSocialTask(1, address);
+          check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaSquareXTwitter}
         buttonLabel={"Go"}
@@ -173,7 +173,7 @@ const Tasks = () => {
         }}
         onButtonClick2={async () => {
           const check = await handleSocialTask(2, address);
-         check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+          check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaTelegram}
         buttonLabel={"Go"}
@@ -193,8 +193,8 @@ const Tasks = () => {
           window.open("https://t.me/theTOPXchange", "_blank");
         }}
         onButtonClick2={async () => {
-         const check= await handleSocialTask(3, address);
-         check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+          const check = await handleSocialTask(3, address);
+          check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaTelegram}
         buttonLabel={"Go"}
@@ -214,7 +214,7 @@ const Tasks = () => {
           window.open(" https://discord.gg/yTxsnK6CgA", "_blank");
         }}
         onButtonClick2={async () => {
-         const check = await handleSocialTask(4, address);
+          const check = await handleSocialTask(4, address);
           check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaDiscord}
@@ -237,8 +237,8 @@ const Tasks = () => {
           );
         }}
         onButtonClick2={async () => {
-        const check=  await handleSocialTask(5, address);
-         check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
+          const check = await handleSocialTask(5, address);
+          check && setRefresh((prev) => prev + 1); // 🔁 Trigger refetch
         }}
         Icon={FaYoutube}
         buttonLabel={"Go"}
@@ -250,7 +250,10 @@ const Tasks = () => {
       <AirdropModal
         isOpen={OpenAirdropModal}
         onClose={setOpenAirdropModal}
-        setClaimed={() => handleSocialTask(0, address)}
+        setClaimed={async() => {
+         const check = await handleSocialTask(0, address);
+          check && setRefresh((prev) => prev + 1);
+        }}
         status={claimed.airdrop}
       />
       <EmailModal
@@ -268,4 +271,3 @@ const Tasks = () => {
 };
 
 export default Tasks;
-

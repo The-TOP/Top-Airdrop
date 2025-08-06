@@ -13,6 +13,7 @@ export const DataProvider = ({ children }) => {
   const [homeModal, setHomeModal] = useState(false);
   const [refresh, setRefresh] = useState(0);
   const [withdrawStats, setwithdrawStats] = useState("");
+  const [referralStats, setReferralStats] = useState([]);
   const connected = useWallet().connected;
   const handleDashBordNav = () => {
     if (!connected) {
@@ -45,6 +46,8 @@ export const DataProvider = ({ children }) => {
         setRefresh,
         withdrawStats,
         setwithdrawStats,
+        referralStats,
+        setReferralStats,
       }}
     >
       {children}

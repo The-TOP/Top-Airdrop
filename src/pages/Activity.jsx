@@ -80,11 +80,13 @@ const Activity = () => {
 
   const { handleFetchUserAccount, handleUserTasks } =
     useContext(myWalletContext);
-  const { withdrawStats } = useContext(DataContext);
+  const { withdrawStats, referralStats } = useContext(DataContext);
+
   const [accountData, setAccountData] = useState([]);
   const [taskStatus, setTaskStatus] = useState([]);
   const address = accountData.user?.toString();
-  console.log(withdrawStats);
+
+  /* console.log(withdrawStats); */
 
   const Airdrop = [
     {
@@ -214,8 +216,6 @@ const Activity = () => {
     },
   ];
 
- 
-
   useEffect(() => {
     const data = async () => {
       try {
@@ -231,6 +231,7 @@ const Activity = () => {
 
     data();
   }, []);
+  console.log(referralStats);
 
   return (
     <div className="w-full p-3 md:p-6 pb-10 space-y-6">
@@ -244,7 +245,7 @@ const Activity = () => {
       <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {activeTab === "Airdrop" && <AirdropTable Data={Airdrop} />}
-      {activeTab === "Referrals" && <ReferralCard data={""} />}
+      {activeTab === "Referrals" && <ReferralCard data={referralStats} />}
       {activeTab === "Social" && <ReferralSocialTable Data={Social} />}
       {activeTab === "Withdrawal" && <WithdrawalCards data={withdrawStats} />}
     </div>
