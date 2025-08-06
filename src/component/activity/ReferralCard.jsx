@@ -18,7 +18,7 @@ const ReferralCard = ({ data }) => {
       </div>
     );
   }
-  console.log(data);
+  //console.log(data);
 
   const referralSource = data?.referralSource;
   const referralsMade = data?.referralsMade;
@@ -56,7 +56,7 @@ const ReferralCard = ({ data }) => {
       <div>
         <div className="text-sm text-zinc-400 capitalize">reffered by</div>
         <div className="text-sm  text-red-400">
-          {address ? address.slice(0, 5) + "...." + address.slice(-4) : "None"}
+          {address ? address.slice(0, 12) + "...." + address.slice(-4) : "None"}
         </div>
       </div>
     </div>

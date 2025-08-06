@@ -231,7 +231,7 @@ const Activity = () => {
 
     data();
   }, []);
-  console.log(referralStats);
+  //console.log(referralStats);
 
   return (
     <div className="w-full p-3 md:p-6 pb-10 space-y-6">
