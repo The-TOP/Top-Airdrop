@@ -7,7 +7,7 @@ import myWalletContext from "../context/WalletContext1";
 
 const Home = () => {
   const { connected, publicKey } = useWallet();
-  /* const address = publicKey?.toString(); */
+  
   const navigate = useNavigate();
   const { handleRegisterUser } = useContext(myWalletContext);
   const { ondashboard } = useContext(DataContext);
@@ -17,7 +17,7 @@ const Home = () => {
       navigate("/dashboard");
     }
   }, [connected]);
-  /* console.log(address); */
+  
 
   useEffect(() => {
     if (connected) {
@@ -28,7 +28,7 @@ const Home = () => {
        
         
        handleRegisterUser(referral);
-       // localStorage.removeItem("referrer"); 
+       localStorage.removeItem("referrer"); 
 
       } else {
         handleRegisterUser();

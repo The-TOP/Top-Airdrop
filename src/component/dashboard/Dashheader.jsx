@@ -13,14 +13,19 @@ const Dashheader = ({ xstyle }) => {
     handleUserBalance,
     handlePlatformStats,
     handleUserTasks,
-    handleReferralStats,
     handleWithdrawStats,
     handleFetchUserAccount,
     getCompleteReferralInfo,
   } = useContext(myWalletContext);
 
-  const { userBalance, setUserbalance, setUserReferral, setUserTask, refresh,  setwithdrawStats } =
-    useContext(DataContext);
+  const {
+    userBalance,
+    setUserbalance,
+    setUserReferral,
+    setUserTask,
+    refresh,
+    setwithdrawStats,
+  } = useContext(DataContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,8 +42,6 @@ const Dashheader = ({ xstyle }) => {
         setUserTask(completedCount);
         setUserReferral(referral.referralsCount);
         setwithdrawStats(withdrawstats);
-        console.log("ACCOUNT",referral.referralsCount);
-        
         
       } catch (error) {
         console.error("Error fetching  Data:", error);

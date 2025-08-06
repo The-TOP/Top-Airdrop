@@ -13,6 +13,7 @@ const SocialtaskCard = ({
   Icon,
   buttonLabel,
   borderstyle,
+  Tracker,
   trackLoading,
 }) => {
   return (
@@ -30,6 +31,8 @@ const SocialtaskCard = ({
           className={`px-3 capitalize font-semibold font-stretch-150% rounded-full text-xs border ${
             buttonDisabled
               ? "bg-white/10 text-white/30 border-white/30 py-1 cursor-not-allowed"
+              : Tracker
+              ? "bg-green-400/30"
               : "border-green-500/40  bg-black/70 text-white hover:bg-white/10"
           }`}
           disabled={buttonDisabled}
@@ -43,7 +46,7 @@ const SocialtaskCard = ({
               <FaSyncAlt className="text-green-500 animate-spin" />
             </div>
           ) : (
-            <div className="flex gap-1.5 items-center justify-center p-1">
+            <div className="flex gap-1.5 items-center justify-center p-1 ">
               <LuCircleArrowOutUpRight className="text-white/50" />
               <span className=""> {buttonLabel}</span>
             </div>

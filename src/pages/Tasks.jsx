@@ -18,18 +18,13 @@ const Tasks = () => {
   const { setRefresh } = useContext(DataContext);
   const { publicKey } = useWallet();
   const address = publicKey.toString();
-  /////////
+
   const generateReferralLink = (walletAddress) => {
     return `${window.location.origin}/?ref=${walletAddress}`;
   };
   const referralLink = generateReferralLink(address);
 
-console.log(referralLink);
-
-
-
-
-  /////////
+   //console.log(referralLink);
 
   const [claimed, setClaimed] = useState({
     airdrop: false,
@@ -58,6 +53,7 @@ console.log(referralLink);
   const [userEmail, setUserEmail] = useState("");
   const [OpenAirdropModal, setOpenAirdropModal] = useState(false);
   const [OpenEmailModal, setOpenEmailModal] = useState(false);
+  const [linkTracker, setlinkTracker] = useState(false);
 
   const twitterTimer = useTaskTimer("task_start_twitter");
   const telegramTimer = useTaskTimer("task_start_telegram");
@@ -125,10 +121,13 @@ console.log(referralLink);
         title={"Your unique link"}
         description={referralLink}
         onButtonClick={() => {
+          setlinkTracker(true);
           navigator.clipboard.writeText(
           referralLink
           );
+          setTimeout(()=>{setlinkTracker(false)},500)
         }}
+        Tracker={linkTracker}
         Icon={FaCopy}
         buttonLabel={"copy"}
         borderstyle={"rounded-b-xl"}
