@@ -26,6 +26,7 @@ const ReferralCard = ({ data }) => {
   const account = referralsMade?.user;
   const referees = referralsMade?.referralsCount;
   const earn = referees * 10000;
+  const address = referralSource?.referredBy;
 
   return (
     <div className="max-w-6xl min-h-5/6  mx-auto mt-6 bg-black/30 p-6 rounded-xl shadow-md border border-zinc-800 text-white">
@@ -35,7 +36,9 @@ const ReferralCard = ({ data }) => {
 
       <div className="mb-3">
         <div className="text-sm text-zinc-400">Account</div>
-        <div className="text-sm font-medium truncate">{account?.toString()}</div>
+        <div className="text-sm font-medium truncate">
+          {account?.toString()}
+        </div>
       </div>
 
       <div className="mb-3">
@@ -53,9 +56,7 @@ const ReferralCard = ({ data }) => {
       <div>
         <div className="text-sm text-zinc-400 capitalize">reffered by</div>
         <div className="text-sm  text-red-400">
-          {referralSource?.referredBy
-            ? referralSource?.referredBy.toString()
-            : "None"}
+          {address ? address.slice(0, 5) + "...." + address.slice(-4) : "None"}
         </div>
       </div>
     </div>

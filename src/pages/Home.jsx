@@ -22,11 +22,7 @@ const Home = () => {
   useEffect(() => {
     if (connected) {
       const referral = localStorage.getItem("referrer");
-      if (referral) {
-        console.log(referral);
-        console.log( typeof referral);
-       
-        
+      if (referral) {  
        handleRegisterUser(referral);
        localStorage.removeItem("referrer"); 
 
