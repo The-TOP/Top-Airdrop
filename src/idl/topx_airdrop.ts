@@ -8,7 +8,7 @@ export type TopxAirdrop = {
   "address": "5AabgEhFn1hFUXCUQA6qDBw2k9TGcpnFET4toPg4bhgb",
   "metadata": {
     "name": "topxAirdrop",
-    "version": "0.1.1",
+    "version": "0.1.0",
     "spec": "0.1.0",
     "description": "Created with Anchor"
   },

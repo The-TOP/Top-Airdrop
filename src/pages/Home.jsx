@@ -24,8 +24,10 @@ const Home = () => {
       const referral = localStorage.getItem("referrer");
       if (referral) {
         console.log(referral);
+        console.log( typeof referral);
+       
         
-        handleRegisterUser(referral);
+       handleRegisterUser(referral);
        // localStorage.removeItem("referrer"); 
 
       } else {

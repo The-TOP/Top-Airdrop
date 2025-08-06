@@ -28,7 +28,7 @@ interface WalletContextProps {
   handleSocialTask: (taskType: number, proof: string) => Promise<any>;
   handleUserTasks: () => Promise<any>;
   handleFetchUserAccount: () => Promise<any>;
- getCompleteReferralInfo: () => Promise<any>;
+  getCompleteReferralInfo: () => Promise<any>;
   handleWithdrawTokens: (
     userWallet: WalletContextState,
     amount: number
@@ -73,6 +73,8 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
     setProvider(provider);
     return provider;
   };
+  /*  console.log(myWallet.publicKey);
+  console.log(getProvider().publicKey); */
 
   /* const handleRegisterUser = async (
     referrerPublicKey: string | null = null
@@ -262,39 +264,58 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         console.log("User not registered yet. Proceeding...");
       }
       let referrer = PublicKey.default;
-      let referrerAccount: PublicKey | null = null;
-      let referrerUserAccount: PublicKey | null = null;
+      // let referrerAccount: PublicKey | null = null;
+      //let referrerUserAccount: PublicKey | null = null;
 
-      if (referrerPublicKey) {
-        referrer = new PublicKey(referrerPublicKey);
+      ///////
 
-        // Derive referrer account PDA
-        const [referrerAccountPda] = PublicKey.findProgramAddressSync(
-          [Buffer.from("user_account"), referrer.toBuffer()],
-          program.programId
-        );
-
-        referrerAccount = referrerAccountPda;
-        referrerUserAccount = referrerAccountPda;
-
-        console.log("✅ Referrer:", referrer.toBase58());
-        console.log("✅ Referrer Account PDA:", referrerAccount.toBase58());
-      }
- 
-      const accounts = {
+      /* const accounts = {
         userAccount: userAccountPda,
         airdropState: airdropStatePda,
         referralTracker: referralTrackerPda,
         user: userPubKey,
         sponsor: userPubKey,
-        systemProgram: web3.SystemProgram.programId,
-        referrerUserAccount,
-        referrerAccount,
+        systemProgram: SystemProgram.programId,
+        referrerUserAccount: null, // ✅ add this
+        referrerAccount: null, // ✅ add this
+      }; */
+
+      //
+      const accounts: {
+        userAccount: PublicKey;
+        airdropState: PublicKey;
+        referralTracker: PublicKey;
+        user: PublicKey;
+        sponsor: PublicKey;
+        systemProgram: PublicKey;
+        referrerUserAccount: PublicKey | null;
+        referrerAccount: PublicKey | null;
+      } = {
+        userAccount: userAccountPda,
+        airdropState: airdropStatePda,
+        referralTracker: referralTrackerPda,
+        user: userPubKey,
+        sponsor: userPubKey,
+        systemProgram: SystemProgram.programId,
+        referrerUserAccount: null,
+        referrerAccount: null,
       };
 
-      if (referrerAccount) {
-        accounts.referrerAccount = referrerAccount;
-         accounts.referrerUserAccount = referrerUserAccount;
+      if (referrerPublicKey) {
+        referrer = new PublicKey(referrerPublicKey);
+
+        // Derive referrer account PDA
+        const [referrerUserAccountPda] = PublicKey.findProgramAddressSync(
+          [Buffer.from("user_account"), referrer.toBuffer()],
+          program.programId
+        );
+
+        console.log("Referrer:", referrer.toString());
+        console.log("Referrer Account PDA:", referrerUserAccountPda.toString());
+
+        // Add referrer accounts
+        accounts.referrerAccount = referrer;
+        accounts.referrerUserAccount = referrerUserAccountPda;
       }
 
       console.log("Registering user...");
@@ -1415,13 +1436,10 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
     }
   }; */
 
-
-
-
   // Check how many people a user has referred (they are the referrer)
-const checkUserReferrals = async (): Promise<any> => {
-  try {
-    const anchProvider = getProvider();
+  const checkUserReferrals = async (): Promise<any> => {
+    try {
+      const anchProvider = getProvider();
       const userPublicKey = anchProvider.publicKey;
       const program = new Program<TopxAirdrop>(idl_object, anchProvider);
 
@@ -1430,109 +1448,118 @@ const checkUserReferrals = async (): Promise<any> => {
           ? new PublicKey(userPublicKey)
           : userPublicKey;
 
-    console.log("\n=== CHECKING USER REFERRALS (How many they referred) ===");
-    
-   
-    
-    // Method 1: Check UserAccount for referrals_count
-    const [userAccountPda] = PublicKey.findProgramAddressSync(
-      [Buffer.from("user_account"), userPubKey.toBuffer()],
-      program.programId
-    );
-    
-    try {
-      const userAccount = await program.account.userAccount.fetch(userAccountPda);
-      console.log("User:", userPubKey.toString());
-      console.log("Total referrals made:", userAccount.referralsCount);
-      console.log("Pending rewards:", userAccount.pendingRewards.toString());
-      
-      // Method 2: Also check ReferralTracker if it exists
-      const [referralTrackerPda] = PublicKey.findProgramAddressSync(
-        [Buffer.from("referral_tracker"), userPubKey.toBuffer()],
+      console.log("\n=== CHECKING USER REFERRALS (How many they referred) ===");
+
+      // Method 1: Check UserAccount for referrals_count
+      const [userAccountPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("user_account"), userPubKey.toBuffer()],
         program.programId
       );
-      
+
       try {
-        const referralTracker = await program.account.referralTracker.fetch(referralTrackerPda);
-        console.log("Referral tracker confirmed - Total referrals:", referralTracker.totalReferrals);
+        const userAccount = await program.account.userAccount.fetch(
+          userAccountPda
+        );
+        console.log("User:", userPubKey.toString());
+        console.log("Total referrals made:", userAccount.referralsCount);
+        console.log("Pending rewards:", userAccount.pendingRewards.toString());
+
+        // Method 2: Also check ReferralTracker if it exists
+        const [referralTrackerPda] = PublicKey.findProgramAddressSync(
+          [Buffer.from("referral_tracker"), userPubKey.toBuffer()],
+          program.programId
+        );
+
+        try {
+          const referralTracker = await program.account.referralTracker.fetch(
+            referralTrackerPda
+          );
+          console.log(
+            "Referral tracker confirmed - Total referrals:",
+            referralTracker.totalReferrals
+          );
+        } catch (e) {
+          console.log(
+            "No referral tracker found (user hasn't referred anyone yet)"
+          );
+        }
+
+        return {
+          user: userAccount.user.toString(),
+          referralsCount: userAccount.referralsCount,
+          pendingRewards: userAccount.pendingRewards.toString(),
+        };
       } catch (e) {
-        console.log("No referral tracker found (user hasn't referred anyone yet)");
+        console.log("User account not found - user not registered");
+        return null;
       }
-      
-      return {
-        user: userAccount.user.toString(),
-        referralsCount: userAccount.referralsCount,
-        pendingRewards: userAccount.pendingRewards.toString()
-      };
-      
-    } catch (e) {
-      console.log("User account not found - user not registered");
-      return null;
+    } catch (err) {
+      console.error("❌ Failed to check user referrals:", err.message);
+      throw err;
     }
-    
-  } catch (err) {
-    console.error("❌ Failed to check user referrals:", err.message);
-    throw err;
-  }
-}
+  };
 
-// Check who referred a user (they were referred by someone)
+  // Check who referred a user (they were referred by someone)
 
-  const checkWhoReferredUser  = async (): Promise<any> => {
-  try {
-
-     const anchProvider = getProvider();
-      const userPublicKey = anchProvider.publicKey;
-      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
-
-      const userPubKey =
-        typeof userPublicKey === "string"
-          ? new PublicKey(userPublicKey)
-          : userPublicKey;
-    console.log("\n=== CHECKING WHO REFERRED THIS USER ===");
-    
-   
-    
-    const [userAccountPda] = PublicKey.findProgramAddressSync(
-      [Buffer.from("user_account"), userPubKey.toBuffer()],
-      program.programId
-    );
-    
+  const checkWhoReferredUser = async (): Promise<any> => {
     try {
-      const userAccount = await program.account.userAccount.fetch(userAccountPda);
-      console.log("User:", userPubKey.toString());
-      
-      if (userAccount.referrer) {
-        console.log("✅ This user was referred by:", userAccount.referrer.toString());
-        return {
-          user: userAccount.user.toString(),
-          referredBy: userAccount.referrer.toString(),
-          dateRegistered: new Date((userAccount.dateRegistered.toNumber()) * 1000).toISOString()
-        };
-      } else {
-        console.log("❌ This user was not referred by anyone");
-        return {
-          user: userAccount.user.toString(),
-          referredBy: null,
-          dateRegistered: new Date((userAccount.dateRegistered.toNumber()) * 1000).toISOString()
-        };
-      }
-      
-    } catch (e) {
-      console.log("User account not found - user not registered");
-      return null;
-    }
-    
-  } catch (err) {
-    console.error("❌ Failed to check who referred user:", err.message);
-    throw err;
-  }
-}
+      const anchProvider = getProvider();
+      const userPublicKey = anchProvider.publicKey;
+      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
 
-// Get complete referral information for a user
-  const getCompleteReferralInfo  = async (): Promise<any> => {
-  try {
-    const anchProvider = getProvider();
+      const userPubKey =
+        typeof userPublicKey === "string"
+          ? new PublicKey(userPublicKey)
+          : userPublicKey;
+      console.log("\n=== CHECKING WHO REFERRED THIS USER ===");
+
+      const [userAccountPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("user_account"), userPubKey.toBuffer()],
+        program.programId
+      );
+
+      try {
+        const userAccount = await program.account.userAccount.fetch(
+          userAccountPda
+        );
+        console.log("User:", userPubKey.toString());
+
+        if (userAccount.referrer) {
+          console.log(
+            "✅ This user was referred by:",
+            userAccount.referrer.toString()
+          );
+          return {
+            user: userAccount.user.toString(),
+            referredBy: userAccount.referrer.toString(),
+            dateRegistered: new Date(
+              userAccount.dateRegistered.toNumber() * 1000
+            ).toISOString(),
+          };
+        } else {
+          console.log("❌ This user was not referred by anyone");
+          return {
+            user: userAccount.user.toString(),
+            referredBy: null,
+            dateRegistered: new Date(
+              userAccount.dateRegistered.toNumber() * 1000
+            ).toISOString(),
+          };
+        }
+      } catch (e) {
+        console.log("User account not found - user not registered");
+        return null;
+      }
+    } catch (err) {
+      console.error("❌ Failed to check who referred user:", err.message);
+      throw err;
+    }
+  };
+
+  // Get complete referral information for a user
+  const getCompleteReferralInfo = async (): Promise<any> => {
+    try {
+      const anchProvider = getProvider();
       const userPublicKey = anchProvider.publicKey;
       const program = new Program<TopxAirdrop>(idl_object, anchProvider);
 
@@ -1541,23 +1568,20 @@ const checkUserReferrals = async (): Promise<any> => {
           ? new PublicKey(userPublicKey)
           : userPublicKey;
 
-    console.log("\n=== COMPLETE REFERRAL INFO ===");
-    
-    const referralsMade = await checkUserReferrals();
-    const referralSource = await checkWhoReferredUser();
-    
-    return {
-      referralsMade,
-      referralSource
-    };
-    
-  } catch (err) {
-    console.error("❌ Failed to get complete referral info:", err.message);
-    throw err;
-  }
-}
+      console.log("\n=== COMPLETE REFERRAL INFO ===");
 
+      const referralsMade = await checkUserReferrals();
+      const referralSource = await checkWhoReferredUser();
 
+      return {
+        referralsMade,
+        referralSource,
+      };
+    } catch (err) {
+      console.error("❌ Failed to get complete referral info:", err.message);
+      throw err;
+    }
+  };
 
   return (
     <myWalletContext.Provider
