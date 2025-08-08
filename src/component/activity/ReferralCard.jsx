@@ -26,7 +26,7 @@ const ReferralCard = ({ data }) => {
   const account = referralsMade?.user;
   const referees = referralsMade?.referralsCount;
   const earn = referees * 10000;
-  const address = referralSource?.referredBy;
+  const address = referralSource?.referredBy
 
   return (
     <div className="max-w-6xl min-h-5/6  mx-auto mt-6 bg-black/30 p-6 rounded-xl shadow-md border border-zinc-800 text-white">

@@ -2,7 +2,7 @@
   "address": "5AabgEhFn1hFUXCUQA6qDBw2k9TGcpnFET4toPg4bhgb",
   "metadata": {
     "name": "topx_airdrop",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "spec": "0.1.0",
     "description": "Created with Anchor"
   },
@@ -242,10 +242,6 @@
         },
         {
           "name": "user",
-          "docs": [
-            "The user proving intent (signs but doesn't pay)"
-          ],
-          "signer": true,
           "relations": [
             "user_account"
           ]
@@ -1235,11 +1231,7 @@
           "optional": true
         },
         {
-          "name": "user",
-          "docs": [
-            "The user proving intent (signs but doesn't pay)"
-          ],
-          "signer": true
+          "name": "user"
         },
         {
           "name": "sponsor",

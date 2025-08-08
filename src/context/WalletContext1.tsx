@@ -73,140 +73,8 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
     setProvider(provider);
     return provider;
   };
-  /*  console.log(myWallet.publicKey);
-  console.log(getProvider().publicKey); */
 
-  /* const handleRegisterUser = async (
-    referrerPublicKey: string | null = null
-  ): Promise<any> => {
-    try {
-      const anchProvider = getProvider();
-      const userPublicKey = anchProvider.publicKey;
-      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
-
-      const userPubKey =
-        typeof userPublicKey === "string"
-          ? new PublicKey(userPublicKey)
-          : userPublicKey;
-
-      console.log("\n=== REGISTERING USER ===");
-
-      const [userAccountPda] = PublicKey.findProgramAddressSync(
-        [Buffer.from("user_account"), userPubKey.toBuffer()],
-        program.programId
-      );
-
-      const [airdropStatePda] = PublicKey.findProgramAddressSync(
-        [Buffer.from("airdrop_state")],
-        program.programId
-      );
-
-      const [referralTrackerPda] = PublicKey.findProgramAddressSync(
-        [Buffer.from("referral_tracker"), userPubKey.toBuffer()],
-        program.programId
-      );
-
-      console.log("User:", userPubKey.toString());
-      console.log("User Account PDA:", userAccountPda.toString());
-      console.log("Referral Tracker PDA:", referralTrackerPda.toString());
-
-      try {
-        const existingUser = await program.account.userAccount.fetch(
-          userAccountPda
-        );
-        console.log("User already registered:", {
-          user: existingUser.user.toString(),
-          referrer: existingUser.referrer
-            ? existingUser.referrer.toString()
-            : "None",
-          pendingRewards: existingUser.pendingRewards.toString(),
-          referralsCount: existingUser.referralsCount,
-        });
-
-        return existingUser;
-      } catch {
-        console.log("User not registered yet. Proceeding...");
-      }
-
-      
-      let referrer = PublicKey.default;
-      let [dummyPda] = PublicKey.findProgramAddressSync(
-        [Buffer.from("user_account"), PublicKey.default.toBuffer()],
-        program.programId
-      );
-
-      let referrerAccount: PublicKey = dummyPda;
-      let referrerUserAccount: PublicKey = dummyPda;
-
-      if (referrerPublicKey) {
-        referrer = new PublicKey(referrerPublicKey);
-
-        const [referrerAccountPda] = PublicKey.findProgramAddressSync(
-          [Buffer.from("user_account"), referrer.toBuffer()],
-          program.programId
-        );
-
-        try {
-          const referrerData = await program.account.userAccount.fetch(
-            referrerAccountPda
-          );
-          referrerAccount = referrerAccountPda;
-          referrerUserAccount = referrerAccountPda;
-        } catch (err) {
-          console.warn("⚠️ Referrer not registered. Ignoring referral.");
-        }
-      }
-
-      const accounts = {
-        userAccount: userAccountPda,
-        airdropState: airdropStatePda,
-        referralTracker: referralTrackerPda,
-        user: userPubKey,
-        sponsor: userPubKey,
-        systemProgram: web3.SystemProgram.programId,
-        referrerAccount,
-        referrerUserAccount,
-      };
-
-      console.log("🚀 Final Accounts Object:", accounts);
-
-      const tx = await program.methods
-        .registerUser(referrer)
-        .accounts(accounts)
-        .rpc();
-
-      console.log("✅ User registered successfully!", tx);
-      console.log(
-        "View on Explorer: https://explorer.solana.com/tx/" +
-          tx +
-          "?cluster=devnet"
-      );
-
-      const userAccount = await program.account.userAccount.fetch(
-        userAccountPda
-      );
-      console.log("User account:", {
-        user: userAccount.user.toString(),
-        referrer: userAccount.referrer
-          ? userAccount.referrer.toString()
-          : "None",
-        pendingRewards: userAccount.pendingRewards.toString(),
-        dateRegistered: new Date(
-          Number(userAccount.dateRegistered) * 1000
-        ).toLocaleDateString("en-GB"),
-      });
-
-      return userAccount;
-    } catch (err: any) {
-      console.error("❌ Failed to register user:", err.message);
-      if (err.logs) {
-        err.logs.forEach((log: string) => console.log(log));
-      }
-      throw err;
-    }
-  }; */
-
-  const handleRegisterUser = async (
+  /*  const handleRegisterUser = async (
     referrerPublicKey: string | null = null
   ): Promise<any> => {
     try {
@@ -264,23 +132,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         console.log("User not registered yet. Proceeding...");
       }
       let referrer = PublicKey.default;
-      // let referrerAccount: PublicKey | null = null;
-      //let referrerUserAccount: PublicKey | null = null;
 
-      ///////
-
-      /* const accounts = {
-        userAccount: userAccountPda,
-        airdropState: airdropStatePda,
-        referralTracker: referralTrackerPda,
-        user: userPubKey,
-        sponsor: userPubKey,
-        systemProgram: SystemProgram.programId,
-        referrerUserAccount: null, // ✅ add this
-        referrerAccount: null, // ✅ add this
-      }; */
-
-      //
       const accounts: {
         userAccount: PublicKey;
         airdropState: PublicKey;
@@ -355,23 +207,15 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       }
       throw err;
     }
-  };
+  }; */
 
-  /*  const handleRegisterUser = async (
+  const handleRegisterUser = async (
     referrerPublicKey: string | null = null
   ): Promise<any> => {
-    const SPONSOR_URL =
-      "https://solana-verification.onrender.com/build_sponsored_transaction/";
-    const SPONSOR_PUBKEY = new PublicKey(
-      "2eyiRKix5DoW32K5GzpafbukGkkncREfXTC4aoK6Lq2i"
-    ); // Devnet
-
     try {
       const anchProvider = getProvider();
       const userPublicKey = anchProvider.publicKey;
       const program = new Program<TopxAirdrop>(idl_object, anchProvider);
-      const connection = anchProvider.connection;
-      console.log(program.programId.toBase58());
 
       const userPubKey =
         typeof userPublicKey === "string"
@@ -380,156 +224,158 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
 
       console.log("\n=== REGISTERING USER ===");
 
-      // === Derive user + airdrop PDAs ===
+      // Derive user account PDA
+
       const [userAccountPda] = PublicKey.findProgramAddressSync(
         [Buffer.from("user_account"), userPubKey.toBuffer()],
         program.programId
       );
 
+      // Derive PDA for airdrop state
       const [airdropStatePda] = PublicKey.findProgramAddressSync(
         [Buffer.from("airdrop_state")],
         program.programId
       );
 
+      // Derive referral tracker PDA for the user being registered
+      const [referralTrackerPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("referral_tracker"), userPubKey.toBuffer()],
+        program.programId
+      );
+
       console.log("User:", userPubKey.toString());
       console.log("User Account PDA:", userAccountPda.toString());
+      console.log("Referral Tracker PDA:", referralTrackerPda.toString());
 
-      // === Check if user already registered ===
+      // Check if user is already registered
       try {
         const existingUser = await program.account.userAccount.fetch(
           userAccountPda
         );
         console.log("User already registered:", {
           user: existingUser.user.toString(),
-          referrer: existingUser.referrer?.toString() || "None",
+          referrer: existingUser.referrer
+            ? existingUser.referrer.toString()
+            : "None",
           pendingRewards: existingUser.pendingRewards.toString(),
           referralsCount: existingUser.referralsCount,
         });
+
         console.log("user already registered");
         return existingUser;
-      } catch {
+      } catch (e) {
         console.log("User not registered yet. Proceeding...");
       }
-
-      // === Handle optional referrer ===
       let referrer = PublicKey.default;
-      let referrerAccount: PublicKey | null = null;
+     
+      const accounts: {
+        userAccount: PublicKey;
+        airdropState: PublicKey;
+        referralTracker: PublicKey;
+        user: PublicKey;
+        sponsor: PublicKey;
+        systemProgram: PublicKey;
+        referrerUserAccount: PublicKey | null;
+        referrerAccount: PublicKey | null;
+      } = {
+        userAccount: userAccountPda,
+        airdropState: airdropStatePda,
+        referralTracker: referralTrackerPda,
+        user: userPubKey,
+        sponsor: userPubKey,
+        systemProgram: SystemProgram.programId,
+        referrerUserAccount: null,
+        referrerAccount: null,
+      };
 
       if (referrerPublicKey) {
         referrer = new PublicKey(referrerPublicKey);
 
-        const [referrerAccountPda] = PublicKey.findProgramAddressSync(
+        // Derive referrer account PDA
+        const [referrerUserAccountPda] = PublicKey.findProgramAddressSync(
           [Buffer.from("user_account"), referrer.toBuffer()],
           program.programId
         );
 
-        referrerAccount = referrerAccountPda;
-
         console.log("Referrer:", referrer.toString());
-        console.log("Referrer Account PDA:", referrerAccount.toString());
+        console.log("Referrer Account PDA:", referrerUserAccountPda.toString());
+
+        // Add referrer accounts
+        accounts.referrerAccount = referrer;
+        accounts.referrerUserAccount = referrerUserAccountPda;
       }
 
-      // === Build accounts object ===
-      const accounts: any = {
-        userAccount: userAccountPda,
-        airdropState: airdropStatePda,
-        referrerAccount: null,
-        user: userPubKey,
-        systemProgram: web3.SystemProgram.programId,
-      };
-
-      /*    if (referrerAccount) {
-        accounts.referrerAccount = referrerAccount;
-      } */
-  ////////////////
-
-  // === Create transaction ===
-  //const tx = new web3.Transaction();
-
-  /*  const instruction = await program.methods
+      console.log("Registering user...");
+      const instruction = await program.methods
         .registerUser(referrer)
         .accounts(accounts)
         .instruction();
 
-      tx.add(
-        instruction,
-        SystemProgram.transfer({
-          fromPubkey: anchProvider.wallet.publicKey,
-          toPubkey: SPONSOR_PUBKEY,
-          lamports: 0,
-        })
-      );
-      console.log("➡  Final instructions BEFORE signing:");
-      tx.instructions.forEach((ix, i) => {
-        console.log(`  [${i}] programId=${ix.programId.toBase58()}`);
-        ix.keys.forEach((k, j) => {
-          console.log(
-            `      key[${j}] ${k.pubkey.toBase58()}  isSigner=${
-              k.isSigner
-            }  writable=${k.isWritable}`
-          );
-        });
-      });
- 
-      //tx.setSigners(SPONSOR_PUBKEY, userPubKey);
-      //tx.feePayer = SPONSOR_PUBKEY!;
-      // const { blockhash } = await connection.getLatestBlockhash("finalized");
-      //tx.recentBlockhash = blockhash;
+      const serializedIx = {
+        keys: instruction.keys,
+        programId: instruction.programId.toBase58(),
+        data: instruction.data.toString("base64"),
+      };
 
-      // === Sign & sponsor ===
-      //const signedTx = await anchProvider.wallet.signTransaction(tx);
-
-      
-
-      const res = await fetch(SPONSOR_URL, {
+      const BUILD_URL =
+        "https://solana-verification.onrender.com/build_sponsored_transaction/";
+      // const SEND_URL = "https://solana-verification.onrender.com/submitSignedTx/";
+      const res = await fetch(BUILD_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          referrerPublicKey: referrerPublicKey,
+          instructionJSON: serializedIx,
           userPublicKey: userPubKey.toBase58(),
         }),
       });
 
       const { base64Tx, success } = await res.json();
 
+      // assume base64Tx comes from buildSponsoredTransaction
       const tx = Transaction.from(Buffer.from(base64Tx, "base64"));
-      console.log(tx.signatures[0].publicKey.toString());
 
-       //tx.setSigners(SPONSOR_PUBKEY, userPubKey); 
+      // User signs slot 1
       const signedTx = await anchProvider.wallet.signTransaction(tx);
-      // slot 0: sponsor signature (remains), slot1: user signature
 
-      const txBuffer = signedTx.serialize(); // already signed
-      const txSignature = await connection.sendRawTransaction(txBuffer, {
-        skipPreflight: false, // optional: true = faster but less safe
+      console.log("Fee payer:");
+      console.log(tx.feePayer?.toString());
+
+      // const res2 = await fetch(SEND_URL, {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({
+      //     signedTx: signedTx.serialize(),
+
+      //   }),
+      // });
+
+      // const { signature } = await res.json();
+      // // Send it
+
+      const txid = await connection.sendRawTransaction(signedTx.serialize(), {
+        skipPreflight: false,
       });
+      // checkTransactionFees(txid);
+      await connection.confirmTransaction(txid, "confirmed");
+      // console.log("🖋 Final signature:", signature);
 
-      console.log("✅ Sent! Transaction signature:", txSignature);
+      console.log("✅ User registered successfully!", tx);
 
-      // Wait for confirmation (optional but recommended)
-      await connection.confirmTransaction(txSignature, "confirmed");
-      console.log("✅ Confirmed on chain");
-
-        // const { signature, error } = await res.json();
-      if (!signature) throw new Error("Sponsored transaction failed.");
-      ///// 
-
-      // if (error) throw new Error("Sponsor failed: " + error);
-
-      // console.log("✅ User registered successfully!");
-       console.log(
-        "Explorer: https://explorer.solana.com/tx/" +
-          signature +
+      console.log(
+        "View on Explorer: https://explorer.solana.com/tx/" +
+          tx +
           "?cluster=devnet"
-      ); 
+      );
 
+      // Verify registration
       const userAccount = await program.account.userAccount.fetch(
         userAccountPda
       );
-
       console.log("User account:", {
         user: userAccount.user.toString(),
-        referrer: userAccount.referrer?.toString() || "None",
+        referrer: userAccount.referrer
+          ? userAccount.referrer.toString()
+          : "None",
         pendingRewards: userAccount.pendingRewards.toString(),
         dateRegistered: new Date(
           Number(userAccount.dateRegistered) * 1000
@@ -539,10 +385,13 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       return userAccount;
     } catch (err: any) {
       console.error("❌ Failed to register user:", err.message);
-      if (err.logs) err.logs.forEach((log: string) => console.log(log));
+
+      if (err.logs) {
+        err.logs.forEach((log: string) => console.log(log));
+      }
       throw err;
     }
-  }; */
+  };
 
   const handleUserBalance = async (): Promise<any> => {
     try {
@@ -743,7 +592,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
     }
   };
 
-  const handleSocialTask = async (
+  /*  const handleSocialTask = async (
     taskType: number,
     proof: string
   ): Promise<any> => {
@@ -846,36 +695,46 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
 
       throw err;
     }
-  };
+  }; */
 
-  /*  const handleSocialTask = async (
+  const handleSocialTask = async (
     taskType: number,
     proof: string
   ): Promise<any> => {
     try {
       const anchProvider = getProvider();
-      const connection = anchProvider.connection;
       const userPublicKey = anchProvider.publicKey;
       const program = new Program<TopxAirdrop>(idl_object, anchProvider);
 
       const userPubKey =
-        typeof anchProvider.publicKey === "string"
+        typeof userPublicKey === "string"
           ? new PublicKey(userPublicKey)
           : userPublicKey;
 
-      // Task type mapping
+      console.log("\n=== COMPLETING SOCIAL TASK ===");
+
+      // ✅ Logging helper only (not used in program call)
       const taskTypes = {
-        0: "FollowTwitter",
-        1: "LikeAndRetweetPinned",
-        2: "JoinTelegramGroup",
-        3: "JoinTelegramChannel",
-        4: "JoinDiscordServer",
-        5: "SubscribeYouTube",
+        0: "welcomeAirdrop",
+        1: "followTwitter",
+        2: "likeAndRetweetPinned",
+        3: "joinTelegramGroup",
+        4: "joinDiscordServer",
+        5: "subscribeYouTube",
+        6: "accountVerification",
       };
 
-      // === Derive PDAs ===
+      console.log(`Task: ${taskTypes[taskType] || taskType}`);
+      console.log(`Proof: ${proof}`);
+
+      // ✅ PDA derivation
       const [userAccountPda] = PublicKey.findProgramAddressSync(
         [Buffer.from("user_account"), userPubKey.toBuffer()],
+        program.programId
+      );
+      // Derive task registry PDA
+      const [taskRegistryPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("task_registry")],
         program.programId
       );
 
@@ -884,89 +743,78 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         program.programId
       );
 
-      console.log(`Task: ${taskTypes[taskType] || taskType}`);
-      console.log(`Proof: ${proof}`);
-
-      // Convert taskType to the enum format expected by the program
-
-      // ✅ Define strict SocialTaskType enum
-      type SocialTaskType =
-        | { followTwitter: {} }
-        | { likeAndRetweetPinned: {} }
-        | { joinTelegramGroup: {} }
-        | { joinTelegramChannel: {} }
-        | { joinDiscordServer: {} }
-        | { subscribeYouTube: {} };
-
-      // ✅ Strict enumMap matching Anchor expected types
-      const enumMap: Record<number, SocialTaskType> = {
-        0: { followTwitter: {} },
-        1: { likeAndRetweetPinned: {} },
-        2: { joinTelegramGroup: {} },
-        3: { joinTelegramChannel: {} },
+      // ✅ Enum values that match Anchor IDL exactly
+      const enumMap: Record<number, any> = {
+        0: { welcomeAirdop: {} },
+        1: { followTwitter: {} },
+        2: { likeAndRetweetPinned: {} },
+        3: { joinTelegramGroup: {} },
         4: { joinDiscordServer: {} },
         5: { subscribeYouTube: {} },
+        6: { accountVerification: {} },
       };
+
       const socialTaskType = enumMap[taskType];
-
-      if (!socialTaskType) {
+      if (!socialTaskType)
         throw new Error("Invalid task type index: " + taskType);
-      }
       console.log("Completing social task...");
-
-      // === Build Transaction ===
-      const tx = new web3.Transaction();
-
+      // ✅ Transaction call
       const instruction = await program.methods
         .completeSocialTask(socialTaskType, proof)
-        .accounts({
+        .accountsStrict({
           userAccount: userAccountPda,
           airdropState: airdropStatePda,
+          taskRegistry: taskRegistryPda,
           user: userPubKey,
+          sponsor: userPubKey, // Added sponsor
+          systemProgram: SystemProgram.programId,
         })
         .instruction();
 
-      tx.add(instruction);
+      const serializedIx = {
+        keys: instruction.keys,
+        programId: instruction.programId.toBase58(),
+        data: instruction.data.toString("base64"),
+      };
 
-      // === Set blockhash & fee payer ===
-      const latestBlockhash = await connection.getLatestBlockhash("finalized");
-      tx.recentBlockhash = latestBlockhash.blockhash;
-      tx.feePayer = userPubKey;
+      const BUILD_URL =
+        "https://solana-verification.onrender.com/build_sponsored_transaction/";
+      //const SEND_URL = "https://solana-verification.onrender.com/submitSignedTx/";
+      const res = await fetch(BUILD_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          instructionJSON: serializedIx,
+          userPublicKey: userPubKey.toBase58(),
+        }),
+      });
 
-      // === Sign Locally ===
+      const { base64Tx, success } = await res.json();
+
+      // assume base64Tx comes from buildSponsoredTransaction
+      const tx = Transaction.from(Buffer.from(base64Tx, "base64"));
+
+      // User signs slot 1
       const signedTx = await anchProvider.wallet.signTransaction(tx);
 
-      // === Send to Sponsor Backend ===
-      const serialized = signedTx
-        .serialize({ requireAllSignatures: false })
-        .toString("base64");
+      console.log("Fee payer:");
+      console.log(tx.feePayer?.toString());
 
-      const res = await fetch(
-        "https://martian-crescent-241154.postman.co/workspace/Team-Workspace~65e514e1-acdb-45f1-8ca7-b121f0041912/collection/23659108-df7020c1-a8a4-4d67-a003-a61cfb14768a?action=share&source=copy-link&creator=23659108",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userTransaction: serialized,
-            userPublicKey: userPubKey.toBase58(),
-          }),
-        }
-      );
+      const txid = await connection.sendRawTransaction(signedTx.serialize(), {
+        skipPreflight: false,
+      });
+      // checkTransactionFees(txid);
+      // await connection.confirmTransaction(txid, "confirmed");
 
-      const { signature } = await res.json();
-      if (!signature) {
-        throw new Error("Sponsored transaction failed.");
-      }
-
-      console.log("✅ Social task completed!");
-      console.log("Tx Signature:", signature);
+      console.log("✅ Social task completed successfully!");
+      console.log("Transaction signature:", tx);
       console.log(
-        "Explorer: https://explorer.solana.com/tx/" +
-          signature +
+        "View on Explorer: https://explorer.solana.com/tx/" +
+          tx +
           "?cluster=devnet"
       );
 
-      // Get updated user account
+      // ✅ Fetch updated account info
       const userAccount = await program.account.userAccount.fetch(
         userAccountPda
       );
@@ -976,13 +824,18 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       );
       console.log("Completed tasks:", userAccount.completedTasks);
 
-      return signature;
+      return tx;
     } catch (err: any) {
-      console.error("❌ Social task failed:", err.message);
-      if (err.logs) err.logs.forEach((log: string) => console.log(log));
+      console.error("❌ Failed to complete social task:", err.message);
+
+      if (err.logs) {
+        console.error("Program logs:");
+        err.logs.forEach((log: string) => console.log(log));
+      }
+
       throw err;
     }
-  }; */
+  };
 
   const handleUserTasks = async (): Promise<any> => {
     try {
@@ -1128,8 +981,6 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
 
       const anchProvider = getProvider();
       const userPublicKey = anchProvider.publicKey;
-      // const program = new Program<TopxAirdrop>(idl_object, anchProvider);
-
       const program = new Program<TopxAirdrop>(idl as Idl, anchProvider);
 
       const userPubKey =
@@ -1182,8 +1033,6 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         );
 
         const createTx = new Transaction().add(createIx);
-        /* const createSignature = await connection.sendTransaction(createTx, [userWallet]);
-      await connection.confirmTransaction(createSignature); */
 
         await anchProvider.sendAndConfirm(createTx, []);
         console.log("✅ User token account created!");
@@ -1285,156 +1134,6 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       throw err;
     }
   };
-  /* const handleWithdrawTokens = async (
-    userWallet: WalletContextState,
-    amountInTokens: number
-  ): Promise<TransactionSignature> => {
-    // inside a function
-
-    if (!userWallet || !userWallet.publicKey) {
-      throw new Error("Wallet not connected or missing public key");
-    }
-    const {
-      TOKEN_PROGRAM_ID,
-      ASSOCIATED_TOKEN_PROGRAM_ID,
-      getAssociatedTokenAddress,
-      createAssociatedTokenAccountInstruction,
-      getAccount,
-    } = await import("@solana/spl-token");
-
-    try {
-      const TOKEN_MINT = new PublicKey(
-        "AFxAyQqpnqazUkP3RYpvcpVpvNPpvPGE9JuQmSzaCA8m"
-      );
-
-      const anchProvider = getProvider();
-      const userPublicKey = anchProvider.publicKey;
-      // const program = new Program<TopxAirdrop>(idl_object, anchProvider);
-      const program = new Program(idl_object as TopxAirdrop, anchProvider);
-      const userPubKey =
-        typeof userPublicKey === "string"
-          ? new PublicKey(userPublicKey)
-          : userPublicKey;
-
-      console.log("\n=== WITHDRAWING TOKENS ===");
-
-      // Convert amount to BN with proper decimals (assuming 9 decimals)
-      const amount = new BN(amountInTokens).mul(new BN(10).pow(new BN(9)));
-      console.log(
-        `Withdrawing ${amountInTokens} tokens (${amount.toString()} base units)`
-      );
-
-      // Derive user account PDA
-      const [userAccountPda] = PublicKey.findProgramAddressSync(
-        [Buffer.from("user_account"), userPubKey.toBuffer()],
-        program.programId
-      );
-
-      // Derive airdrop token account PDA
-      const [airdropTokenAccount] = PublicKey.findProgramAddressSync(
-        [Buffer.from("airdrop_token_account"), TOKEN_MINT.toBuffer()],
-        program.programId
-      );
-
-      // Get user's associated token account
-      const userTokenAccount = await getAssociatedTokenAddress(
-        TOKEN_MINT,
-        userWallet.publicKey || userPubKey ////check this later
-      );
-
-      console.log("User token account:", userTokenAccount.toString());
-
-      // Check if user token account exists, create if needed
-      const userTokenAccountInfo = await checkTokenAccount(
-        userTokenAccount,
-        "User token account"
-      );
-
-      if (!userTokenAccountInfo) {
-        console.log("Creating user token account...");
-
-        const createIx = createAssociatedTokenAccountInstruction(
-          userWallet.publicKey, // payer
-          userTokenAccount, // ata
-          userWallet.publicKey, // owner
-          TOKEN_MINT // mint
-        );
-
-        const createTx = new Transaction().add(createIx);
-        /// const createSignature = await connection.sendTransaction(createTx, [userWallet]);
-      //await connection.confirmTransaction(createSignature); *
-
-        await anchProvider.sendAndConfirm(createTx, []);
-        console.log("✅ User token account created!");
-      }
-
-      // Get airdrop state to find admin
-
-      // Derive airdropState PDA
-      const [airdropStatePda] = PublicKey.findProgramAddressSync(
-        [Buffer.from("airdrop_state")],
-        program.programId
-      );
-
-      const airdropState = await program.account.airdropState.fetch(
-        airdropStatePda
-      );
-      console.log("Withdrawing tokens...");
-
-      const tx = await program.methods
-        .withdrawTokens(amount)
-        .accounts({
-          userAccount: userAccountPda,
-          airdropState: airdropStatePda,
-          airdropTokenAccount: airdropTokenAccount,
-          userTokenAccount: userTokenAccount,
-          tokenMint: TOKEN_MINT,
-          user: userWallet.publicKey,
-          admin: airdropState.admin,
-          tokenProgram: TOKEN_PROGRAM_ID,
-          systemProgram: web3.SystemProgram.programId,
-        })
-
-        .rpc();
-
-      console.log("✅ Tokens withdrawn successfully!");
-      console.log("Transaction signature:", tx);
-      console.log(
-        "View on Explorer: https://explorer.solana.com/tx/" +
-          tx +
-          "?cluster=devnet"
-      );
-
-      // Verify withdrawal
-      const updatedUserAccount = await program.account.userAccount.fetch(
-        userAccountPda
-      );
-      const updatedUserTokenAccount = await checkTokenAccount(
-        userTokenAccount,
-        "Updated user token account"
-      );
-
-      console.log(
-        "Updated pending rewards:",
-        updatedUserAccount.pendingRewards.toString()
-      );
-      console.log(
-        "User token balance:",
-        updatedUserTokenAccount.amount.toString()
-      );
-
-      return tx;
-    } catch (err) {
-      console.error("❌ Failed to withdraw tokens:", err.message);
-
-      if (err.logs) {
-        console.error("Program logs:");
-        err.logs.forEach((log) => console.log(log));
-      }
-
-      throw err;
-    }
-  }; */
 
   // Check how many people a user has referred (they are the referrer)
   const checkUserReferrals = async (): Promise<any> => {

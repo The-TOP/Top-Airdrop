@@ -9,71 +9,7 @@ import WithdrawalCards from "../component/activity/WithdrawalCard";
 import DataContext from "../context/DataContext";
 import ReferralCard from "../component/activity/ReferralCard";
 
-const Referrals = [
-  /* {
-    account: "Cxae99...8ac5",
-    task: "Referral",
-    date: "10-03-25",
-    reward: "+1",
-    status: "Unclaimed",
-    claimed: false,
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "Referral",
-    date: "10-03-25",
-    reward: "+1",
-    status: "Unclaimed",
-    claimed: false,
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "Referral",
-    date: "10-03-25",
-    reward: "+1",
-    status: "Unclaimed",
-    claimed: false,
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "Referral",
-    date: "10-03-25",
-    reward: "+1",
-    status: "Unclaimed",
-    claimed: false,
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "Referral",
-    date: "10-03-25",
-    reward: "+1",
-    status: "Unclaimed",
-    claimed: false,
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "Referral",
-    date: "10-03-25",
-    reward: "+1",
-    status: "Claimed",
-    claimed: true,
-    profile: profile,
-  },
-  {
-    account: "Cxae99...8ac5",
-    task: "Referral",
-    date: "10-03-25",
-    reward: "+1",
-    status: "Claimed",
-    claimed: true,
-    profile: profile,
-  }, */
-];
+
 
 const Activity = () => {
   const [activeTab, setActiveTab] = useState("Airdrop");
@@ -102,7 +38,7 @@ const Activity = () => {
           ).toLocaleDateString("en-GB")
         : "loadin...",
 
-      reward: "+10 000",
+      reward: "+1 ",
       status: taskStatus[0] ? "Claimed" : "UnClaimed",
 
       profile: profile,
@@ -121,7 +57,7 @@ const Activity = () => {
           ).toLocaleDateString("en-GB")
         : "loadin...",
 
-      reward: "+10 000 ",
+      reward: "+1  ",
       status: taskStatus[6] ? "Claimed" : "UnClaimed",
       profile: profile,
     },
@@ -140,7 +76,7 @@ const Activity = () => {
           ).toLocaleDateString("en-GB")
         : "loadin...",
 
-      reward: "+10 000",
+      reward: "+1 ",
       status: taskStatus[1] ? "Claimed" : "UnClaimed",
       claimed: taskStatus[1],
       profile: profile,
@@ -158,7 +94,7 @@ const Activity = () => {
           ).toLocaleDateString("en-GB")
         : "loadin...",
 
-      reward: "+10 000",
+      reward: "+1 ",
       status: taskStatus[2] ? "Claimed" : "UnClaimed",
       claimed: taskStatus[2],
       profile: profile,
@@ -175,7 +111,7 @@ const Activity = () => {
           ).toLocaleDateString("en-GB")
         : "loadin...",
 
-      reward: "+10 000",
+      reward: "+1 ",
       status: taskStatus[3] ? "Claimed" : "UnClaimed",
       claimed: taskStatus[3],
       profile: profile,
@@ -192,7 +128,7 @@ const Activity = () => {
           ).toLocaleDateString("en-GB")
         : "loadin...",
 
-      reward: "+10 000",
+      reward: "+1 ",
       status: taskStatus[4] ? "Claimed" : "UnClaimed",
       claimed: taskStatus[4],
       profile: profile,
@@ -209,7 +145,7 @@ const Activity = () => {
           ).toLocaleDateString("en-GB")
         : "loadin...",
 
-      reward: "+10 000",
+      reward: "+1 ",
       status: taskStatus[5] ? "Claimed" : "UnClaimed",
       claimed: taskStatus[5],
       profile: profile,

@@ -9,6 +9,11 @@ const Dashheader = ({ xstyle }) => {
   const check = useWallet();
   const { publicKey } = useWallet();
   const wallet = publicKey ? publicKey.toString() : null;
+
+  const formatNumber = (num) => {
+    return num.toString().padStart(3, "0");
+  };
+
   const {
     handleUserBalance,
     handlePlatformStats,
@@ -36,7 +41,7 @@ const Dashheader = ({ xstyle }) => {
         const task = await handleUserTasks();
         const withdrawstats = await handleWithdrawStats();
         const refferalstats = await getCompleteReferralInfo();
-        const humanReadable = result.toNumber() / 100000;
+        const humanReadable = result.toNumber() / 1e9;
         const completedCount = task.filter((task) => task).length;
         //const account = await handleFetchUserAccount();
 
@@ -44,7 +49,7 @@ const Dashheader = ({ xstyle }) => {
         setUserTask(completedCount);
         setUserReferral(referral.referralsCount);
         setwithdrawStats(withdrawstats);
-       setReferralStats(refferalstats);
+        setReferralStats(refferalstats);
       } catch (error) {
         console.error("Error fetching  Data:", error);
       }
@@ -59,20 +64,20 @@ const Dashheader = ({ xstyle }) => {
     >
       <div className="flex justify-center items-center gap-2">
         <img
-          onClick={() => {
+          /*  onClick={() => {
             getCompleteReferralInfo();
-          }}
+          }} */
           src={miniLogo}
           className="w-5"
           alt="top"
         />
-        <p className="text-xs"> {userBalance} </p>
+        <p className="text-xs">{formatNumber(userBalance)} </p>
       </div>
       <div className="flex gap-2 justify-center items-center">
         <img
-          onClick={() => {
+          /*  onClick={() => {
             handleWithdrawStats();
-          }}
+          }} */
           src={user}
           className="w-5"
           alt="top"

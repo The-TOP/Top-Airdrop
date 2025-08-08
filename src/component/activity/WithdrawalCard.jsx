@@ -40,7 +40,7 @@ const WithdrawalCard = ({ data }) => {
        <div>
         <div className="text-sm text-zinc-400">Total Withdrawals</div>
         <div className="text-sm font-bold text-green-400">
-          {(Number(totalWithdrawals) / 100000).toLocaleString()} tokens
+          {(Number(totalWithdrawals) / 1e9).toLocaleString()} tokens
         </div>
       </div> 
     </div>

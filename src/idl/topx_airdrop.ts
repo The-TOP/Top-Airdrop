@@ -5,10 +5,10 @@
  * IDL can be found at `target/idl/topx_airdrop.json`.
  */
 export type TopxAirdrop = {
-  "address": "5AabgEhFn1hFUXCUQA6qDBw2k9TGcpnFET4toPg4bhgb",
+  "address": "43onu3svYrMCXmqiL9hj3MMseeK8QFWk65WNnqfTZwsq",
   "metadata": {
     "name": "topxAirdrop",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "spec": "0.1.0",
     "description": "Created with Anchor"
   },
@@ -248,10 +248,6 @@ export type TopxAirdrop = {
         },
         {
           "name": "user",
-          "docs": [
-            "The user proving intent (signs but doesn't pay)"
-          ],
-          "signer": true,
           "relations": [
             "userAccount"
           ]
@@ -266,7 +262,7 @@ export type TopxAirdrop = {
         },
         {
           "name": "systemProgram",
-          "address": "11111111111111111111111111111111"
+          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
         }
       ],
       "args": [
@@ -930,7 +926,7 @@ export type TopxAirdrop = {
         },
         {
           "name": "systemProgram",
-          "address": "11111111111111111111111111111111"
+          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
         }
       ],
       "args": [
@@ -1037,7 +1033,7 @@ export type TopxAirdrop = {
         },
         {
           "name": "systemProgram",
-          "address": "11111111111111111111111111111111"
+          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
         }
       ],
       "args": []
@@ -1117,7 +1113,7 @@ export type TopxAirdrop = {
         },
         {
           "name": "systemProgram",
-          "address": "11111111111111111111111111111111"
+          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
         }
       ],
       "args": []
@@ -1241,11 +1237,7 @@ export type TopxAirdrop = {
           "optional": true
         },
         {
-          "name": "user",
-          "docs": [
-            "The user proving intent (signs but doesn't pay)"
-          ],
-          "signer": true
+          "name": "user"
         },
         {
           "name": "sponsor",
@@ -1257,7 +1249,7 @@ export type TopxAirdrop = {
         },
         {
           "name": "systemProgram",
-          "address": "11111111111111111111111111111111"
+          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
         }
       ],
       "args": [
@@ -1578,7 +1570,7 @@ export type TopxAirdrop = {
         },
         {
           "name": "systemProgram",
-          "address": "11111111111111111111111111111111"
+          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
         }
       ],
       "args": []
@@ -1835,7 +1827,7 @@ export type TopxAirdrop = {
         },
         {
           "name": "systemProgram",
-          "address": "11111111111111111111111111111111"
+          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
         }
       ],
       "args": [

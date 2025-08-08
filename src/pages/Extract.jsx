@@ -1,4 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
+import Lottie from "lottie-react";
+import animationData from "../assets/animation.json";
+
+const Extract = () => {
+  return (
+    <div className="h-full flex flex-col bg-white/10 justify-center items-center">
+      <div className=" text-white w-4/5 h-4/6 mt-20 md:mt-4">
+        <Lottie animationData={animationData} />
+      </div>
+    </div>
+  );
+};
+
+export default Extract;
+
+// mean extract page bellow , to be used when the function is implemented
+
+/* import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaArrowDown, FaCheckCircle, FaInfoCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -46,7 +64,8 @@ const Extract = () => {
 
       <div className="flex flex-col-reverse lg:flex-row  gap-4 ">
         <div className="flex-1   rounded-xl shadow-md">
-          {/* Left Section */}
+          // Left Section 
+
           <p className="text-zinc-400 rounded-b-lg bg-white/5 py-1 px-2 text-sm mb-2">
             Cross Swap
           </p>
@@ -67,7 +86,7 @@ const Extract = () => {
                 className=" text-white bg-black/40 capitalize"
                 onChange={(e) => setFromToken(e.target.value)}
               >
-                {/* map available option */}
+              //   map available option 
                 <option value="" className="bg-black/40 capitalize ">
                   Select Token
                 </option>
@@ -128,7 +147,7 @@ const Extract = () => {
                 className=" text-white bg-black/40 capitalize"
                 onChange={(e) => setToToken(e.target.value)}
               >
-                {/* map available option */}
+             //   map available option 
                 <option value="" className="bg-black/40 capitalize ">
                   Select Token
                 </option>
@@ -188,7 +207,7 @@ const Extract = () => {
             </button>
           </div>
         </div>
-        {/* Right Section */}
+       //  Right Section 
         <div className="w-full lg:max-w-sm ">
           <p className="text-zinc-400 rounded-b-lg bg-white/5 py-1 px-2 text-sm mb-2 hidden lg:block">
             Swap Breakdown
@@ -242,3 +261,5 @@ const Extract = () => {
 };
 
 export default Extract;
+
+ */

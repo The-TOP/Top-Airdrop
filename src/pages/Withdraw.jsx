@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FaArrowRight } from "react-icons/fa";
 import top from "../img/miniLogo.png";
 import solana from "../img/solana.png";
 import WithdrawModal from "../modal/WithdrawModal";
@@ -11,14 +10,17 @@ import myWalletContext from "../context/WalletContext1";
 
 const Withdraw = () => {
   const [withdraw, setWithdraw] = useState("");
+  const [platformEnd, setPlatformEnd] = useState(false);
   const [openWithdrawModal, setopenWithdrawModal] = useState(false);
   const { publicKey, connected } = useWallet();
   const userwallet = useWallet();
   const address = publicKey.toString();
-  const { userBalance, setRefresh } = useContext(DataContext);
-  const { handleWithdrawTokens } = useContext(myWalletContext);
-  const withdrawAmount = Number(withdraw) / 10000;
-  /* console.log("chek11111111111111:", withdrawAmount); */
+  const { userBalance, setRefresh, isCountdownComplete } =
+    useContext(DataContext);
+  const { handleWithdrawTokens, handlePlatformStats } =
+    useContext(myWalletContext);
+  const withdrawAmount = Number(withdraw);
+  console.log(isCountdownComplete);
 
   const handleWithdraw = () => {
     setopenWithdrawModal(true);
@@ -28,6 +30,20 @@ const Withdraw = () => {
       fee: "0.00004286 SOL",
     });
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await handlePlatformStats();
+        setPlatformEnd(result.isEnded);
+        console.log(result.isEnded);
+      } catch (error) {
+        console.error("Error fetching platform endDate:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -101,7 +117,7 @@ const Withdraw = () => {
           </div>
           <div className="flex justify-between">
             <span>Minimum Withdrawal Amount:</span>
-            <span className="text-white">10 $TOP</span>
+            <span className="text-white">1 $TOP</span>
           </div>
           <div className="flex justify-between">
             <span>Transaction Fee:</span>
@@ -136,8 +152,11 @@ const Withdraw = () => {
         {/* Proceed Button */}
         <div className="mt-8 text-center">
           <button
+            disabled={!isCountdownComplete && !platformEnd}
             onClick={handleWithdraw}
-            className="flex mx-auto justify-center items-center bg-black/60  border-green-500 border  hover:bg-white/5 hover:text-green-500 text-white py-2 px-10 rounded-full text-sm  text-center font-semibold transition"
+            className={`flex mx-auto justify-center items-center   border-green-500 border  hover:bg-white/5 hover:text-green-500 text-white py-2 px-10 rounded-full text-sm  text-center font-semibold transition ${
+              !platformEnd ? " bg-white/10 text-white/30 border-white/30 py-1 cursor-not-allowed" : "bg-black/60"
+            }`}
           >
             Proceed
           </button>
@@ -151,7 +170,7 @@ const Withdraw = () => {
             userwallet,
             withdrawAmount
           );
-         withdawtoken && setRefresh((prev) => prev + 1);
+          withdawtoken && setRefresh((prev) => prev + 1);
         }}
         withdrawAmount={withdraw} // to display on screen
       />
