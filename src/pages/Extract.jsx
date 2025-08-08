@@ -4,8 +4,8 @@ import animationData from "../assets/animation.json";
 
 const Extract = () => {
   return (
-    <div className="h-full flex flex-col bg-white/10 justify-center items-center">
-      <div className=" text-white w-4/5 h-4/6 mt-20 md:mt-4">
+    <div className="h-full flex flex-col bg-white/8 justify-center items-center">
+      <div className=" text-white w-4/5 h-4/6 md:h-full mt-20 md:mt-4">
         <Lottie animationData={animationData} />
       </div>
     </div>
