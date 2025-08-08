@@ -28,7 +28,7 @@ const VerifyAccount = ({
           /* disabled={buttonDisabled} */
           onChange={(e) => setUserEmail(e.target.value)}
           required
-          className="w-full max-w-xl placeholder:text-xs bg-black/60 flex items-center px-4 py-3 justify-between border-white/20 border rounded-tl-xl rounded-br-xl  text-white    pl-4 pr-20 focus:outline-none focus:border-green-400/40"
+          className="w-full max-w-xl placeholder:text-xs bg-black/60 flex items-center px-4 py-3 justify-between border-white/20 border rounded-tl-xl rounded-br-xl  text-white  overflow-x-clip   pl-4 pr-20 focus:outline-none focus:border-green-400/40"
         />
 
         <motion.button

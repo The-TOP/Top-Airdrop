@@ -21,10 +21,10 @@ const SocialtaskCard = ({
       <h3 className="text-sm pb-1 text-white/40">{title}</h3>
       <div className="flex flex-col md:flex-row  max-w-6xl items-center text-xs gap-3 ">
         <div
-          className={`flex-1 flex items-center text-xs  border bg-black/60 border-white/20 p-2 rounded-tl-xl rounded-br-xl gap-2 min-w-60 md:max-w-xl  overflow-x-auto  ${textcolor} `}
+          className={`flex-1 flex items-center text-xs  border bg-black/60 border-white/20 p-2 rounded-tl-xl rounded-br-xl gap-2 w-full md:max-w-xl  overflow-x-auto  ${textcolor} `}
         >
           {Icon && <Icon size={21} className=" text-green-400" />}
-          <p className="">{description}</p>
+          <p className="text-nowrap ">{description}</p>
         </div>
         <motion.button
           whileTap={{ scale: 0.95 }}
