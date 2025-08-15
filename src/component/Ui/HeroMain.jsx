@@ -135,29 +135,29 @@ const HeroMain = () => {
             <div className="md:flex-2 flex mt-4 justify-center  md:items-center items-start gap-3">
               <div className="flex flex-col items-center justify-center gap-1 mt-4">
                 <div className="flex gap-4 text-white/70">
-                  <Link
+                  <a
                     target="_blank"
-                    to={" https://www.facebook.com/share/1BGLMMAAQN/"}
+                    href={" https://www.facebook.com/share/1BGLMMAAQN/"}
                   >
                     <FaFacebookF className="hover:text-white" />
-                  </Link>
-                  <Link target="_blank" to={"#"}>
+                  </a>
+                  <a target="_blank" href={"https://x.com/theTOPXchange"}>
                     <FaTwitter className="hover:text-white" />
-                  </Link>
-                  <Link
+                  </a>
+                  <a
                     target="_blank"
-                    to={
+                    href={
                       " https://www.instagram.com/thetopxchange?igsh=YndwaHNjcjRpM21p"
                     }
                   >
                     <FaInstagram className="hover:text-white" />
-                  </Link>
-                  <Link
+                  </a>
+                  <a
                     target="_blank"
-                    to={"https://youtube.com/@topxchange?feature=shared"}
+                    href={"https://youtube.com/@topxchange?feature=shared"}
                   >
                     <FaSquareYoutube className="hover:text-white" />
-                  </Link>
+                  </a>
                 </div>
                 <p className="text-sm">@top_protocol</p>
               </div>
