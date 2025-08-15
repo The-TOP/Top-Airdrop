@@ -15,7 +15,7 @@ const WithdrawalCard = ({ data }) => {
   const lastWithdrawalTime = lastWithdrawal.toNumber();
 
   return (
-    <div className="max-w-4xl mx-auto mt-6 bg-black/30 p-6 rounded-xl shadow-md border border-zinc-800 text-white">
+    <div className="max-w-6xl mx-auto mt-6 bg-black/30 p-6 rounded-xl shadow-md border border-zinc-800 text-white">
       <h2 className="text-lg font-semibold text-zinc-200 mb-4">
         Withdrawal Summary
       </h2>

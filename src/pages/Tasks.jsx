@@ -49,6 +49,12 @@ const Tasks = () => {
 
     fetchTasks();
   }, [refresh]);
+  // backup refresh on page unMount.... if transaction feedback pends
+  useEffect(() => {
+    return () => {
+      setRefresh((prev) => prev + 1); // safe: runs on unmount
+    };
+  }, []);
 
   const [userEmail, setUserEmail] = useState("");
   const [OpenAirdropModal, setOpenAirdropModal] = useState(false);
@@ -250,8 +256,8 @@ const Tasks = () => {
       <AirdropModal
         isOpen={OpenAirdropModal}
         onClose={setOpenAirdropModal}
-        setClaimed={async() => {
-         const check = await handleSocialTask(0, address);
+        setClaimed={async () => {
+          const check = await handleSocialTask(0, address);
           check && setRefresh((prev) => prev + 1);
         }}
         status={claimed.airdrop}

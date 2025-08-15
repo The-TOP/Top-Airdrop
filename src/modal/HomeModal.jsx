@@ -29,7 +29,7 @@ const HomeModal = ({ isOpen, onClose }) => {
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 text-white/60 hover:text-white transition"
+              className="absolute top-4 right-4 shadow shadow-white/40 p-1 rounded text-white/60 hover:text-white transition"
             >
               <FaTimes />
             </button>
@@ -39,10 +39,13 @@ const HomeModal = ({ isOpen, onClose }) => {
                
               </div>
                <FaWallet size={50} className={" text-green-600 font-bold"} />
-              <div className=" flex flex-col gap-6">
+              <div className=" flex flex-col gap-4">
                 <h2 className="text-white text-xl">Connect Wallet</h2>
                 <p className="text-white/60 text-xs flex w-65 gap-2 items-center justify-center">
                   kindly Connect Wallet to view Dashboard
+                </p>
+                <p className="text-white/60 text-xs flex w-65 -mt-4 gap-2 items-center justify-center">
+                  Use connect button on Header
                 </p>
               </div>
             </div>

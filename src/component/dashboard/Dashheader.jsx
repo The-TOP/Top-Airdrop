@@ -75,9 +75,9 @@ const Dashheader = ({ xstyle }) => {
       </div>
       <div className="flex gap-2 justify-center items-center">
         <img
-          /*  onClick={() => {
+            onClick={() => {
             handleWithdrawStats();
-          }} */
+          }} 
           src={user}
           className="w-5"
           alt="top"

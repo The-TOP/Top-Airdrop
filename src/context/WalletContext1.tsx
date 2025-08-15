@@ -318,7 +318,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       };
 
       const BUILD_URL =
-        "https://solana-verification.onrender.com/build_sponsored_transaction/";
+        "https://solana-verification-ck88.onrender.com/build_sponsored_transaction/";
       // const SEND_URL = "https://solana-verification.onrender.com/submitSignedTx/";
       const res = await fetch(BUILD_URL, {
         method: "POST",
@@ -778,7 +778,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       };
 
       const BUILD_URL =
-        "https://solana-verification.onrender.com/build_sponsored_transaction/";
+        "https://solana-verification-ck88.onrender.com/build_sponsored_transaction/";
       //const SEND_URL = "https://solana-verification.onrender.com/submitSignedTx/";
       const res = await fetch(BUILD_URL, {
         method: "POST",
