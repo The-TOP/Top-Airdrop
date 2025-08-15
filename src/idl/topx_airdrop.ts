@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/topx_airdrop.json`.
  */
 export type TopxAirdrop = {
-  "address": "43onu3svYrMCXmqiL9hj3MMseeK8QFWk65WNnqfTZwsq",
+  "address": "Bfd3USbTQAgejPJ8eyygtoNsjV9foHoYEPqRNnkrpUFk",
   "metadata": {
     "name": "topxAirdrop",
     "version": "0.1.1",
@@ -15,9 +15,6 @@ export type TopxAirdrop = {
   "instructions": [
     {
       "name": "addSocialTask",
-      "docs": [
-        "Add a new social task (admin only)"
-      ],
       "discriminator": [
         231,
         108,
@@ -98,9 +95,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "changeAdmin",
-      "docs": [
-        "Change admin (current admin only)"
-      ],
       "discriminator": [
         193,
         151,
@@ -152,9 +146,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "completeSocialTask",
-      "docs": [
-        "Complete a social task"
-      ],
       "discriminator": [
         64,
         77,
@@ -254,15 +245,12 @@ export type TopxAirdrop = {
         },
         {
           "name": "sponsor",
-          "docs": [
-            "The sponsor paying fees"
-          ],
           "writable": true,
           "signer": true
         },
         {
           "name": "systemProgram",
-          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
@@ -282,9 +270,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "emergencyPause",
-      "docs": [
-        "Emergency pause/unpause (admin only)"
-      ],
       "discriminator": [
         21,
         143,
@@ -331,9 +316,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "endAirdrop",
-      "docs": [
-        "End the airdrop (admin only)"
-      ],
       "discriminator": [
         128,
         69,
@@ -380,9 +362,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "fundAirdrop",
-      "docs": [
-        "Fund the airdrop contract with tokens (admin only)"
-      ],
       "discriminator": [
         63,
         24,
@@ -569,9 +548,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "getPlatformStats",
-      "docs": [
-        "Get platform statistics"
-      ],
       "discriminator": [
         7,
         67,
@@ -672,9 +648,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "getSocialTasks",
-      "docs": [
-        "Get all social tasks"
-      ],
       "discriminator": [
         254,
         93,
@@ -723,9 +696,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "getUserBalance",
-      "docs": [
-        "Get user balance (view function)"
-      ],
       "discriminator": [
         244,
         189,
@@ -772,9 +742,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "getUserTasks",
-      "docs": [
-        "Get user task completion status"
-      ],
       "discriminator": [
         79,
         28,
@@ -879,9 +846,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "initialize",
-      "docs": [
-        "Initialize the airdrop program (admin only)"
-      ],
       "discriminator": [
         175,
         175,
@@ -926,7 +890,7 @@ export type TopxAirdrop = {
         },
         {
           "name": "systemProgram",
-          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
@@ -942,9 +906,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "initializeAirdropTokenAccount",
-      "docs": [
-        "Initialize the airdrop token account (admin only)"
-      ],
       "discriminator": [
         69,
         205,
@@ -1033,16 +994,13 @@ export type TopxAirdrop = {
         },
         {
           "name": "systemProgram",
-          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": []
     },
     {
       "name": "initializeTaskRegistry",
-      "docs": [
-        "Initialize social task registry (admin only)"
-      ],
       "discriminator": [
         65,
         207,
@@ -1113,16 +1071,13 @@ export type TopxAirdrop = {
         },
         {
           "name": "systemProgram",
-          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": []
     },
     {
       "name": "registerUser",
-      "docs": [
-        "Register a new user for the airdrop"
-      ],
       "discriminator": [
         2,
         241,
@@ -1225,9 +1180,6 @@ export type TopxAirdrop = {
         },
         {
           "name": "referrerUserAccount",
-          "docs": [
-            "The referrer's user account (optional - only needed when there's a referrer)"
-          ],
           "writable": true,
           "optional": true
         },
@@ -1241,15 +1193,12 @@ export type TopxAirdrop = {
         },
         {
           "name": "sponsor",
-          "docs": [
-            "The sponsor paying fees and rent"
-          ],
           "writable": true,
           "signer": true
         },
         {
           "name": "systemProgram",
-          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
@@ -1261,9 +1210,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "removeSocialTask",
-      "docs": [
-        "Remove a social task (admin only)"
-      ],
       "discriminator": [
         39,
         244,
@@ -1340,9 +1286,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "resumeAirdrop",
-      "docs": [
-        "Resume airdrop (admin only)"
-      ],
       "discriminator": [
         204,
         105,
@@ -1389,9 +1332,6 @@ export type TopxAirdrop = {
     },
     {
       "name": "withdrawLeftoverTokens",
-      "docs": [
-        "Withdraw leftover tokens after airdrop ends (admin only)"
-      ],
       "discriminator": [
         153,
         54,
@@ -1570,16 +1510,13 @@ export type TopxAirdrop = {
         },
         {
           "name": "systemProgram",
-          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": []
     },
     {
       "name": "withdrawTokens",
-      "docs": [
-        "Withdraw tokens to user wallet (only works when airdrop has ended)"
-      ],
       "discriminator": [
         2,
         4,
@@ -1827,7 +1764,7 @@ export type TopxAirdrop = {
         },
         {
           "name": "systemProgram",
-          "address": "bc1qa4wmjkvl6k7cx03gvsg25xtyrz5797lh3d636c"
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [

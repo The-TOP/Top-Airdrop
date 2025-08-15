@@ -1,5 +1,5 @@
 {
-  "address": "5AabgEhFn1hFUXCUQA6qDBw2k9TGcpnFET4toPg4bhgb",
+  "address": "Bfd3USbTQAgejPJ8eyygtoNsjV9foHoYEPqRNnkrpUFk",
   "metadata": {
     "name": "topx_airdrop",
     "version": "0.1.1",
@@ -9,9 +9,6 @@
   "instructions": [
     {
       "name": "add_social_task",
-      "docs": [
-        "Add a new social task (admin only)"
-      ],
       "discriminator": [
         231,
         108,
@@ -92,9 +89,6 @@
     },
     {
       "name": "change_admin",
-      "docs": [
-        "Change admin (current admin only)"
-      ],
       "discriminator": [
         193,
         151,
@@ -146,9 +140,6 @@
     },
     {
       "name": "complete_social_task",
-      "docs": [
-        "Complete a social task"
-      ],
       "discriminator": [
         64,
         77,
@@ -248,9 +239,6 @@
         },
         {
           "name": "sponsor",
-          "docs": [
-            "The sponsor paying fees"
-          ],
           "writable": true,
           "signer": true
         },
@@ -276,9 +264,6 @@
     },
     {
       "name": "emergency_pause",
-      "docs": [
-        "Emergency pause/unpause (admin only)"
-      ],
       "discriminator": [
         21,
         143,
@@ -325,9 +310,6 @@
     },
     {
       "name": "end_airdrop",
-      "docs": [
-        "End the airdrop (admin only)"
-      ],
       "discriminator": [
         128,
         69,
@@ -374,9 +356,6 @@
     },
     {
       "name": "fund_airdrop",
-      "docs": [
-        "Fund the airdrop contract with tokens (admin only)"
-      ],
       "discriminator": [
         63,
         24,
@@ -563,9 +542,6 @@
     },
     {
       "name": "get_platform_stats",
-      "docs": [
-        "Get platform statistics"
-      ],
       "discriminator": [
         7,
         67,
@@ -666,9 +642,6 @@
     },
     {
       "name": "get_social_tasks",
-      "docs": [
-        "Get all social tasks"
-      ],
       "discriminator": [
         254,
         93,
@@ -717,9 +690,6 @@
     },
     {
       "name": "get_user_balance",
-      "docs": [
-        "Get user balance (view function)"
-      ],
       "discriminator": [
         244,
         189,
@@ -766,9 +736,6 @@
     },
     {
       "name": "get_user_tasks",
-      "docs": [
-        "Get user task completion status"
-      ],
       "discriminator": [
         79,
         28,
@@ -873,9 +840,6 @@
     },
     {
       "name": "initialize",
-      "docs": [
-        "Initialize the airdrop program (admin only)"
-      ],
       "discriminator": [
         175,
         175,
@@ -936,9 +900,6 @@
     },
     {
       "name": "initialize_airdrop_token_account",
-      "docs": [
-        "Initialize the airdrop token account (admin only)"
-      ],
       "discriminator": [
         69,
         205,
@@ -1034,9 +995,6 @@
     },
     {
       "name": "initialize_task_registry",
-      "docs": [
-        "Initialize social task registry (admin only)"
-      ],
       "discriminator": [
         65,
         207,
@@ -1114,9 +1072,6 @@
     },
     {
       "name": "register_user",
-      "docs": [
-        "Register a new user for the airdrop"
-      ],
       "discriminator": [
         2,
         241,
@@ -1219,9 +1174,6 @@
         },
         {
           "name": "referrer_user_account",
-          "docs": [
-            "The referrer's user account (optional - only needed when there's a referrer)"
-          ],
           "writable": true,
           "optional": true
         },
@@ -1235,9 +1187,6 @@
         },
         {
           "name": "sponsor",
-          "docs": [
-            "The sponsor paying fees and rent"
-          ],
           "writable": true,
           "signer": true
         },
@@ -1255,9 +1204,6 @@
     },
     {
       "name": "remove_social_task",
-      "docs": [
-        "Remove a social task (admin only)"
-      ],
       "discriminator": [
         39,
         244,
@@ -1334,9 +1280,6 @@
     },
     {
       "name": "resume_airdrop",
-      "docs": [
-        "Resume airdrop (admin only)"
-      ],
       "discriminator": [
         204,
         105,
@@ -1383,9 +1326,6 @@
     },
     {
       "name": "withdraw_leftover_tokens",
-      "docs": [
-        "Withdraw leftover tokens after airdrop ends (admin only)"
-      ],
       "discriminator": [
         153,
         54,
@@ -1571,9 +1511,6 @@
     },
     {
       "name": "withdraw_tokens",
-      "docs": [
-        "Withdraw tokens to user wallet (only works when airdrop has ended)"
-      ],
       "discriminator": [
         2,
         4,

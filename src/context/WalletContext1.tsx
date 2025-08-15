@@ -976,7 +976,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
 
     try {
       const TOKEN_MINT = new PublicKey(
-        "AFxAyQqpnqazUkP3RYpvcpVpvNPpvPGE9JuQmSzaCA8m"
+        "7fhSBcX2g1cm2RbqUA1Rdie5DL6aFMfztHXxbejxLaos"
       );
 
       const anchProvider = getProvider();
