@@ -157,11 +157,7 @@ const Activity = () => {
         : "xxxxx....xxxx",
 
       task: "Like This Post",
-      date: accountData.dateRegistered
-        ? new Date(
-            Number(accountData.dateRegistered.toString()) * 1000
-          ).toLocaleDateString("en-GB")
-        : "loadin...",
+      date:"04/09/2025",
 
       reward: "+1 ",
       status: newtaskStatus[0] ? "Claimed" : "UnClaimed",
@@ -174,11 +170,7 @@ const Activity = () => {
         : "xxxxx....xxxx",
 
       task: "Like This Post",
-      date: accountData.dateRegistered
-        ? new Date(
-            Number(accountData.dateRegistered.toString()) * 1000
-          ).toLocaleDateString("en-GB")
-        : "loadin...",
+      date:"04/09/2025",
 
       reward: "+1 ",
       status: newtaskStatus[1] ? "Claimed" : "UnClaimed",
@@ -191,11 +183,7 @@ const Activity = () => {
         : "xxxxx....xxxx",
 
       task: "Like This Post",
-      date: accountData.dateRegistered
-        ? new Date(
-            Number(accountData.dateRegistered.toString()) * 1000
-          ).toLocaleDateString("en-GB")
-        : "loadin...",
+      date:"04/09/2025",
 
       reward: "+1 ",
       status: newtaskStatus[2] ? "Claimed" : "UnClaimed",
@@ -208,11 +196,7 @@ const Activity = () => {
         : "xxxxx....xxxx",
 
       task: "Repost This ",
-      date: accountData.dateRegistered
-        ? new Date(
-            Number(accountData.dateRegistered.toString()) * 1000
-          ).toLocaleDateString("en-GB")
-        : "loadin...",
+      date:"04/09/2025",
 
       reward: "+1 ",
       status: newtaskStatus[3] ? "Claimed" : "UnClaimed",
@@ -225,11 +209,7 @@ const Activity = () => {
         : "xxxxx....xxxx",
 
       task: "Share This Post",
-      date: accountData.dateRegistered
-        ? new Date(
-            Number(accountData.dateRegistered.toString()) * 1000
-          ).toLocaleDateString("en-GB")
-        : "loadin...",
+      date:"04/09/2025",
 
       reward: "+1 ",
       status: newtaskStatus[4] ? "Claimed" : "UnClaimed",
@@ -242,11 +222,7 @@ const Activity = () => {
         : "xxxxx....xxxx",
 
       task: " This Post",
-      date: accountData.dateRegistered
-        ? new Date(
-            Number(accountData.dateRegistered.toString()) * 1000
-          ).toLocaleDateString("en-GB")
-        : "loadin...",
+      date:"04/09/2025",
 
       reward: "+1 ",
       status: newtaskStatus[5] ? "Claimed" : "UnClaimed",
@@ -259,11 +235,7 @@ const Activity = () => {
         : "xxxxx....xxxx",
 
       task: "Clap for This Article",
-      date: accountData.dateRegistered
-        ? new Date(
-            Number(accountData.dateRegistered.toString()) * 1000
-          ).toLocaleDateString("en-GB")
-        : "loadin...",
+      date:"04/09/2025",
 
       reward: "+1 ",
       status: newtaskStatus[6] ? "Claimed" : "UnClaimed",
@@ -276,11 +248,7 @@ const Activity = () => {
         : "xxxxx....xxxx",
 
       task: "Like & Repost",
-      date: accountData.dateRegistered
-        ? new Date(
-            Number(accountData.dateRegistered.toString()) * 1000
-          ).toLocaleDateString("en-GB")
-        : "loadin...",
+      date:"04/09/2025",
 
       reward: "+1 ",
       status: newtaskStatus[7] ? "Claimed" : "UnClaimed",
