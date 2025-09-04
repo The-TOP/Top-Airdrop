@@ -255,12 +255,8 @@ export type TopxAirdrop = {
       ],
       "args": [
         {
-          "name": "taskType",
-          "type": {
-            "defined": {
-              "name": "socialTaskType"
-            }
-          }
+          "name": "taskId",
+          "type": "u8"
         },
         {
           "name": "proof",
@@ -2529,11 +2525,7 @@ export type TopxAirdrop = {
           },
           {
             "name": "taskType",
-            "type": {
-              "defined": {
-                "name": "socialTaskType"
-              }
-            }
+            "type": "u8"
           },
           {
             "name": "rewardAmount",
@@ -2584,35 +2576,6 @@ export type TopxAirdrop = {
           {
             "name": "taskId",
             "type": "u8"
-          }
-        ]
-      }
-    },
-    {
-      "name": "socialTaskType",
-      "type": {
-        "kind": "enum",
-        "variants": [
-          {
-            "name": "welcomeAirdop"
-          },
-          {
-            "name": "followTwitter"
-          },
-          {
-            "name": "likeAndRetweetPinned"
-          },
-          {
-            "name": "joinTelegramGroup"
-          },
-          {
-            "name": "joinDiscordServer"
-          },
-          {
-            "name": "subscribeYouTube"
-          },
-          {
-            "name": "accountVerification"
           }
         ]
       }

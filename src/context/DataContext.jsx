@@ -23,7 +23,7 @@ export const DataProvider = ({ children }) => {
     }
   };
   const [isCountdownComplete, setIsCountdownComplete] = useState(false);
-  const targetDate = new Date("2025-08-31T00:00:00Z");
+  const targetDate = new Date("2025-09-19T00:00:00Z");
 
   return (
     <DataContext.Provider

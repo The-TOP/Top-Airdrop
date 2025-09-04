@@ -27,6 +27,7 @@ interface WalletContextProps {
   handleReferralStats: () => Promise<any>;
   handleSocialTask: (taskType: number, proof: string) => Promise<any>;
   handleUserTasks: () => Promise<any>;
+  handleFinishedTasks: () => Promise<any>;
   handleFetchUserAccount: () => Promise<any>;
   getCompleteReferralInfo: () => Promise<any>;
   handleWithdrawTokens: (
@@ -267,7 +268,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         console.log("User not registered yet. Proceeding...");
       }
       let referrer = PublicKey.default;
-     
+
       const accounts: {
         userAccount: PublicKey;
         airdropState: PublicKey;
@@ -592,7 +593,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
     }
   };
 
-  /*  const handleSocialTask = async (
+  /* const handleSocialTask = async (
     taskType: number,
     proof: string
   ): Promise<any> => {
@@ -617,6 +618,14 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         4: "joinDiscordServer",
         5: "subscribeYouTube",
         6: "accountVerification",
+        7: "NewTaskA",
+        8: "NewTaskB",
+        9: "NewTaskC",
+        10: "NewTaskD",
+        11: "NewTaskE",
+        12: "NewTaskF",
+        13: "NewTaskG",
+        14: "NewTaskH",
       };
 
       console.log(`Task: ${taskTypes[taskType] || taskType}`);
@@ -647,111 +656,14 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         4: { joinDiscordServer: {} },
         5: { subscribeYouTube: {} },
         6: { accountVerification: {} },
-      };
-
-      const socialTaskType = enumMap[taskType];
-      if (!socialTaskType)
-        throw new Error("Invalid task type index: " + taskType);
-      console.log("Completing social task...");
-      // ✅ Transaction call
-      const tx = await program.methods
-        .completeSocialTask(socialTaskType, proof)
-        .accountsStrict({
-          userAccount: userAccountPda,
-          airdropState: airdropStatePda,
-          taskRegistry: taskRegistryPda,
-          user: userPubKey,
-          sponsor: userPubKey, // Added sponsor
-          systemProgram: SystemProgram.programId,
-        })
-        .rpc();
-
-      console.log("✅ Social task completed successfully!");
-      console.log("Transaction signature:", tx);
-      console.log(
-        "View on Explorer: https://explorer.solana.com/tx/" +
-          tx +
-          "?cluster=devnet"
-      );
-
-      // ✅ Fetch updated account info
-      const userAccount = await program.account.userAccount.fetch(
-        userAccountPda
-      );
-      console.log(
-        "Updated pending rewards:",
-        userAccount.pendingRewards.toString()
-      );
-      console.log("Completed tasks:", userAccount.completedTasks);
-
-      return tx;
-    } catch (err: any) {
-      console.error("❌ Failed to complete social task:", err.message);
-
-      if (err.logs) {
-        console.error("Program logs:");
-        err.logs.forEach((log: string) => console.log(log));
-      }
-
-      throw err;
-    }
-  }; */
-
-  const handleSocialTask = async (
-    taskType: number,
-    proof: string
-  ): Promise<any> => {
-    try {
-      const anchProvider = getProvider();
-      const userPublicKey = anchProvider.publicKey;
-      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
-
-      const userPubKey =
-        typeof userPublicKey === "string"
-          ? new PublicKey(userPublicKey)
-          : userPublicKey;
-
-      console.log("\n=== COMPLETING SOCIAL TASK ===");
-
-      // ✅ Logging helper only (not used in program call)
-      const taskTypes = {
-        0: "welcomeAirdrop",
-        1: "followTwitter",
-        2: "likeAndRetweetPinned",
-        3: "joinTelegramGroup",
-        4: "joinDiscordServer",
-        5: "subscribeYouTube",
-        6: "accountVerification",
-      };
-
-      console.log(`Task: ${taskTypes[taskType] || taskType}`);
-      console.log(`Proof: ${proof}`);
-
-      // ✅ PDA derivation
-      const [userAccountPda] = PublicKey.findProgramAddressSync(
-        [Buffer.from("user_account"), userPubKey.toBuffer()],
-        program.programId
-      );
-      // Derive task registry PDA
-      const [taskRegistryPda] = PublicKey.findProgramAddressSync(
-        [Buffer.from("task_registry")],
-        program.programId
-      );
-
-      const [airdropStatePda] = PublicKey.findProgramAddressSync(
-        [Buffer.from("airdrop_state")],
-        program.programId
-      );
-
-      // ✅ Enum values that match Anchor IDL exactly
-      const enumMap: Record<number, any> = {
-        0: { welcomeAirdop: {} },
-        1: { followTwitter: {} },
-        2: { likeAndRetweetPinned: {} },
-        3: { joinTelegramGroup: {} },
-        4: { joinDiscordServer: {} },
-        5: { subscribeYouTube: {} },
-        6: { accountVerification: {} },
+        7: { NewTaskA: {} },
+        8: { NewTaskB: {} },
+        9: { NewTaskC: {} },
+        10: { NewTaskD: {} },
+        11: { NewTaskE: {} },
+        12: { NewTaskF: {} },
+        13: { NewTaskG: {} },
+        14: { NewTaskH: {} },
       };
 
       const socialTaskType = enumMap[taskType];
@@ -835,6 +747,97 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
 
       throw err;
     }
+  }; */
+  const handleSocialTask = async (
+    taskType: number,
+    proof: string
+  ): Promise<any> => {
+    try {
+      const anchProvider = getProvider();
+      const userPublicKey = anchProvider.publicKey;
+      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
+
+      const userPubKey =
+        typeof userPublicKey === "string"
+          ? new PublicKey(userPublicKey)
+          : userPublicKey;
+
+      console.log("\n=== COMPLETING SOCIAL TASK ===");
+
+      // Task type mapping for hardcoded tasks
+      const hardcodedTaskTypes = {
+        0: "welcomeAirdrop",
+        1: "followTwitter",
+        2: "likeAndRetweetPinned",
+        3: "joinTelegramGroup",
+        4: "joinDiscordServer",
+        5: "subscribeYouTube",
+        6: "accountVerification",
+      };
+
+      console.log(`Task ID: ${taskType}`); // console.log(`Task ID: ${taskType}`);
+      console.log(`Proof: ${proof}`);
+
+      // ✅ PDA derivation
+      const [userAccountPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("user_account"), userPubKey.toBuffer()],
+        program.programId
+      );
+      // Derive task registry PDA
+      const [taskRegistryPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("task_registry")],
+        program.programId
+      );
+
+      const [airdropStatePda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("airdrop_state")],
+        program.programId
+      );
+
+      console.log("Completing social task...");
+
+      // ✅ Transaction call
+      const tx = await program.methods
+        .completeSocialTask(taskType, proof)
+        .accountsStrict({
+          userAccount: userAccountPda,
+          airdropState: airdropStatePda,
+          taskRegistry: taskRegistryPda,
+          user: userPubKey,
+          sponsor: userPubKey, // Added sponsor
+          systemProgram: SystemProgram.programId,
+        })
+        .rpc();
+
+      console.log("✅ Social task completed successfully!");
+      console.log("Transaction signature:", tx);
+      console.log(
+        "View on Explorer: https://explorer.solana.com/tx/" +
+          tx +
+          "?cluster=devnet"
+      );
+
+      // Get updated user account
+      const userAccount = await program.account.userAccount.fetch(
+        userAccountPda
+      );
+      console.log(
+        "Updated pending rewards:",
+        userAccount.pendingRewards.toString()
+      );
+      console.log("Completed tasks:", userAccount.completedTasks);
+
+      return tx;
+    } catch (err: any) {
+      console.error("❌ Failed to complete social task:", err.message);
+
+      if (err.logs) {
+        console.error("Program logs:");
+        err.logs.forEach((log: string) => console.log(log));
+      }
+
+      throw err;
+    }
   };
 
   const handleUserTasks = async (): Promise<any> => {
@@ -890,6 +893,129 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
       throw err;
     }
   };
+  const handleFinishedTasks = async (): Promise<any> => {
+    try {
+      const anchProvider = getProvider();
+      const userPublicKey = anchProvider.publicKey;
+      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
+
+      const userPubKey =
+        typeof userPublicKey === "string"
+          ? new PublicKey(userPublicKey)
+          : userPublicKey;
+
+      console.log("\n=== GETTING USER TASKS ===");
+
+      // Derive task registry PDA
+      const [taskRegistryPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("task_registry")],
+        program.programId
+      );
+
+      // Derive user account PDA
+      const [userAccountPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("user_account"), userPubKey.toBuffer()],
+        program.programId
+      );
+
+      // Get user account directly to see completed tasks
+      const userAccount = await program.account.userAccount.fetch(
+        userAccountPda
+      );
+         let taskResults: boolean[] = [];
+      const tasks = await program.methods
+        .getSocialTasks()
+        .accounts({
+          taskRegistry: taskRegistryPda,
+        })
+        .view();
+
+      console.log("Social Tasks:");
+      console.log("Hardcoded Tasks (0-6):");
+      const hardcodedTasks = [
+        "WelcomeAirdrop",
+        "FollowTwitter",
+        "LikeAndRetweetPinned",
+        "JoinTelegramGroup",
+        "JoinDiscordServer",
+        "SubscribeYouTube",
+        "AccountVerification",
+      ];
+
+      hardcodedTasks.forEach((name, index) => {
+        console.log(`  ${index}: ${name} - 1 token reward`);
+      });
+
+      console.log("\nDynamic Tasks (7+):");
+      tasks.forEach((task) => {
+        const rewardInTokens = task.rewardTokens / 10 ** 9;
+        const status = task.isActive ? "Active" : "Inactive";
+        console.log(
+          `  ${task.taskId}: ${task.taskName} - ${rewardInTokens} token reward (${status})`
+        );
+      });
+
+       tasks.forEach((task) => {
+        const completed = userAccount.completedTasks.includes(task.taskId);
+        const status = completed ? "✅ Completed" : "❌ Not completed";
+        const result = `${task.taskId}. ${task.taskName}: ${status}`;
+        console.log(result);
+        taskResults.push(completed);
+      });
+
+      return  taskResults;
+    } catch (err) {
+      console.error("❌ Failed to get user tasks:", err.message);
+      throw err;
+    }
+  };
+ /*  const handleUserTasksB = async (): Promise<any> => {
+    try {
+      const anchProvider = getProvider();
+      const userPublicKey = anchProvider.publicKey;
+      const program = new Program<TopxAirdrop>(idl_object, anchProvider);
+
+      const userPubKey =
+        typeof userPublicKey === "string"
+          ? new PublicKey(userPublicKey)
+          : userPublicKey;
+
+      console.log("\n=== GETTING USER TASKS ===");
+
+      // Derive user account PDA
+      const [userAccountPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("user_account"), userPubKey.toBuffer()],
+        program.programId
+      );
+      // Get user account directly to see completed tasks
+      const userAccount = await program.account.userAccount.fetch(
+        userAccountPda
+      );
+
+      console.log("User:", userPubKey.toString());
+      console.log("User Account PDA:", userAccountPda.toString());
+
+      // Get dynamic tasks
+      try {
+        const dynamicTasks = await handleFinishedTasks();
+        if (dynamicTasks.length > 0) {
+          console.log("Dynamic Tasks:");
+          dynamicTasks.forEach((task) => {
+            const completed = userAccount.completedTasks.includes(task.taskId);
+            const status = completed ? "✅ Completed" : "❌ Not completed";
+            console.log(`  ${task.taskId}. ${task.taskName}: ${status}`);
+          });
+        }
+      } catch (e) {
+        console.log("No dynamic tasks available");
+      }
+
+      return userAccount.completedTasks;
+    } catch (err) {
+      console.error("❌ Failed to get user tasks:", err.message);
+      throw err;
+    }
+  }; */
 
   const handleFetchUserAccount = async (): Promise<any> => {
     try {
@@ -1291,6 +1417,7 @@ export const WalletContextProvider: React.FC<WalletProviderProps> = ({
         handlePlatformStats,
         handleSocialTask,
         handleUserTasks,
+        handleFinishedTasks,
         handleFetchUserAccount,
         handleWithdrawTokens,
         handleReferralStats,

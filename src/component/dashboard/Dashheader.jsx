@@ -16,11 +16,13 @@ const Dashheader = ({ xstyle }) => {
 
   const {
     handleUserBalance,
-    handlePlatformStats,
+    /* handlePlatformStats, */
     handleUserTasks,
     handleWithdrawStats,
     handleFetchUserAccount,
     getCompleteReferralInfo,
+    /* handleSocialTask, */
+    /* handleFinishedTasks, */
   } = useContext(myWalletContext);
 
   const {
@@ -64,8 +66,8 @@ const Dashheader = ({ xstyle }) => {
     >
       <div className="flex justify-center items-center gap-2">
         <img
-          /*  onClick={() => {
-            getCompleteReferralInfo();
+         /*  onClick={() => {
+            handleSocialTask(9, "delight");
           }} */
           src={miniLogo}
           className="w-5"
@@ -75,9 +77,9 @@ const Dashheader = ({ xstyle }) => {
       </div>
       <div className="flex gap-2 justify-center items-center">
         <img
-            onClick={() => {
-            handleWithdrawStats();
-          }} 
+          /* onClick={() => {
+            handleFinishedTasks();
+          }} */
           src={user}
           className="w-5"
           alt="top"
