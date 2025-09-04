@@ -14,12 +14,13 @@ import ReferralCard from "../component/activity/ReferralCard";
 const Activity = () => {
   const [activeTab, setActiveTab] = useState("Airdrop");
 
-  const { handleFetchUserAccount, handleUserTasks } =
+  const { handleFetchUserAccount, handleUserTasks,handleFinishedTasks } =
     useContext(myWalletContext);
   const { withdrawStats, referralStats } = useContext(DataContext);
 
   const [accountData, setAccountData] = useState([]);
   const [taskStatus, setTaskStatus] = useState([]);
+  const [newtaskStatus, setNewTaskStatus] = useState([]);
   const address = accountData.user?.toString();
 
   /* console.log(withdrawStats); */
@@ -150,6 +151,145 @@ const Activity = () => {
       claimed: taskStatus[5],
       profile: profile,
     },
+    {
+      account: address
+        ? address.slice(0, 5) + "...." + address.slice(-4)
+        : "xxxxx....xxxx",
+
+      task: "Like This Post",
+      date: accountData.dateRegistered
+        ? new Date(
+            Number(accountData.dateRegistered.toString()) * 1000
+          ).toLocaleDateString("en-GB")
+        : "loadin...",
+
+      reward: "+1 ",
+      status: newtaskStatus[0] ? "Claimed" : "UnClaimed",
+      claimed: newtaskStatus[0],
+      profile: profile,
+    },
+    {
+      account: address
+        ? address.slice(0, 5) + "...." + address.slice(-4)
+        : "xxxxx....xxxx",
+
+      task: "Like This Post",
+      date: accountData.dateRegistered
+        ? new Date(
+            Number(accountData.dateRegistered.toString()) * 1000
+          ).toLocaleDateString("en-GB")
+        : "loadin...",
+
+      reward: "+1 ",
+      status: newtaskStatus[1] ? "Claimed" : "UnClaimed",
+      claimed: newtaskStatus[1],
+      profile: profile,
+    },
+    {
+      account: address
+        ? address.slice(0, 5) + "...." + address.slice(-4)
+        : "xxxxx....xxxx",
+
+      task: "Like This Post",
+      date: accountData.dateRegistered
+        ? new Date(
+            Number(accountData.dateRegistered.toString()) * 1000
+          ).toLocaleDateString("en-GB")
+        : "loadin...",
+
+      reward: "+1 ",
+      status: newtaskStatus[2] ? "Claimed" : "UnClaimed",
+      claimed: newtaskStatus[2],
+      profile: profile,
+    },
+    {
+      account: address
+        ? address.slice(0, 5) + "...." + address.slice(-4)
+        : "xxxxx....xxxx",
+
+      task: "Repost This ",
+      date: accountData.dateRegistered
+        ? new Date(
+            Number(accountData.dateRegistered.toString()) * 1000
+          ).toLocaleDateString("en-GB")
+        : "loadin...",
+
+      reward: "+1 ",
+      status: newtaskStatus[3] ? "Claimed" : "UnClaimed",
+      claimed: newtaskStatus[3],
+      profile: profile,
+    },
+    {
+      account: address
+        ? address.slice(0, 5) + "...." + address.slice(-4)
+        : "xxxxx....xxxx",
+
+      task: "Share This Post",
+      date: accountData.dateRegistered
+        ? new Date(
+            Number(accountData.dateRegistered.toString()) * 1000
+          ).toLocaleDateString("en-GB")
+        : "loadin...",
+
+      reward: "+1 ",
+      status: newtaskStatus[4] ? "Claimed" : "UnClaimed",
+      claimed: newtaskStatus[4],
+      profile: profile,
+    },
+    {
+      account: address
+        ? address.slice(0, 5) + "...." + address.slice(-4)
+        : "xxxxx....xxxx",
+
+      task: " This Post",
+      date: accountData.dateRegistered
+        ? new Date(
+            Number(accountData.dateRegistered.toString()) * 1000
+          ).toLocaleDateString("en-GB")
+        : "loadin...",
+
+      reward: "+1 ",
+      status: newtaskStatus[5] ? "Claimed" : "UnClaimed",
+      claimed: newtaskStatus[5],
+      profile: profile,
+    },
+    {
+      account: address
+        ? address.slice(0, 5) + "...." + address.slice(-4)
+        : "xxxxx....xxxx",
+
+      task: "Clap for This Article",
+      date: accountData.dateRegistered
+        ? new Date(
+            Number(accountData.dateRegistered.toString()) * 1000
+          ).toLocaleDateString("en-GB")
+        : "loadin...",
+
+      reward: "+1 ",
+      status: newtaskStatus[6] ? "Claimed" : "UnClaimed",
+      claimed: newtaskStatus[6],
+      profile: profile,
+    },
+    {
+      account: address
+        ? address.slice(0, 5) + "...." + address.slice(-4)
+        : "xxxxx....xxxx",
+
+      task: "Like & Repost",
+      date: accountData.dateRegistered
+        ? new Date(
+            Number(accountData.dateRegistered.toString()) * 1000
+          ).toLocaleDateString("en-GB")
+        : "loadin...",
+
+      reward: "+1 ",
+      status: newtaskStatus[7] ? "Claimed" : "UnClaimed",
+      claimed: newtaskStatus[7],
+      profile: profile,
+    },
+  
+   
+
   ];
 
   useEffect(() => {
@@ -157,9 +297,11 @@ const Activity = () => {
       try {
         const result = await handleFetchUserAccount();
         const status = await handleUserTasks();
+        const newstatus = await handleFinishedTasks();
         /* console.log(result.user); */
         setAccountData(result);
         setTaskStatus(status);
+        setNewTaskStatus(newstatus);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
