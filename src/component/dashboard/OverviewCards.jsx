@@ -4,18 +4,17 @@ import { FaCoins, FaUserFriends, FaTasks, FaDownload } from "react-icons/fa";
 import DataContext from "../../context/DataContext";
 
 const OverviewCards = () => {
-  const { userBalance, userReferral, userTask } = useContext(DataContext);
+  const { userBalance, userReferral, userTask, newtaskCount } =
+    useContext(DataContext);
 
-  
   const formatNumber = (num) => {
-  return num.toString().padStart(3, "0");
-};
-
+    return num.toString().padStart(3, "0");
+  };
 
   const cards = [
     { icon: <FaCoins />, label: "Token Balance", value: userBalance },
     { icon: <FaUserFriends />, label: "Total Referral", value: userReferral },
-    { icon: <FaTasks />, label: "Total Activities", value: userTask},
+    { icon: <FaTasks />, label: "Total Activities", value: userTask + newtaskCount },
     { icon: <FaDownload />, label: "Total Extract", value: "000" },
   ];
   return (

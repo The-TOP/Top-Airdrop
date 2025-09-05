@@ -22,7 +22,7 @@ const Dashheader = ({ xstyle }) => {
     handleFetchUserAccount,
     getCompleteReferralInfo,
     /* handleSocialTask, */
-    /* handleFinishedTasks, */
+    handleFinishedTasks,
   } = useContext(myWalletContext);
 
   const {
@@ -33,6 +33,7 @@ const Dashheader = ({ xstyle }) => {
     refresh,
     setwithdrawStats,
     setReferralStats,
+    setNewtaskCount,
   } = useContext(DataContext);
 
   useEffect(() => {
@@ -56,8 +57,19 @@ const Dashheader = ({ xstyle }) => {
         console.error("Error fetching  Data:", error);
       }
     };
+    const fetchnewTask = async () => {
+      try {
+        const result = await handleFinishedTasks();
+        const newtaskCount = result.filter((task) => task === true).length;
+      
+        setNewtaskCount(newtaskCount);
+      } catch (error) {
+        console.error("Error fetching  Data:", error);
+      }
+    };
 
     fetchData();
+    fetchnewTask();
   }, [refresh]);
 
   return (
@@ -66,7 +78,7 @@ const Dashheader = ({ xstyle }) => {
     >
       <div className="flex justify-center items-center gap-2">
         <img
-         /*  onClick={() => {
+          /*  onClick={() => {
             handleSocialTask(9, "delight");
           }} */
           src={miniLogo}

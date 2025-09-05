@@ -14,6 +14,7 @@ export const DataProvider = ({ children }) => {
   const [refresh, setRefresh] = useState(0);
   const [withdrawStats, setwithdrawStats] = useState("");
   const [referralStats, setReferralStats] = useState([]);
+  const [newtaskCount, setNewtaskCount] = useState([]);
   const connected = useWallet().connected;
   const handleDashBordNav = () => {
     if (!connected) {
@@ -23,7 +24,7 @@ export const DataProvider = ({ children }) => {
     }
   };
   const [isCountdownComplete, setIsCountdownComplete] = useState(false);
-  const targetDate = new Date("2025-09-19T00:00:00Z");
+  const targetDate = new Date("2025-09-30T00:00:00Z");
 
   return (
     <DataContext.Provider
@@ -48,6 +49,8 @@ export const DataProvider = ({ children }) => {
         setwithdrawStats,
         referralStats,
         setReferralStats,
+        newtaskCount,
+        setNewtaskCount,
       }}
     >
       {children}
